@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "name": "Áo phông Gaming Đen",
+    "price": 250000,
+    "salePrice": 199000,
+    "category": "xuan-he",
+    "images": [
+      "assets/images/products/ao-01.jpg",
+      "assets/images/products/ao-01-b.jpg"
+    ],
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Đen"],
+    "description": "Áo phông cotton in hình gaming, form rộng thoải mái.",
+    "tag": "Trending",
+    "createdAt": "2026-09-01"
+  },
+  {
+    "id": 2,
+    "name": "Cốc giữ nhiệt Gaming 500ml",
+    "price": 180000,
+    "salePrice": null,
+    "category": "coc-binh",
+    "images": [
+      "assets/images/products/coc-01.jpg",
+      "assets/images/products/coc-01-b.jpg"
+    ],
+    "sizes": [],
+    "colors": ["Trắng", "Đỏ"],
+    "description": "Cốc inox giữ nhiệt 500ml, nắp kín chống đổ.",
+    "tag": "",
+    "createdAt": "2026-09-10"
+  }
+]
