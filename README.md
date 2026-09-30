@@ -1,5 +1,5 @@
 # website
-- clone web: https://shop.mixigaming.com/
+- Website bán hàng thời trang
 # HTMLCSSJS
 - chỉ dùng HTML, CSS, JS thuần (không framework)
 - js (
