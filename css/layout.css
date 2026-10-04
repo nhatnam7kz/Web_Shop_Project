@@ -30,6 +30,17 @@
 .header__logo img { height: 90px; width: auto; }
 .header__actions { display: flex; align-items: center; gap: 14px; font-size: 1.25rem; }
 .header__icon { position: relative; }
+.header__icon-svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+.header__icon:hover { color: var(--color-primary); }
 
 .badge {
   position: absolute; top: -8px; right: -10px;
@@ -46,6 +57,11 @@
 .header__search button {
   border: 1px solid var(--color-border); border-left: 0;
   border-radius: 0 20px 20px 0; background: var(--color-bg-soft); padding: 7px 12px;
+  color: var(--color-text);
+}
+.header__search button .header__icon-svg {
+  width: 18px;
+  height: 18px;
 }
 
 /* ===== Menu (điện thoại: xổ xuống dưới header) ===== */
