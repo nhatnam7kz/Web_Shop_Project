@@ -1,5 +1,3 @@
-/* products.js – Thẻ sản phẩm, chi tiết, popup xem nhanh (Người phụ trách: Kiệt) */
-
 const COLOR_LABELS = {
   den: "Đen",
   trang: "Trắng",
@@ -262,11 +260,11 @@ function optionButtons(items, name, selected, labelFn) {
   return items.map((item, index) => {
     const checked = (selected ? item === selected : index === 0) ? " checked" : "";
     const text = labelFn ? labelFn(item) : item;
-    const extraClass = name === "color" ? ` swatch swatch--${item}` : "";
+    const dot = name === "color" ? `<i class="swatch swatch--${item}"></i>` : "";
     return `
-      <label class="option-chip${extraClass}">
+      <label class="option-chip">
         <input type="radio" name="${name}" value="${item}"${checked}>
-        <span>${text}</span>
+        ${dot}<span>${text}</span>
       </label>`;
   }).join("");
 }

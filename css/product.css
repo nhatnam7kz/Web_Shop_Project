@@ -1,4 +1,3 @@
-/* product.css – Trang sản phẩm, chi tiết, tìm kiếm, popup xem nhanh (Kiệt) */
 
 .no-scroll { overflow: hidden; }
 
@@ -124,8 +123,8 @@
   font-size: .8rem;
 }
 
-.swatch,
-.swatch span {
+.swatch {
+  flex: 0 0 14px;
   width: 14px;
   height: 14px;
   border-radius: 50%;
@@ -273,28 +272,27 @@
   gap: 10px;
   margin-bottom: 14px;
 }
-.option-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.option-list { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .option-chip {
   position: relative;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  gap: 6px;
   min-width: 42px;
-  padding: 6px 10px;
+  height: 38px;
+  padding: 0 12px;
   border: 1px solid var(--color-border);
   border-radius: 4px;
+  background: #fff;
+  line-height: 1;
   cursor: pointer;
   white-space: nowrap;
 }
-.option-chip input { position: absolute; inset: 0; opacity: 0; }
+.option-chip input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
 .option-chip:has(input:checked) {
   border-color: #2b6ce4;
   color: #2b6ce4;
-}
-.option-chip.swatch {
-  width: auto;
-  height: auto;
-  border-radius: 4px;
-  background: #fff;
 }
 
 .qty-box {
