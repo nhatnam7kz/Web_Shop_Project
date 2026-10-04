@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Đăng nhập | Tên shop</title>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+    <link rel="stylesheet" href="../css/pages.css" />
+    <link rel="stylesheet" href="../css/account.css" />
+  </head>
+  <body>
+    <div id="site-header"></div>
+    <main>
+      <div class="page-container">
+        <div class="auth-card">
+          <nav class="auth-card__tabs" aria-label="Đăng nhập hoặc đăng ký">
+            <a
+              class="auth-card__tab auth-card__tab--active"
+              href="dang-nhap.html"
+              aria-current="page"
+              >Đăng nhập</a
+            >
+            <a class="auth-card__tab" href="dang-ky.html">Đăng ký</a>
+          </nav>
+          <form class="form-block" id="login-form" novalidate>
+            <div class="form-block__field">
+              <label class="form-block__label" for="login-email">Email</label>
+              <input
+                class="form-block__input"
+                id="login-email"
+                name="login-email"
+                type="email"
+                autocomplete="email"
+              />
+            </div>
+            <div class="form-block__field">
+              <label class="form-block__label" for="login-password"
+                >Mật khẩu</label
+              >
+              <input
+                class="form-block__input"
+                id="login-password"
+                name="login-password"
+                type="password"
+                autocomplete="current-password"
+              />
+            </div>
+            <p class="form-block__error" id="login-error" role="alert"></p>
+            <button class="btn btn--primary" type="submit">Đăng nhập</button>
+          </form>
+          <p class="auth-card__switch">
+            Chưa có tài khoản? <a href="dang-ky.html">Đăng ký ngay</a>
+          </p>
+        </div>
+      </div>
+    </main>
+    <div id="site-footer"></div>
+    <div id="toast-container"></div>
+    <!-- Thứ tự script: KHÔNG ĐỔI -->
+    <script src="../js/config.js"></script>
+    <script src="../js/validate.js"></script>
+    <script src="../js/products.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/wishlist.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>

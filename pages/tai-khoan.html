@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tài khoản của tôi | Tên shop</title>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+    <link rel="stylesheet" href="../css/pages.css" />
+    <link rel="stylesheet" href="../css/account.css" />
+  </head>
+  <body>
+    <div id="site-header"></div>
+    <main>
+      <div class="page-container">
+        <header class="page-header">
+          <h1 class="page-header__title" id="account-greeting">
+            Tài khoản của tôi
+          </h1>
+        </header>
+        <div class="account-tabs" id="account-tabs" role="tablist">
+          <button
+            class="account-tabs__btn account-tabs__btn--active"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            data-tab="profile"
+          >
+            Thông tin cá nhân
+          </button>
+          <button
+            class="account-tabs__btn"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            data-tab="orders"
+          >
+            Đơn hàng của tôi
+          </button>
+          <button
+            class="account-tabs__btn"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            data-tab="password"
+          >
+            Đổi mật khẩu
+          </button>
+        </div>
+
+        <section class="account-panel" data-panel="profile">
+          <h2 class="account-panel__title">Thông tin cá nhân</h2>
+          <form class="form-block" id="profile-form" novalidate>
+            <div class="form-block__field">
+              <label class="form-block__label" for="profile-fullname"
+                >Họ và tên</label
+              >
+              <input
+                class="form-block__input"
+                id="profile-fullname"
+                name="profile-fullname"
+                type="text"
+                autocomplete="name"
+              />
+            </div>
+            <div class="form-block__field">
+              <label class="form-block__label" for="profile-email">Email</label>
+              <input
+                class="form-block__input"
+                id="profile-email"
+                name="profile-email"
+                type="email"
+                readonly
+              />
+              <p class="form-block__hint">
+                Email dùng để đăng nhập nên không thể thay đổi.
+              </p>
+            </div>
+            <div class="form-block__field">
+              <label class="form-block__label" for="profile-phone"
+                >Số điện thoại</label
+              >
+              <input
+                class="form-block__input"
+                id="profile-phone"
+                name="profile-phone"
+                type="tel"
+                autocomplete="tel"
+              />
+            </div>
+            <div class="form-block__field">
+              <label class="form-block__label" for="profile-address"
+                >Địa chỉ mặc định</label
+              >
+              <input
+                class="form-block__input"
+                id="profile-address"
+                name="profile-address"
+                type="text"
+                autocomplete="street-address"
+              />
+            </div>
+            <button class="btn btn--primary" type="submit">Lưu thay đổi</button>
+          </form>
+          <button class="btn account-logout" type="button" data-action="logout">
+            Đăng xuất
+          </button>
+        </section>
+
+        <section
+          class="account-panel account-panel--wide"
+          data-panel="orders"
+          hidden
+        >
+          <h2 class="account-panel__title">Đơn hàng của tôi</h2>
+          <div id="account-orders"></div>
+        </section>
+
+        <section class="account-panel" data-panel="password" hidden>
+          <h2 class="account-panel__title">Đổi mật khẩu</h2>
+          <form class="form-block" id="password-form" novalidate>
+            <div class="form-block__field">
+              <label class="form-block__label" for="password-old"
+                >Mật khẩu hiện tại</label
+              >
+              <input
+                class="form-block__input"
+                id="password-old"
+                name="password-old"
+                type="password"
+                autocomplete="current-password"
+              />
+            </div>
+            <div class="form-block__field">
+              <label class="form-block__label" for="password-new"
+                >Mật khẩu mới</label
+              >
+              <input
+                class="form-block__input"
+                id="password-new"
+                name="password-new"
+                type="password"
+                autocomplete="new-password"
+              />
+              <p class="form-block__hint">Ít nhất 6 ký tự.</p>
+            </div>
+            <div class="form-block__field">
+              <label class="form-block__label" for="password-confirm"
+                >Nhập lại mật khẩu mới</label
+              >
+              <input
+                class="form-block__input"
+                id="password-confirm"
+                name="password-confirm"
+                type="password"
+                autocomplete="new-password"
+              />
+            </div>
+            <button class="btn btn--primary" type="submit">Đổi mật khẩu</button>
+          </form>
+        </section>
+      </div>
+    </main>
+    <div id="site-footer"></div>
+    <div id="toast-container"></div>
+    <!-- Thứ tự script: KHÔNG ĐỔI -->
+    <script src="../js/config.js"></script>
+    <script src="../js/validate.js"></script>
+    <script src="../js/products.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/orders.js"></script>
+    <script src="../js/wishlist.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>

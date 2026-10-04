@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Liên hệ | Tên shop</title>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+    <link rel="stylesheet" href="../css/pages.css" />
+  </head>
+  <body>
+    <div id="site-header"></div>
+    <main>
+      <div class="page-container">
+        <header class="page-header">
+          <h1 class="page-header__title">Liên hệ với chúng tôi</h1>
+          <p class="page-header__lead">
+            Gửi câu hỏi về sản phẩm, đơn hàng hoặc đổi trả. Shop sẽ phản hồi qua
+            email hoặc điện thoại bạn để lại.
+          </p>
+        </header>
+        <div class="contact-layout">
+          <form class="form-block" id="contact-form" novalidate>
+            <div class="form-block__field">
+              <label class="form-block__label" for="contact-name"
+                >Họ và tên</label
+              >
+              <input
+                class="form-block__input"
+                id="contact-name"
+                name="contact-name"
+                type="text"
+                autocomplete="name"
+              />
+            </div>
+            <div class="form-block__field">
+              <label class="form-block__label" for="contact-email">Email</label>
+              <input
+                class="form-block__input"
+                id="contact-email"
+                name="contact-email"
+                type="email"
+                autocomplete="email"
+              />
+            </div>
+            <div class="form-block__field">
+              <label class="form-block__label" for="contact-phone"
+                >Số điện thoại (không bắt buộc)</label
+              >
+              <input
+                class="form-block__input"
+                id="contact-phone"
+                name="contact-phone"
+                type="tel"
+                autocomplete="tel"
+              />
+            </div>
+            <div class="form-block__field">
+              <label class="form-block__label" for="contact-message"
+                >Nội dung</label
+              >
+              <textarea
+                class="form-block__input"
+                id="contact-message"
+                name="contact-message"
+              ></textarea>
+            </div>
+            <button class="btn btn--primary" type="submit">Gửi liên hệ</button>
+          </form>
+          <aside class="contact-info">
+            <h2 class="contact-info__title">Thông tin cửa hàng</h2>
+            <ul class="contact-info__list">
+              <li>
+                <span class="contact-info__label">Địa chỉ</span>[Địa chỉ cửa
+                hàng]
+              </li>
+              <li>
+                <span class="contact-info__label">Hotline</span>[Số điện thoại]
+              </li>
+              <li>
+                <span class="contact-info__label">Email</span>[Email cửa hàng]
+              </li>
+              <li>
+                <span class="contact-info__label">Giờ làm việc</span>8:00 –
+                21:00, tất cả các ngày trong tuần
+              </li>
+            </ul>
+            <div
+              class="contact-map"
+              role="img"
+              aria-label="Vị trí cửa hàng trên bản đồ"
+            >
+              Bản đồ cửa hàng
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+    <div id="site-footer"></div>
+    <div id="toast-container"></div>
+    <!-- Thứ tự script: KHÔNG ĐỔI -->
+    <script src="../js/config.js"></script>
+    <script src="../js/validate.js"></script>
+    <script src="../js/products.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/wishlist.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>
