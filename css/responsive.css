@@ -1,14 +1,128 @@
 /* responsive.css – Media query dùng chung (mobile-first). Breakpoint: 768px và 1024px.
    Mỗi người tự lo responsive cho trang của mình trong file CSS riêng. */
 
+@media (max-width: 767px) {
+  .section {
+    padding: 24px 0;
+  }
+
+  .feature-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .hot-deals-title {
+    font-size: 1.7rem;
+  }
+
+  .hot-deals-heading {
+    min-height: 72px;
+    padding-right: 150px;
+  }
+
+  .hot-deals-badge {
+    width: 38px;
+    height: 38px;
+  }
+
+  .countdown-wrapper {
+    top: 30px;
+    right: 16px;
+    gap: 6px;
+  }
+
+  .countdown-label {
+    display: none;
+  }
+
+  .timer {
+    gap: 4px;
+  }
+
+  .time-box {
+    width: 34px;
+    height: 40px;
+  }
+
+  .time-box span {
+    font-size: 15px;
+  }
+
+  .tab-buttons {
+    gap: 4px;
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    flex: 0 0 auto;
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .hot-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .recommendation-grid,
+  .collection-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .review-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .discord-gallery {
+    display: flex;
+    gap: 8px;
+    margin-right: -16px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .discord-gallery img {
+    flex: 0 0 42vw;
+  }
+
+  .collection-tabs {
+    gap: 14px;
+  }
+
+  .do-hieu-king-shop .container {
+    padding-right: 0;
+    overflow: hidden;
+  }
+
+  .do-hieu-king-shop .category-grid {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding: 0 16px 12px 0;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary) var(--color-bg-soft);
+  }
+
+  .do-hieu-king-shop .category-card {
+    flex: 0 0 42vw;
+    scroll-snap-align: start;
+  }
+}
+
 @media (min-width: 768px) {
   .product-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .recommendation-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .collection-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .category-grid { grid-template-columns: repeat(3, 1fr); }
   .footer__grid { grid-template-columns: repeat(2, 1fr); }
   .header__search { display: flex; }
 }
 
 @media (min-width: 1024px) {
   .product-grid { grid-template-columns: repeat(4, 1fr); }
+  .hot-product-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .category-grid { grid-template-columns: repeat(7, 1fr); gap: 28px 18px; }
+  .feature-list { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
   .footer__grid { grid-template-columns: 1.3fr 1fr 1fr 1.4fr; }
 
   .header__menu-btn { display: none; }

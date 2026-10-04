@@ -41,3 +41,288 @@ button { cursor: pointer; }
 
 .section { padding: 32px 0; }
 .section__title { font-size: 1.5rem; text-align: center; margin-bottom: 20px; }
+.home-section-title {
+  margin-bottom: 18px;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+.feature-list{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.banner-container {
+  max-width: 1200px; 
+  width: 100%;
+  margin: 0 auto;   
+  padding: 0 16px;  
+  box-sizing: border-box;
+}
+
+.banner-img {
+  width: 100%;
+  height: auto;      
+  display: block;   
+  border-radius: 12px; 
+}
+.do-hieu-king-shop p {
+  margin: 0 0 28px;
+  padding-top: 40px;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+}
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px 16px;
+}
+.category-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: var(--color-text);
+  transition: transform .2s;
+}
+.category-card:hover {
+  transform: translateY(-4px);
+}
+.category-card__image {
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--color-bg-soft);
+  border: 1px solid var(--color-border);
+}
+.category-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform .2s;
+}
+.category-card:hover .category-card__image img {
+  transform: scale(1.03);
+}
+.category-card__name {
+  margin-top: 12px;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+.category-card__count {
+  margin-top: 2px;
+  color: var(--color-muted);
+  font-size: .9rem;
+}
+.hot-deals-container {
+  position: relative;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 32px 16px 0;
+}
+.hot-deals-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 88px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.hot-deals-title {
+  font-size: 2.2rem;
+  line-height: 1;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.hot-deals-badge {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+.hot-deals-tabs {
+  display: block;
+}
+.hot-deals-toolbar {
+  display: block;
+  border-bottom: 1px solid var(--color-border);
+}
+.tab-buttons {
+  display: flex;
+  gap: 28px;
+}
+.tab-btn {
+  position: relative;
+  padding: 18px 18px 14px;
+  border: 0;
+  background: transparent;
+  color: var(--color-muted);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.tab-btn--active,
+.tab-btn:hover {
+  color: var(--color-text);
+}
+.tab-btn--active::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  background: var(--color-primary);
+}
+.tab-content {
+  padding: 32px 0;
+}
+.hot-product-grid {
+  gap: 24px;
+}
+.recommendation-grid,
+.collection-grid {
+  gap: 24px;
+}
+.view-all-link {
+  display: block;
+  width: fit-content;
+  margin: 28px auto 0;
+  padding: 8px 18px;
+  border: 1px solid var(--color-text);
+  border-radius: 4px;
+  font-size: .9rem;
+}
+.view-all-link span {
+  margin-left: 6px;
+  font-size: 1.1rem;
+}
+.collection-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 22px;
+}
+.collection-tab {
+  padding: 0 0 6px;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  color: var(--color-muted);
+  font-size: .9rem;
+}
+.collection-tab--active {
+  border-color: var(--color-text);
+  color: var(--color-text);
+}
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.review-card {
+  min-height: 150px;
+  padding: 20px;
+  background: var(--color-bg-soft);
+  border-radius: 4px;
+}
+.review-stars {
+  margin: 12px 0 8px;
+  color: #f4b400;
+  letter-spacing: 2px;
+}
+.review-card p {
+  color: var(--color-muted);
+  font-size: .9rem;
+}
+.home-cta__link {
+  display: block;
+}
+.home-cta__link img {
+  width: 100%;
+  border-radius: 4px;
+}
+.discord-section {
+  background: #f3f5ff;
+}
+.discord-section__inner {
+  text-align: center;
+}
+.discord-section__eyebrow {
+  margin-bottom: 8px;
+  color: #5865f2;
+  font-size: .85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.discord-section__text {
+  color: var(--color-muted);
+}
+.discord-gallery {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+  margin: 24px 0;
+}
+.discord-gallery img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+.discord-section__button {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 10px 20px;
+  border-radius: 4px;
+  background: #5865f2;
+  color: #fff;
+  font-weight: 600;
+}
+.discord-section__button:hover {
+  background: #4752c4;
+}
+.countdown-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-left: auto;
+  padding: 8px 0;
+  position: absolute;
+  top: 40px;
+  right: 16px;
+}
+
+.countdown-label {
+  color: #1890ff;
+  font-size: 14px;
+}
+
+.timer {
+  display: flex;
+  gap: 8px;
+}
+
+.time-box {
+  background-color: #000;
+  color: #fff;
+  width: 42px;
+  height: 48px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.time-box span {
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.time-box small {
+  font-size: 10px;
+  color: #ccc;
+  margin-top: 2px;
+}
