@@ -1,34 +1,920 @@
 [
   {
     "id": 1,
-    "name": "Áo phông Gaming Đen",
-    "price": 250000,
-    "salePrice": 199000,
-    "category": "xuan-he",
+    "name": "Áo phông Gaming Logo Classic",
+    "category": "ao-xuan-he",
+    "categoryName": "Đồ xuân hè",
+    "price": 199000,
+    "salePrice": 159000,
     "images": [
-      "assets/images/products/ao-01.jpg",
-      "assets/images/products/ao-01-b.jpg"
+      "sp01-1.jpg",
+      "sp01-2.jpg",
+      "sp01-3.jpg"
     ],
-    "sizes": ["S", "M", "L", "XL"],
-    "colors": ["Đen"],
-    "description": "Áo phông cotton in hình gaming, form rộng thoải mái.",
-    "tag": "Trending",
-    "createdAt": "2026-09-01"
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "den",
+      "trang",
+      "xam"
+    ],
+    "tag": "trending",
+    "hot": true,
+    "inStock": true,
+    "createdAt": "2026-08-20",
+    "description": "Áo phông cotton 100% in logo gaming, form regular, thấm hút mồ hôi tốt."
   },
   {
     "id": 2,
-    "name": "Cốc giữ nhiệt Gaming 500ml",
-    "price": 180000,
+    "name": "Áo phông Oversize Graphic Pixel",
+    "category": "ao-xuan-he",
+    "categoryName": "Đồ xuân hè",
+    "price": 249000,
     "salePrice": null,
-    "category": "coc-binh",
     "images": [
-      "assets/images/products/coc-01.jpg",
-      "assets/images/products/coc-01-b.jpg"
+      "sp02-1.jpg",
+      "sp02-2.jpg",
+      "sp02-3.jpg"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "den",
+      "be"
+    ],
+    "tag": null,
+    "hot": true,
+    "inStock": true,
+    "createdAt": "2026-08-12",
+    "description": "Form oversize, in hình pixel art phong cách retro game."
+  },
+  {
+    "id": 3,
+    "name": "Áo phông Basic Cotton Trơn",
+    "category": "ao-xuan-he",
+    "categoryName": "Đồ xuân hè",
+    "price": 149000,
+    "salePrice": 119000,
+    "images": [
+      "sp03-1.jpg",
+      "sp03-2.jpg",
+      "sp03-3.jpg"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "den",
+      "trang",
+      "xanh-navy"
+    ],
+    "tag": "sale",
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-07-30",
+    "description": "Áo trơn dễ phối đồ, vải cotton mềm mịn, co giãn nhẹ."
+  },
+  {
+    "id": 4,
+    "name": "Áo phông Unisex Mèo Game Thủ",
+    "category": "ao-xuan-he",
+    "categoryName": "Đồ xuân hè",
+    "price": 219000,
+    "salePrice": null,
+    "images": [
+      "sp04-1.jpg",
+      "sp04-2.jpg",
+      "sp04-3.jpg"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "trang",
+      "hong"
+    ],
+    "tag": "new",
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-09-10",
+    "description": "Họa tiết mèo cầm tay cầm đáng yêu, phù hợp cả nam và nữ."
+  },
+  {
+    "id": 5,
+    "name": "Áo ba lỗ Tanktop Thể Thao",
+    "category": "ao-xuan-he",
+    "categoryName": "Đồ xuân hè",
+    "price": 129000,
+    "salePrice": null,
+    "images": [
+      "sp05-1.jpg",
+      "sp05-2.jpg",
+      "sp05-3.jpg"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "den",
+      "xam"
+    ],
+    "tag": null,
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-07-15",
+    "description": "Áo ba lỗ thoáng mát, phù hợp tập gym và mặc ở nhà."
+  },
+  {
+    "id": 6,
+    "name": "Áo ba lỗ Gym Fit Dry",
+    "category": "ao-xuan-he",
+    "categoryName": "Đồ xuân hè",
+    "price": 159000,
+    "salePrice": 129000,
+    "images": [
+      "sp06-1.jpg",
+      "sp06-2.jpg",
+      "sp06-3.jpg"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "den",
+      "xanh-navy"
+    ],
+    "tag": "sale",
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-07-22",
+    "description": "Vải khô nhanh, ôm vừa vặn, thoải mái khi vận động."
+  },
+  {
+    "id": 7,
+    "name": "Quần đùi Thể Thao Gaming",
+    "category": "ao-xuan-he",
+    "categoryName": "Đồ xuân hè",
+    "price": 179000,
+    "salePrice": null,
+    "images": [
+      "sp07-1.jpg",
+      "sp07-2.jpg",
+      "sp07-3.jpg"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "den",
+      "xam",
+      "xanh-navy"
+    ],
+    "tag": null,
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-08-01",
+    "description": "Quần đùi lưng thun, có túi hai bên, in logo nhỏ ở ống quần."
+  },
+  {
+    "id": 8,
+    "name": "Quần short Kaki Streetwear",
+    "category": "ao-xuan-he",
+    "categoryName": "Đồ xuân hè",
+    "price": 229000,
+    "salePrice": null,
+    "images": [
+      "sp08-1.jpg",
+      "sp08-2.jpg",
+      "sp08-3.jpg"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "be",
+      "den"
+    ],
+    "tag": null,
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-08-18",
+    "description": "Chất kaki dày dặn, form suông, phong cách đường phố."
+  },
+  {
+    "id": 9,
+    "name": "Áo polo Esports Team",
+    "category": "ao-xuan-he",
+    "categoryName": "Đồ xuân hè",
+    "price": 289000,
+    "salePrice": null,
+    "images": [
+      "sp09-1.jpg",
+      "sp09-2.jpg",
+      "sp09-3.jpg"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "den",
+      "do"
+    ],
+    "tag": "new",
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-09-05",
+    "description": "Áo polo thêu logo đội tuyển, cổ bẻ lịch sự, vải pique thoáng."
+  },
+  {
+    "id": 10,
+    "name": "Áo phông Limited Summer 2026",
+    "category": "ao-xuan-he",
+    "categoryName": "Đồ xuân hè",
+    "price": 329000,
+    "salePrice": null,
+    "images": [
+      "sp10-1.jpg",
+      "sp10-2.jpg",
+      "sp10-3.jpg"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "trang",
+      "vang"
+    ],
+    "tag": "trending",
+    "hot": true,
+    "inStock": true,
+    "createdAt": "2026-09-01",
+    "description": "Phiên bản giới hạn mùa hè 2026, số lượng có hạn."
+  },
+  {
+    "id": 11,
+    "name": "Áo nỉ Hoodie Gaming Logo",
+    "category": "do-thu-dong",
+    "categoryName": "Đồ thu đông",
+    "price": 450000,
+    "salePrice": 399000,
+    "images": [
+      "sp11-1.jpg",
+      "sp11-2.jpg",
+      "sp11-3.jpg"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "den",
+      "xam",
+      "xanh-navy"
+    ],
+    "tag": "trending",
+    "hot": true,
+    "inStock": true,
+    "createdAt": "2026-09-12",
+    "description": "Hoodie nỉ bông dày, mũ hai lớp, in logo thêu nổi ở ngực."
+  },
+  {
+    "id": 12,
+    "name": "Áo nỉ Sweater Cổ Tròn",
+    "category": "do-thu-dong",
+    "categoryName": "Đồ thu đông",
+    "price": 359000,
+    "salePrice": null,
+    "images": [
+      "sp12-1.jpg",
+      "sp12-2.jpg",
+      "sp12-3.jpg"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "xam",
+      "be",
+      "den"
+    ],
+    "tag": null,
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-09-03",
+    "description": "Sweater cổ tròn, bo gấu chắc chắn, giữ ấm tốt."
+  },
+  {
+    "id": 13,
+    "name": "Áo khoác Bomber Esports",
+    "category": "do-thu-dong",
+    "categoryName": "Đồ thu đông",
+    "price": 530000,
+    "salePrice": null,
+    "images": [
+      "sp13-1.jpg",
+      "sp13-2.jpg",
+      "sp13-3.jpg"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "den",
+      "xanh-reu"
+    ],
+    "tag": "new",
+    "hot": true,
+    "inStock": true,
+    "createdAt": "2026-09-15",
+    "description": "Áo khoác bomber lót mỏng, thêu logo tay áo, khóa kéo bền."
+  },
+  {
+    "id": 14,
+    "name": "Áo khoác gió Windbreaker",
+    "category": "do-thu-dong",
+    "categoryName": "Đồ thu đông",
+    "price": 420000,
+    "salePrice": null,
+    "images": [
+      "sp14-1.jpg",
+      "sp14-2.jpg",
+      "sp14-3.jpg"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "den",
+      "xanh-navy"
+    ],
+    "tag": null,
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-08-25",
+    "description": "Chống gió, chống nước nhẹ, có mũ gập gọn."
+  },
+  {
+    "id": 15,
+    "name": "Quần nỉ Jogger",
+    "category": "do-thu-dong",
+    "categoryName": "Đồ thu đông",
+    "price": 299000,
+    "salePrice": null,
+    "images": [
+      "sp15-1.jpg",
+      "sp15-2.jpg",
+      "sp15-3.jpg"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "den",
+      "xam"
+    ],
+    "tag": null,
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-08-28",
+    "description": "Quần jogger nỉ mềm, bo ống, lưng thun có dây rút."
+  },
+  {
+    "id": 16,
+    "name": "Áo Hoodie Zip Kéo Khóa",
+    "category": "do-thu-dong",
+    "categoryName": "Đồ thu đông",
+    "price": 479000,
+    "salePrice": 429000,
+    "images": [
+      "sp16-1.jpg",
+      "sp16-2.jpg",
+      "sp16-3.jpg"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "den",
+      "xam"
+    ],
+    "tag": "sale",
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-08-15",
+    "description": "Hoodie khóa kéo tiện mặc, hai túi trước, nỉ bông ấm."
+  },
+  {
+    "id": 17,
+    "name": "Áo len Cổ Cao Basic",
+    "category": "do-thu-dong",
+    "categoryName": "Đồ thu đông",
+    "price": 339000,
+    "salePrice": null,
+    "images": [
+      "sp17-1.jpg",
+      "sp17-2.jpg",
+      "sp17-3.jpg"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "be",
+      "den"
+    ],
+    "tag": null,
+    "hot": false,
+    "inStock": false,
+    "createdAt": "2026-07-20",
+    "description": "Áo len cổ cao giữ ấm, mềm, không gây ngứa."
+  },
+  {
+    "id": 18,
+    "name": "Cốc sứ In Logo",
+    "category": "coc-binh",
+    "categoryName": "Cốc bình",
+    "price": 99000,
+    "salePrice": null,
+    "images": [
+      "sp18-1.jpg",
+      "sp18-2.jpg",
+      "sp18-3.jpg"
     ],
     "sizes": [],
-    "colors": ["Trắng", "Đỏ"],
-    "description": "Cốc inox giữ nhiệt 500ml, nắp kín chống đổ.",
-    "tag": "",
-    "createdAt": "2026-09-10"
+    "colors": [
+      "trang",
+      "den"
+    ],
+    "tag": null,
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-07-10",
+    "description": "Cốc sứ dung tích 350ml, in logo bền màu, dùng được trong lò vi sóng."
+  },
+  {
+    "id": 19,
+    "name": "Bình giữ nhiệt 500ml",
+    "category": "coc-binh",
+    "categoryName": "Cốc bình",
+    "price": 249000,
+    "salePrice": 219000,
+    "images": [
+      "sp19-1.jpg",
+      "sp19-2.jpg",
+      "sp19-3.jpg"
+    ],
+    "sizes": [],
+    "colors": [
+      "den",
+      "trang",
+      "xanh-navy"
+    ],
+    "tag": "sale",
+    "hot": true,
+    "inStock": true,
+    "createdAt": "2026-08-08",
+    "description": "Inox 304 hai lớp, giữ nóng 8 giờ, giữ lạnh 12 giờ."
+  },
+  {
+    "id": 20,
+    "name": "Ly thủy tinh hai lớp 300ml",
+    "category": "coc-binh",
+    "categoryName": "Cốc bình",
+    "price": 179000,
+    "salePrice": null,
+    "images": [
+      "sp20-1.jpg",
+      "sp20-2.jpg",
+      "sp20-3.jpg"
+    ],
+    "sizes": [],
+    "colors": [
+      "trong"
+    ],
+    "tag": null,
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-07-25",
+    "description": "Thủy tinh borosilicate hai lớp, không bỏng tay, trong suốt."
+  },
+  {
+    "id": 21,
+    "name": "Bình nước thể thao 750ml",
+    "category": "coc-binh",
+    "categoryName": "Cốc bình",
+    "price": 159000,
+    "salePrice": null,
+    "images": [
+      "sp21-1.jpg",
+      "sp21-2.jpg",
+      "sp21-3.jpg"
+    ],
+    "sizes": [],
+    "colors": [
+      "den",
+      "xanh-la"
+    ],
+    "tag": null,
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-08-05",
+    "description": "Nhựa Tritan an toàn, nắp bật, có vạch chia dung tích."
+  },
+  {
+    "id": 22,
+    "name": "Cốc đổi màu theo nhiệt độ",
+    "category": "coc-binh",
+    "categoryName": "Cốc bình",
+    "price": 189000,
+    "salePrice": null,
+    "images": [
+      "sp22-1.jpg",
+      "sp22-2.jpg",
+      "sp22-3.jpg"
+    ],
+    "sizes": [],
+    "colors": [
+      "den"
+    ],
+    "tag": "new",
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-09-08",
+    "description": "Rót nước nóng, hình in hiện ra. Dung tích 400ml, có nắp đậy."
+  },
+  {
+    "id": 23,
+    "name": "Mô hình ghép Bàn phím cơ mini",
+    "category": "lego",
+    "categoryName": "Lego",
+    "price": 349000,
+    "salePrice": null,
+    "images": [
+      "sp23-1.jpg",
+      "sp23-2.jpg",
+      "sp23-3.jpg"
+    ],
+    "sizes": [],
+    "colors": [],
+    "tag": "trending",
+    "hot": true,
+    "inStock": true,
+    "createdAt": "2026-08-22",
+    "description": "Bộ ghép 580 mảnh, hoàn thiện thành bàn phím cơ để bàn."
+  },
+  {
+    "id": 24,
+    "name": "Mô hình ghép Tay cầm game",
+    "category": "lego",
+    "categoryName": "Lego",
+    "price": 299000,
+    "salePrice": null,
+    "images": [
+      "sp24-1.jpg",
+      "sp24-2.jpg",
+      "sp24-3.jpg"
+    ],
+    "sizes": [],
+    "colors": [],
+    "tag": null,
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-08-02",
+    "description": "Bộ ghép 420 mảnh, mô phỏng tay cầm chơi game kích thước thật."
+  },
+  {
+    "id": 25,
+    "name": "Mô hình ghép Robot chiến binh",
+    "category": "lego",
+    "categoryName": "Lego",
+    "price": 459000,
+    "salePrice": null,
+    "images": [
+      "sp25-1.jpg",
+      "sp25-2.jpg",
+      "sp25-3.jpg"
+    ],
+    "sizes": [],
+    "colors": [],
+    "tag": "new",
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-09-14",
+    "description": "Bộ ghép 860 mảnh, khớp xoay được, có thể tạo nhiều tư thế."
+  },
+  {
+    "id": 26,
+    "name": "Mô hình ghép Xe đua F1",
+    "category": "lego",
+    "categoryName": "Lego",
+    "price": 399000,
+    "salePrice": null,
+    "images": [
+      "sp26-1.jpg",
+      "sp26-2.jpg",
+      "sp26-3.jpg"
+    ],
+    "sizes": [],
+    "colors": [],
+    "tag": null,
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-07-28",
+    "description": "Bộ ghép 640 mảnh, bánh xe lăn mượt, chi tiết sắc nét."
+  },
+  {
+    "id": 27,
+    "name": "Dép quai ngang Gaming",
+    "category": "giay-dep",
+    "categoryName": "Giày dép",
+    "price": 149000,
+    "salePrice": null,
+    "images": [
+      "sp27-1.jpg",
+      "sp27-2.jpg",
+      "sp27-3.jpg"
+    ],
+    "sizes": [
+      "39",
+      "40",
+      "41",
+      "42",
+      "43"
+    ],
+    "colors": [
+      "den",
+      "trang"
+    ],
+    "tag": null,
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-07-18",
+    "description": "Đế EVA siêu nhẹ, chống trơn, in logo nổi trên quai."
+  },
+  {
+    "id": 28,
+    "name": "Giày Sneaker Street Low",
+    "category": "giay-dep",
+    "categoryName": "Giày dép",
+    "price": 499000,
+    "salePrice": 449000,
+    "images": [
+      "sp28-1.jpg",
+      "sp28-2.jpg",
+      "sp28-3.jpg"
+    ],
+    "sizes": [
+      "38",
+      "39",
+      "40",
+      "41",
+      "42",
+      "43"
+    ],
+    "colors": [
+      "trang",
+      "den"
+    ],
+    "tag": "trending",
+    "hot": true,
+    "inStock": true,
+    "createdAt": "2026-09-02",
+    "description": "Sneaker cổ thấp, đế cao su êm, phối được nhiều phong cách."
+  },
+  {
+    "id": 29,
+    "name": "Dép sục Gaming Slide",
+    "category": "giay-dep",
+    "categoryName": "Giày dép",
+    "price": 189000,
+    "salePrice": null,
+    "images": [
+      "sp29-1.jpg",
+      "sp29-2.jpg",
+      "sp29-3.jpg"
+    ],
+    "sizes": [
+      "39",
+      "40",
+      "41",
+      "42",
+      "43"
+    ],
+    "colors": [
+      "den",
+      "xam"
+    ],
+    "tag": null,
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-08-10",
+    "description": "Dép sục mềm nhẹ, đế dày êm chân, phù hợp đi trong nhà."
+  },
+  {
+    "id": 30,
+    "name": "Pad chuột cỡ lớn 80x30",
+    "category": "do-luu-niem",
+    "categoryName": "Đồ lưu niệm",
+    "price": 199000,
+    "salePrice": null,
+    "images": [
+      "sp30-1.jpg",
+      "sp30-2.jpg",
+      "sp30-3.jpg"
+    ],
+    "sizes": [],
+    "colors": [
+      "den"
+    ],
+    "tag": null,
+    "hot": true,
+    "inStock": true,
+    "createdAt": "2026-08-14",
+    "description": "Bàn di chuột 800x300mm, mặt vải mịn, đế cao su chống trượt."
+  },
+  {
+    "id": 31,
+    "name": "Pad chuột mini 25x21",
+    "category": "do-luu-niem",
+    "categoryName": "Đồ lưu niệm",
+    "price": 99000,
+    "salePrice": null,
+    "images": [
+      "sp31-1.jpg",
+      "sp31-2.jpg",
+      "sp31-3.jpg"
+    ],
+    "sizes": [],
+    "colors": [
+      "den",
+      "hong"
+    ],
+    "tag": null,
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-07-12",
+    "description": "Kích thước nhỏ gọn 250x210mm, in hình sắc nét, dễ mang theo."
+  },
+  {
+    "id": 32,
+    "name": "Móc khóa Mica Nhân vật",
+    "category": "do-luu-niem",
+    "categoryName": "Đồ lưu niệm",
+    "price": 99000,
+    "salePrice": null,
+    "images": [
+      "sp32-1.jpg",
+      "sp32-2.jpg",
+      "sp32-3.jpg"
+    ],
+    "sizes": [],
+    "colors": [],
+    "tag": "new",
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-09-09",
+    "description": "Móc khóa mica trong hai mặt in hình, kèm dây đeo."
+  },
+  {
+    "id": 33,
+    "name": "Bộ Sticker Gaming 50 miếng",
+    "category": "do-luu-niem",
+    "categoryName": "Đồ lưu niệm",
+    "price": 109000,
+    "salePrice": null,
+    "images": [
+      "sp33-1.jpg",
+      "sp33-2.jpg",
+      "sp33-3.jpg"
+    ],
+    "sizes": [],
+    "colors": [],
+    "tag": null,
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-07-08",
+    "description": "50 sticker chống nước, dán laptop, bình nước, mũ bảo hiểm."
+  },
+  {
+    "id": 34,
+    "name": "Túi Tote Vải Canvas",
+    "category": "do-luu-niem",
+    "categoryName": "Đồ lưu niệm",
+    "price": 139000,
+    "salePrice": null,
+    "images": [
+      "sp34-1.jpg",
+      "sp34-2.jpg",
+      "sp34-3.jpg"
+    ],
+    "sizes": [],
+    "colors": [
+      "be",
+      "den"
+    ],
+    "tag": null,
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-08-19",
+    "description": "Túi vải canvas dày, có khóa miệng túi, in hình lớn một mặt."
+  },
+  {
+    "id": 35,
+    "name": "Combo Áo phông + Cốc sứ",
+    "category": "combo",
+    "categoryName": "Combo quà tặng",
+    "price": 299000,
+    "salePrice": 259000,
+    "images": [
+      "sp35-1.jpg",
+      "sp35-2.jpg",
+      "sp35-3.jpg"
+    ],
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "den",
+      "trang"
+    ],
+    "tag": "sale",
+    "hot": false,
+    "inStock": true,
+    "createdAt": "2026-09-06",
+    "description": "Gồm 1 áo phông Gaming Logo và 1 cốc sứ in logo, đóng gói hộp quà."
+  },
+  {
+    "id": 36,
+    "name": "Combo Quà tặng Gamer",
+    "category": "combo",
+    "categoryName": "Combo quà tặng",
+    "price": 279000,
+    "salePrice": 239000,
+    "images": [
+      "sp36-1.jpg",
+      "sp36-2.jpg",
+      "sp36-3.jpg"
+    ],
+    "sizes": [],
+    "colors": [],
+    "tag": "trending",
+    "hot": true,
+    "inStock": true,
+    "createdAt": "2026-09-11",
+    "description": "Gồm pad chuột mini, móc khóa mica và bộ sticker, hộp quà đẹp."
   }
 ]
