@@ -61,12 +61,22 @@ function renderHeader() {
         </nav>
         <form class="header__search" id="search-form" role="search">
           <input id="search-input" type="search" placeholder="Tìm sản phẩm..." autocomplete="off">
-          <button id="search-btn" type="submit" aria-label="Tìm kiếm">🔍</button>
+          <button id="search-btn" type="submit" aria-label="Tìm kiếm">
+            <svg class="header__icon-svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3"></circle><path d="m16 16 4.5 4.5"></path></svg>
+          </button>
         </form>
         <div class="header__actions">
-          <a href="${page("tai-khoan")}" id="user-link" title="Tài khoản">👤</a>
-          <a href="${page("yeu-thich")}" class="header__icon" title="Yêu thích">♡<span class="badge" id="wishlist-badge">0</span></a>
-          <a href="${page("gio-hang")}" class="header__icon" title="Giỏ hàng">🛒<span class="badge" id="cart-badge">0</span></a>
+          <a href="${page("tai-khoan")}" id="user-link" class="header__icon" title="Tài khoản" aria-label="Tài khoản">
+            <svg class="header__icon-svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M4.5 20c.8-3.3 3.2-5 7.5-5s6.7 1.7 7.5 5"></path></svg>
+          </a>
+          <a href="${page("yeu-thich")}" class="header__icon" title="Yêu thích" aria-label="Yêu thích">
+            <svg class="header__icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 8.7c0 5.2-8.8 10.1-8.8 10.1S3.2 13.9 3.2 8.7A4.3 4.3 0 0 1 12 6.2a4.3 4.3 0 0 1 8.8 2.5Z"></path></svg>
+            <span class="badge" id="wishlist-badge">0</span>
+          </a>
+          <a href="${page("gio-hang")}" class="header__icon" title="Giỏ hàng" aria-label="Giỏ hàng">
+            <svg class="header__icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 1.9-1.5L20.5 8H6"></path><circle cx="9" cy="20" r="1"></circle><circle cx="17" cy="20" r="1"></circle></svg>
+            <span class="badge" id="cart-badge">0</span>
+          </a>
         </div>
       </div>
     </header>`;
