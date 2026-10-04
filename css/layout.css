@@ -1,0 +1,92 @@
+/* layout.css – Header, footer, nút nổi (Người phụ trách: Nguyên). Viết mobile-first. */
+
+/* ===== Thanh thông báo ===== */
+.topbar {
+  position: relative;
+  background: var(--color-text);
+  color: #fff;
+  font-size: .8rem;
+  text-align: center;
+  padding: 6px 32px;
+}
+.topbar__close {
+  position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+  background: none; border: 0; color: #fff; font-size: 1.1rem;
+}
+
+/* ===== Header ===== */
+.header {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+.header__inner {
+  display: flex; align-items: center; gap: 12px;
+  min-height: 60px; position: relative;
+}
+.header__menu-btn { background: none; border: 0; font-size: 1.5rem; }
+.header__logo { font-weight: 700; font-size: 1.25rem; color: var(--color-primary); margin-right: auto; }
+.header__logo { display: flex; align-items: center; gap: 8px; }
+.header__logo img { height: 90px; width: auto; }
+.header__actions { display: flex; align-items: center; gap: 14px; font-size: 1.25rem; }
+.header__icon { position: relative; }
+
+.badge {
+  position: absolute; top: -8px; right: -10px;
+  min-width: 18px; height: 18px; padding: 0 4px;
+  background: var(--color-primary); color: #fff;
+  border-radius: 9px; font-size: .7rem; line-height: 18px; text-align: center;
+}
+
+.header__search { display: none; }
+.header__search input {
+  border: 1px solid var(--color-border); border-radius: 20px 0 0 20px;
+  padding: 7px 14px; width: 200px; outline: none;
+}
+.header__search button {
+  border: 1px solid var(--color-border); border-left: 0;
+  border-radius: 0 20px 20px 0; background: var(--color-bg-soft); padding: 7px 12px;
+}
+
+/* ===== Menu (điện thoại: xổ xuống dưới header) ===== */
+.nav {
+  display: none;
+  position: absolute; top: 100%; left: 0; right: 0;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  padding: 8px 16px;
+}
+.nav--open { display: block; }
+.nav__list a { display: block; padding: 10px 0; font-weight: 500; }
+.nav__dropdown { padding-left: 14px; }
+.nav__dropdown a { font-weight: 400; color: var(--color-muted); }
+
+/* ===== Footer ===== */
+.footer { background: var(--color-text); color: #ddd; margin-top: 40px; font-size: .9rem; }
+.footer__grid { display: grid; grid-template-columns: 1fr; gap: 24px; padding: 32px 16px; }
+.footer__title { color: #fff; font-size: 1rem; }
+.footer li { margin-bottom: 6px; }
+.footer a:hover { color: #fff; text-decoration: underline; }
+.footer__newsletter { display: flex; gap: 6px; }
+.footer__newsletter input { flex: 1; min-width: 0; padding: 8px 10px; border: 0; border-radius: var(--radius); }
+.footer__bottom { text-align: center; padding: 14px; border-top: 1px solid #444; font-size: .8rem; }
+.footer__brand {
+  display: flex; align-items: center; gap: 10px;
+  color: #fff; font-weight: 700; font-size: 1.15rem;
+  margin-bottom: 10px;
+}
+.footer__brand img { height: 36px; width: auto; }
+
+/* ===== Nút nổi ===== */
+.floating {
+  position: fixed; right: 14px; bottom: 14px; z-index: 90;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.floating__btn {
+  width: 44px; height: 44px; border-radius: 50%; border: 0;
+  background: var(--color-primary); color: #fff; font-size: 1.2rem;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .25);
+}
+.floating__top { display: none; background: var(--color-text); }
+.floating__top--show { display: flex; }

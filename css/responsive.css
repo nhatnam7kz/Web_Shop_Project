@@ -1,0 +1,30 @@
+/* responsive.css – Media query dùng chung (mobile-first). Breakpoint: 768px và 1024px.
+   Mỗi người tự lo responsive cho trang của mình trong file CSS riêng. */
+
+@media (min-width: 768px) {
+  .product-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .footer__grid { grid-template-columns: repeat(2, 1fr); }
+  .header__search { display: flex; }
+}
+
+@media (min-width: 1024px) {
+  .product-grid { grid-template-columns: repeat(4, 1fr); }
+  .footer__grid { grid-template-columns: 1.3fr 1fr 1fr 1.4fr; }
+
+  .header__menu-btn { display: none; }
+  .header__logo { margin-right: 0; }
+  .header__search { margin-left: auto; }
+
+  .nav { display: block; position: static; border: 0; padding: 0; margin-left: 24px; }
+  .nav__list { display: flex; gap: 22px; }
+  .nav__list a { padding: 18px 0; }
+  .nav__item--dropdown { position: relative; }
+  .nav__dropdown {
+    display: none; position: absolute; top: 100%; left: -12px; min-width: 190px; padding: 6px 0;
+    background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .1);
+  }
+  .nav__dropdown a { padding: 8px 16px; color: var(--color-text); }
+  .nav__dropdown a:hover { color: var(--color-primary); }
+  .nav__item--dropdown:hover .nav__dropdown { display: block; }
+}
