@@ -168,7 +168,7 @@ function setFavicon() {
     link.rel = "icon";
     document.head.appendChild(link);
   }
-  link.href = ROOT + "assets/images/favicon.ico";
+  link.href = ROOT + "assets/images/logo.png";
 }
 
 document.addEventListener("DOMContentLoaded", () => {
