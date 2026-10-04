@@ -1,3 +1,20 @@
+/**
+ * js/products.js - Đọc và hiển thị sản phẩm (Phụ trách: Kiệt)
+ * Quy ước: CONVENTIONS.md
+ *
+ * Hàm dùng chung cho cả nhóm:
+ *   loadProducts()            async, có cache, gọi nhiều lần chỉ tải 1 lần
+ *   getProductById(id)        async, tự đợi dữ liệu tải xong
+ *   getFinalPrice(product)    salePrice ?? price
+ *   formatPrice(number)       250000 -> "250.000₫"
+ *   getImageUrl(fileName)     ghép đường dẫn ảnh
+ *   renderProductCard(p)      trả về chuỗi HTML thẻ sản phẩm
+ */
+
+// ==========================================
+// 1. DỮ LIỆU TĨNH
+// ==========================================
+
 const COLOR_LABELS = {
   den: "Đen",
   trang: "Trắng",
@@ -12,6 +29,12 @@ const COLOR_LABELS = {
   "xanh-la": "Xanh lá",
 };
 
+const TAG_LABELS = {
+  trending: "Trending",
+  new: "Mới",
+  sale: "Giảm giá",
+};
+
 const PRICE_RANGES = [
   { id: "under-150", label: "Giá dưới 150.000₫", min: 0, max: 150000 },
   { id: "150-200", label: "150.000₫ - 200.000₫", min: 150000, max: 200000 },
@@ -20,27 +43,59 @@ const PRICE_RANGES = [
   { id: "over-350", label: "Giá trên 350.000₫", min: 350000, max: Infinity },
 ];
 
+// ==========================================
+// 2. ĐỌC DỮ LIỆU (API DÙNG CHUNG)
+// ==========================================
+
 let products = [];
+let productsPromise = null;
 
+/**
+ * Đọc products.json. Có cache: gọi nhiều lần (kể cả cùng lúc) chỉ tải 1 lần.
+ * @returns {Promise<Array>} mảng sản phẩm
+ */
 async function loadProducts() {
-  const response = await fetch(PRODUCTS_URL);
-  if (!response.ok) throw new Error("Không thể tải danh sách sản phẩm");
-  products = await response.json();
-  return products;
+  if (products.length) return products;
+
+  if (!productsPromise) {
+    productsPromise = fetch(PRODUCTS_URL)
+      .then((response) => {
+        if (!response.ok) throw new Error("Không thể tải danh sách sản phẩm");
+        return response.json();
+      })
+      .then((data) => {
+        products = data;
+        return products;
+      })
+      .catch((error) => {
+        productsPromise = null; // cho phép thử lại lần sau
+        throw error;
+      });
+  }
+  return productsPromise;
 }
 
-function getProductById(id) {
-  return products.find((product) => product.id === Number(id));
+/**
+ * Lấy 1 sản phẩm theo id. Tự đợi dữ liệu tải xong nên gọi lúc nào cũng an toàn.
+ * @param {number|string} id
+ * @returns {Promise<Object|undefined>}
+ */
+async function getProductById(id) {
+  const list = await loadProducts();
+  return list.find((product) => product.id === Number(id));
 }
 
+/** Giá bán thực tế = giá sale nếu có, không thì giá gốc */
 function getFinalPrice(product) {
-  return product.salePrice || product.price;
+  return product.salePrice ?? product.price;
 }
 
+/** 250000 -> "250.000₫" */
 function formatPrice(number) {
   return `${Number(number).toLocaleString("vi-VN")}₫`;
 }
 
+/** Ghép đường dẫn ảnh từ tên file */
 function getImageUrl(fileName) {
   return `${IMAGE_DIR}${fileName}`;
 }
@@ -48,6 +103,10 @@ function getImageUrl(fileName) {
 function colorLabel(slug) {
   return COLOR_LABELS[slug] || slug;
 }
+
+// ==========================================
+// 3. HÀM DỰ PHÒNG (khi cart.js / wishlist.js chưa có)
+// ==========================================
 
 function ensureShopFallbacks() {
   if (typeof window.getCart !== "function") {
@@ -66,13 +125,14 @@ function ensureShopFallbacks() {
       const match = cart.find(
         (item) =>
           Number(item.id) === Number(id) &&
-          (item.size || "") === (size || "") &&
-          (item.color || "") === (color || "")
+          (item.size || null) === (size || null) &&
+          (item.color || null) === (color || null)
       );
       if (match) match.qty = Number(match.qty || 0) + nextQty;
-      else cart.push({ id: Number(id), size: size || "", color: color || "", qty: nextQty });
+      else cart.push({ id: Number(id), size: size || null, color: color || null, qty: nextQty });
       localStorage.setItem(STORAGE_KEYS.cart, JSON.stringify(cart));
       if (typeof updateCartBadge === "function") updateCartBadge();
+      if (typeof showToast === "function") showToast("Đã thêm vào giỏ");
     };
   }
   if (typeof window.getCartCount !== "function") {
@@ -119,6 +179,11 @@ function ensureShopFallbacks() {
   }
 }
 
+// ==========================================
+// 4. THẺ SẢN PHẨM VÀ THẺ DANH MỤC
+// ==========================================
+
+/** Trả về chuỗi HTML của một thẻ sản phẩm */
 function renderProductCard(product) {
   const image = product.images && product.images[0]
     ? getImageUrl(product.images[0])
@@ -128,7 +193,7 @@ function renderProductCard(product) {
     ? `<del class="price-old">${formatPrice(product.price)}</del>`
     : "";
   const tag = product.tag
-    ? `<span class="product-card__tag">${product.tag}</span>`
+    ? `<span class="product-card__tag">${TAG_LABELS[product.tag] || product.tag}</span>`
     : "";
   const soldOutClass = product.inStock ? "" : " product-card--sold-out";
   const optionLabel = product.inStock ? "Tùy chọn" : "Hết hàng";
@@ -173,12 +238,16 @@ function renderCategoryCard(category) {
     </a>`;
 }
 
+// ==========================================
+// 5. TRANG CHỦ
+// ==========================================
+
 async function renderKingShopProducts() {
   const grid = document.querySelector(".do-hieu-king-shop .category-grid");
   if (!grid) return;
 
   try {
-    const allProducts = products.length ? products : await loadProducts();
+    const allProducts = await loadProducts();
     const categories = [];
     const categoryMap = new Map();
 
@@ -187,7 +256,7 @@ async function renderKingShopProducts() {
         const category = {
           name: product.categoryName,
           slug: product.category,
-          products: []
+          products: [],
         };
         categoryMap.set(product.categoryName, category);
         categories.push(category);
@@ -226,8 +295,14 @@ function renderHomeProductSections(allProducts) {
 }
 
 async function renderHotProductTabs() {
+  // Chỉ chạy khi trang có các vùng chứa này (tránh tải thừa ở trang khác)
+  const hasHomeGrids = document.querySelector(
+    ".recommendation-grid, .collection-grid, .new-product-grid, .winter-product-grid"
+  );
+  if (!hasHomeGrids) return;
+
   try {
-    const allProducts = products.length ? products : await loadProducts();
+    const allProducts = await loadProducts();
     renderHomeProductSections(allProducts);
     renderProductsByCategory(".new-product-grid", allProducts, "ao-xuan-he");
     renderProductsByCategory(".winter-product-grid", allProducts, "do-thu-dong");
@@ -255,6 +330,10 @@ function setupHotProductTabs() {
   });
 }
 
+// ==========================================
+// 6. FORM CHỌN SIZE / MÀU / SỐ LƯỢNG (dùng chung cho chi tiết và xem nhanh)
+// ==========================================
+
 function optionButtons(items, name, selected, labelFn) {
   if (!items || !items.length) return "";
   return items.map((item, index) => {
@@ -273,7 +352,7 @@ function qtyControl(id) {
   return `
     <div class="qty-box" data-qty-for="${id}">
       <button type="button" class="qty-box__btn" data-qty="-1" aria-label="Giảm">−</button>
-      <input class="qty-box__input" type="number" min="1" value="1">
+      <input class="qty-box__input" type="number" min="1" max="99" value="1">
       <button type="button" class="qty-box__btn" data-qty="1" aria-label="Tăng">+</button>
     </div>`;
 }
@@ -296,20 +375,24 @@ function selectedValue(root, name) {
 }
 
 function selectedQty(root) {
-  return Math.max(1, Number(root.querySelector(".qty-box__input")?.value) || 1);
+  const value = Number(root.querySelector(".qty-box__input")?.value) || 1;
+  return Math.min(99, Math.max(1, value));
 }
 
+/** Kiểm tra lựa chọn rồi thêm vào giỏ. goCheckout = true thì chuyển sang trang giỏ hàng */
 function handleAddToCart(product, root, goCheckout) {
   if (!product.inStock) {
     if (typeof showToast === "function") showToast("Sản phẩm đã hết hàng", "error");
     return;
   }
-  if (product.sizes?.length && !selectedValue(root, "size")) {
+  const size = selectedValue(root, "size");
+  if (product.sizes?.length && !size) {
     if (typeof showToast === "function") showToast("Vui lòng chọn kích thước", "error");
     return;
   }
-  addToCart(product.id, selectedValue(root, "size"), selectedValue(root, "color"), selectedQty(root));
-  if (typeof showToast === "function") showToast("Đã thêm vào giỏ");
+  // Quy ước: sản phẩm không có size/màu thì truyền null (không truyền chuỗi rỗng)
+  // Thông báo "Đã thêm vào giỏ" do addToCart (cart.js) tự hiện
+  addToCart(product.id, size || null, selectedValue(root, "color") || null, selectedQty(root));
   if (goCheckout) location.href = `${ROOT}pages/gio-hang.html`;
 }
 
@@ -340,17 +423,20 @@ function bindProductForm(root, product) {
     const qtyBtn = event.target.closest("[data-qty]");
     if (qtyBtn) {
       const input = root.querySelector(".qty-box__input");
-      input.value = Math.max(1, Number(input.value || 1) + Number(qtyBtn.dataset.qty));
+      input.value = Math.min(99, Math.max(1, Number(input.value || 1) + Number(qtyBtn.dataset.qty)));
     }
     if (event.target.closest(".js-add-cart")) handleAddToCart(product, root, false);
     if (event.target.closest(".js-buy-now")) handleAddToCart(product, root, true);
   });
 }
 
+// ==========================================
+// 7. POPUP XEM NHANH
+// ==========================================
+
 async function openQuickView(id) {
   ensureShopFallbacks();
-  if (!products.length) await loadProducts();
-  const product = getProductById(id);
+  const product = await getProductById(id);
   const box = document.getElementById("quick-view") || createQuickViewHost();
   if (!product) return;
 
@@ -395,6 +481,10 @@ function createQuickViewHost() {
   return box;
 }
 
+// ==========================================
+// 8. TRANG CHI TIẾT SẢN PHẨM
+// ==========================================
+
 function galleryHtml(product) {
   const images = (product.images || []).map(getImageUrl);
   if (!images.length) images.push(PLACEHOLDER_IMG);
@@ -415,14 +505,16 @@ async function initProductDetail() {
   const mount = document.getElementById("product-detail");
   if (!mount) return;
   ensureShopFallbacks();
+
+  let product;
   try {
-    if (!products.length) await loadProducts();
+    product = await getProductById(getQueryParam("id"));
   } catch (error) {
     mount.innerHTML = "<p>Không thể tải sản phẩm lúc này.</p>";
+    console.error(error);
     return;
   }
 
-  const product = getProductById(getQueryParam("id"));
   if (!product) {
     mount.innerHTML = `<p class="empty-state">Không tìm thấy sản phẩm. <a href="${ROOT}pages/san-pham.html">Quay lại cửa hàng</a></p>`;
     return;
@@ -485,6 +577,10 @@ async function initProductDetail() {
   if (relatedGrid) relatedGrid.innerHTML = related.map(renderProductCard).join("");
 }
 
+// ==========================================
+// 9. SỰ KIỆN CHUNG (event delegation)
+// ==========================================
+
 function bindProductEvents() {
   document.addEventListener("click", (event) => {
     const quick = event.target.closest("[data-quick]");
@@ -495,6 +591,9 @@ function bindProductEvents() {
     }
     if (event.target.closest("[data-close-quick]")) closeQuickView();
 
+    // Nút yêu thích: nếu wishlist.js (Vương) đã tự xử lý click thì bỏ qua để không bị bật/tắt 2 lần.
+    // Vương chỉ cần đặt window.WISHLIST_HANDLES_CLICKS = true ở đầu wishlist.js.
+    if (window.WISHLIST_HANDLES_CLICKS) return;
     const wish = event.target.closest(".btn-wishlist[data-id]");
     if (wish && typeof toggleWishlist === "function") {
       const active = toggleWishlist(wish.dataset.id);
