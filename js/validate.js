@@ -1,7 +1,3 @@
-/* validate.js – Kiểm tra dữ liệu form (Người phụ trách: Vương – LÀM SỚM vì Nam cũng dùng)
-   Cần viết (xem CONVENTIONS.md mục 7):
-   isValidEmail(value), isValidPhone(value), isNotEmpty(value),
-   showFieldError(inputEl, message), clearFieldError(inputEl) */
 /* validate.js – Vương
  * Kiểm tra dữ liệu nhập + xử lý form liên hệ + form đăng ký nhận tin.
  * Nạp ngay sau config.js (Nam, Vương đều dùng).
@@ -186,4 +182,30 @@ document.addEventListener("input", (event) => {
   if (event.target.classList && event.target.classList.contains("is-invalid")) {
     clearFieldError(event.target);
   }
+});
+
+// ---------- Nhảy đúng tới mục khi mở link dạng trang.html#id ----------
+
+/**
+ * Cuộn tới đúng mục khi mở link dạng trang.html#id hoặc trang.html?p=id
+ * (footer của Nguyên dùng ?p=). Mục tìm được sẽ được đánh dấu bằng class "is-linked".
+ * Header/footer do main.js đổ vào sau khi trang tải nên làm nội dung bị đẩy xuống,
+ * vì vậy cần cuộn lại đúng mục sau khi trang tải xong.
+ */
+function scrollToHashTarget() {
+  const id = decodeURIComponent(location.hash.slice(1)) || getQueryParam("p");
+  if (!id) return;
+  const target = document.getElementById(id);
+  if (!target) return;
+  document
+    .querySelectorAll(".is-linked")
+    .forEach((el) => el.classList.remove("is-linked"));
+  target.classList.add("is-linked");
+  target.scrollIntoView({ block: "start" });
+}
+
+window.addEventListener("load", () => {
+  scrollToHashTarget();
+  // Thử lại một lần nữa phòng khi ảnh/font làm thay đổi bố cục.
+  setTimeout(scrollToHashTarget, 300);
 });

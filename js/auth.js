@@ -1,7 +1,3 @@
-/* auth.js – Đăng ký, đăng nhập giả lập (Người phụ trách: Vương)
-   Cần viết (xem CONVENTIONS.md mục 7):
-   registerUser(...), loginUser(email, password), logoutUser(),
-   getCurrentUser(), requireLogin(), updateUser(email, data) */
 /* auth.js – Vương
  * Đăng ký / đăng nhập giả lập bằng localStorage + logic các trang dang-nhap, dang-ky, tai-khoan.
  * LƯU Ý: mật khẩu lưu dạng chữ thường chỉ vì đây là bài tập giả lập, thực tế không bao giờ làm vậy.
@@ -367,6 +363,12 @@ function initAccountPage() {
   });
 
   renderAccountOrders(user);
+
+  // Link dạng tai-khoan.html#orders (hoặc #password, #profile) mở thẳng tab tương ứng.
+  const initialTab = tabs.querySelector(
+    `[data-tab="${location.hash.slice(1)}"]`,
+  );
+  if (initialTab) initialTab.click();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
