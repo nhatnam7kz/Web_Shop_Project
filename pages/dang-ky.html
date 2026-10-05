@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Đăng ký | King Shop</title>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+    <link rel="stylesheet" href="../css/pages.css" />
+    <link rel="stylesheet" href="../css/account.css" />
+  </head>
+  <body>
+    <div id="site-header"></div>
+    <main>
+      <div class="page-container">
+        <div class="auth-card">
+          <nav class="auth-card__tabs" aria-label="Đăng nhập hoặc đăng ký">
+            <a class="auth-card__tab" href="dang-nhap.html">Đăng nhập</a>
+            <a
+              class="auth-card__tab auth-card__tab--active"
+              href="dang-ky.html"
+              aria-current="page"
+              >Đăng ký</a
+            >
+          </nav>
+          <form class="form-block" id="register-form" novalidate>
+            <div class="form-block__field">
+              <label class="form-block__label" for="register-fullname"
+                >Họ và tên</label
+              >
+              <input
+                class="form-block__input"
+                id="register-fullname"
+                name="register-fullname"
+                type="text"
+                autocomplete="name"
+              />
+            </div>
+            <div class="form-block__field">
+              <label class="form-block__label" for="register-email"
+                >Email</label
+              >
+              <input
+                class="form-block__input"
+                id="register-email"
+                name="register-email"
+                type="email"
+                autocomplete="email"
+              />
+            </div>
+            <div class="form-block__field">
+              <label class="form-block__label" for="register-password"
+                >Mật khẩu</label
+              >
+              <input
+                class="form-block__input"
+                id="register-password"
+                name="register-password"
+                type="password"
+                autocomplete="new-password"
+              />
+              <p class="form-block__hint">Ít nhất 6 ký tự.</p>
+            </div>
+            <div class="form-block__field">
+              <label class="form-block__label" for="register-confirm"
+                >Nhập lại mật khẩu</label
+              >
+              <input
+                class="form-block__input"
+                id="register-confirm"
+                name="register-confirm"
+                type="password"
+                autocomplete="new-password"
+              />
+            </div>
+            <p class="form-block__error" id="register-error" role="alert"></p>
+            <p class="form-block__hint">
+              Khi tạo tài khoản, bạn đồng ý với
+              <a href="chinh-sach.html#dieu-khoan">Điều khoản dịch vụ</a> và
+              <a href="chinh-sach.html#bao-mat">Chính sách bảo mật</a>.
+            </p>
+            <button class="btn btn--primary" type="submit">
+              Tạo tài khoản
+            </button>
+          </form>
+          <p class="auth-card__switch">
+            Đã có tài khoản? <a href="dang-nhap.html">Đăng nhập</a>
+          </p>
+        </div>
+      </div>
+    </main>
+    <div id="site-footer"></div>
+    <div id="toast-container"></div>
+    <!-- Thứ tự script: KHÔNG ĐỔI -->
+    <script src="../js/config.js"></script>
+    <script src="../js/validate.js"></script>
+    <script src="../js/products.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/wishlist.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>
