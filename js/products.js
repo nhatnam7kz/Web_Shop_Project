@@ -1,20 +1,3 @@
-/**
- * js/products.js - Đọc và hiển thị sản phẩm (Phụ trách: Kiệt)
- * Quy ước: CONVENTIONS.md
- *
- * Hàm dùng chung cho cả nhóm:
- *   loadProducts()            async, có cache, gọi nhiều lần chỉ tải 1 lần
- *   getProductById(id)        async, tự đợi dữ liệu tải xong
- *   getFinalPrice(product)    salePrice ?? price
- *   formatPrice(number)       250000 -> "250.000₫"
- *   getImageUrl(fileName)     ghép đường dẫn ảnh
- *   renderProductCard(p)      trả về chuỗi HTML thẻ sản phẩm
- */
-
-// ==========================================
-// 1. DỮ LIỆU TĨNH
-// ==========================================
-
 const COLOR_LABELS = {
   den: "Đen",
   trang: "Trắng",
@@ -43,259 +26,189 @@ const PRICE_RANGES = [
   { id: "over-350", label: "Giá trên 350.000₫", min: 350000, max: Infinity },
 ];
 
-// ==========================================
-// 2. ĐỌC DỮ LIỆU (API DÙNG CHUNG)
-// ==========================================
+const LOAD_ERROR_HTML = "<p>Không thể tải sản phẩm lúc này.</p>";
 
 let products = [];
 let productsPromise = null;
 
-/**
- * Đọc products.json. Có cache: gọi nhiều lần (kể cả cùng lúc) chỉ tải 1 lần.
- * @returns {Promise<Array>} mảng sản phẩm
- */
 async function loadProducts() {
   if (products.length) return products;
 
-  if (!productsPromise) {
-    productsPromise = fetch(PRODUCTS_URL)
-      .then((response) => {
-        if (!response.ok) throw new Error("Không thể tải danh sách sản phẩm");
-        return response.json();
-      })
-      .then((data) => {
-        products = data;
-        return products;
-      })
-      .catch((error) => {
-        productsPromise = null; // cho phép thử lại lần sau
-        throw error;
-      });
-  }
+  productsPromise ||= fetch(PRODUCTS_URL)
+    .then((response) => {
+      if (!response.ok) throw new Error("Không thể tải danh sách sản phẩm");
+      return response.json();
+    })
+    .then((data) => (products = data))
+    .catch((error) => {
+      productsPromise = null;
+      throw error;
+    });
+
   return productsPromise;
 }
 
-/**
- * Lấy 1 sản phẩm theo id. Tự đợi dữ liệu tải xong nên gọi lúc nào cũng an toàn.
- * @param {number|string} id
- * @returns {Promise<Object|undefined>}
- */
 async function getProductById(id) {
   const list = await loadProducts();
   return list.find((product) => product.id === Number(id));
 }
 
-/** Giá bán thực tế = giá sale nếu có, không thì giá gốc */
-function getFinalPrice(product) {
-  return product.salePrice ?? product.price;
+const getFinalPrice = (product) => product.salePrice ?? product.price;
+const formatPrice = (number) => `${Number(number).toLocaleString("vi-VN")}₫`;
+const getImageUrl = (fileName) => `${IMAGE_DIR}${fileName}`;
+const colorLabel = (slug) => COLOR_LABELS[slug] || slug;
+const detailUrl = (id) => `${ROOT}pages/chi-tiet.html?id=${id}`;
+const categoryUrl = (slug) => `${ROOT}pages/san-pham.html?category=${slug}`;
+const clamp = (value) => Math.min(99, Math.max(1, value));
+
+function notify(message, type) {
+  if (typeof showToast === "function") showToast(message, type);
 }
 
-/** 250000 -> "250.000₫" */
-function formatPrice(number) {
-  return `${Number(number).toLocaleString("vi-VN")}₫`;
+function readList(key) {
+  try {
+    return JSON.parse(localStorage.getItem(key) || "[]");
+  } catch (error) {
+    return [];
+  }
 }
 
-/** Ghép đường dẫn ảnh từ tên file */
-function getImageUrl(fileName) {
-  return `${IMAGE_DIR}${fileName}`;
+function setBadge(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = value;
 }
-
-function colorLabel(slug) {
-  return COLOR_LABELS[slug] || slug;
-}
-
-// ==========================================
-// 3. HÀM DỰ PHÒNG (khi cart.js / wishlist.js chưa có)
-// ==========================================
 
 function ensureShopFallbacks() {
-  if (typeof window.getCart !== "function") {
-    window.getCart = function () {
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEYS.cart) || "[]");
-      } catch (error) {
-        return [];
-      }
-    };
-  }
-  if (typeof window.addToCart !== "function") {
-    window.addToCart = function (id, size, color, qty) {
-      const cart = getCart();
-      const nextQty = Number(qty) || 1;
-      const match = cart.find(
-        (item) =>
-          Number(item.id) === Number(id) &&
-          (item.size || null) === (size || null) &&
-          (item.color || null) === (color || null)
-      );
-      if (match) match.qty = Number(match.qty || 0) + nextQty;
-      else cart.push({ id: Number(id), size: size || null, color: color || null, qty: nextQty });
-      localStorage.setItem(STORAGE_KEYS.cart, JSON.stringify(cart));
-      if (typeof updateCartBadge === "function") updateCartBadge();
-      if (typeof showToast === "function") showToast("Đã thêm vào giỏ");
-    };
-  }
-  if (typeof window.getCartCount !== "function") {
-    window.getCartCount = function () {
-      return getCart().reduce((sum, item) => sum + Number(item.qty || 0), 0);
-    };
-  }
-  if (typeof window.updateCartBadge !== "function") {
-    window.updateCartBadge = function () {
-      const el = document.getElementById("cart-badge");
-      if (el) el.textContent = getCartCount();
-    };
-  }
-  if (typeof window.getWishlist !== "function") {
-    window.getWishlist = function () {
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEYS.wishlist) || "[]");
-      } catch (error) {
-        return [];
-      }
-    };
-  }
-  if (typeof window.isInWishlist !== "function") {
-    window.isInWishlist = function (id) {
-      return getWishlist().some((item) => Number(item) === Number(id));
-    };
-  }
-  if (typeof window.toggleWishlist !== "function") {
-    window.toggleWishlist = function (id) {
-      const list = getWishlist().map(Number);
-      const index = list.indexOf(Number(id));
-      if (index >= 0) list.splice(index, 1);
-      else list.push(Number(id));
-      localStorage.setItem(STORAGE_KEYS.wishlist, JSON.stringify(list));
-      if (typeof updateWishlistBadge === "function") updateWishlistBadge();
-      return isInWishlist(id);
-    };
-  }
-  if (typeof window.updateWishlistBadge !== "function") {
-    window.updateWishlistBadge = function () {
-      const el = document.getElementById("wishlist-badge");
-      if (el) el.textContent = getWishlist().length;
-    };
-  }
+  window.getCart ||= () => readList(STORAGE_KEYS.cart);
+
+  window.addToCart ||= (id, size, color, qty) => {
+    const cart = getCart();
+    const nextQty = Number(qty) || 1;
+    const match = cart.find(
+      (item) =>
+        Number(item.id) === Number(id) &&
+        (item.size || null) === (size || null) &&
+        (item.color || null) === (color || null)
+    );
+    if (match) match.qty = Number(match.qty || 0) + nextQty;
+    else cart.push({ id: Number(id), size: size || null, color: color || null, qty: nextQty });
+    localStorage.setItem(STORAGE_KEYS.cart, JSON.stringify(cart));
+    if (typeof updateCartBadge === "function") updateCartBadge();
+    notify("Đã thêm vào giỏ");
+  };
+
+  window.getCartCount ||= () => getCart().reduce((sum, item) => sum + Number(item.qty || 0), 0);
+  window.updateCartBadge ||= () => setBadge("cart-badge", getCartCount());
+
+  window.getWishlist ||= () => readList(STORAGE_KEYS.wishlist);
+  window.isInWishlist ||= (id) => getWishlist().some((item) => Number(item) === Number(id));
+
+  window.toggleWishlist ||= (id) => {
+    const list = getWishlist().map(Number);
+    const index = list.indexOf(Number(id));
+    if (index >= 0) list.splice(index, 1);
+    else list.push(Number(id));
+    localStorage.setItem(STORAGE_KEYS.wishlist, JSON.stringify(list));
+    if (typeof updateWishlistBadge === "function") updateWishlistBadge();
+    return isInWishlist(id);
+  };
+
+  window.updateWishlistBadge ||= () => setBadge("wishlist-badge", getWishlist().length);
 }
 
-// ==========================================
-// 4. THẺ SẢN PHẨM VÀ THẺ DANH MỤC
-// ==========================================
-
-/** Trả về chuỗi HTML của một thẻ sản phẩm */
-function renderProductCard(product) {
-  const image = product.images && product.images[0]
-    ? getImageUrl(product.images[0])
-    : PLACEHOLDER_IMG;
-  const salePrice = getFinalPrice(product);
+function priceHtml(product) {
   const oldPrice = product.salePrice
     ? `<del class="price-old">${formatPrice(product.price)}</del>`
     : "";
+  return `<span class="price-sale">${formatPrice(getFinalPrice(product))}</span>${oldPrice}`;
+}
+
+function firstImageUrl(product) {
+  return product.images && product.images[0] ? getImageUrl(product.images[0]) : PLACEHOLDER_IMG;
+}
+
+function renderProductCard(product) {
   const tag = product.tag
     ? `<span class="product-card__tag">${TAG_LABELS[product.tag] || product.tag}</span>`
     : "";
   const soldOutClass = product.inStock ? "" : " product-card--sold-out";
   const optionLabel = product.inStock ? "Tùy chọn" : "Hết hàng";
   const wished = typeof isInWishlist === "function" && isInWishlist(product.id) ? " is-active" : "";
+  const url = detailUrl(product.id);
 
   return `
     <article class="product-card${soldOutClass}">
       <div class="product-card__media">
-        <a class="product-card__image" href="${ROOT}pages/chi-tiet.html?id=${product.id}">
-          <img src="${image}" alt="${product.name}" loading="lazy">
+        <a class="product-card__image" href="${url}">
+          <img src="${firstImageUrl(product)}" alt="${product.name}" loading="lazy">
           ${tag}
         </a>
         <button class="btn-wishlist product-card__wish${wished}" data-id="${product.id}" aria-label="Thêm vào yêu thích">♡</button>
         <div class="product-card__actions">
-          <a class="product-card__option" href="${ROOT}pages/chi-tiet.html?id=${product.id}">${optionLabel}</a>
+          <a class="product-card__option" href="${url}">${optionLabel}</a>
           <button type="button" class="product-card__quick" data-quick="${product.id}">Xem nhanh</button>
         </div>
       </div>
       <div class="product-card__body">
         <span class="product-card__vendor">${product.categoryName}</span>
-        <a class="product-card__title" href="${ROOT}pages/chi-tiet.html?id=${product.id}">${product.name}</a>
-        <div class="product-card__price">
-          <span class="price-sale">${formatPrice(salePrice)}</span>
-          ${oldPrice}
-        </div>
+        <a class="product-card__title" href="${url}">${product.name}</a>
+        <div class="product-card__price">${priceHtml(product)}</div>
       </div>
     </article>`;
 }
 
 function renderCategoryCard(category) {
-  const image = category.products[0].images && category.products[0].images[0]
-    ? getImageUrl(category.products[0].images[0])
-    : PLACEHOLDER_IMG;
-
   return `
-    <a class="category-card" href="${ROOT}pages/san-pham.html?category=${category.slug}">
+    <a class="category-card" href="${categoryUrl(category.slug)}">
       <div class="category-card__image">
-        <img src="${image}" alt="${category.name}" loading="lazy">
+        <img src="${firstImageUrl(category.products[0])}" alt="${category.name}" loading="lazy">
       </div>
       <span class="category-card__name">${category.name}</span>
       <span class="category-card__count">${category.products.length} sản phẩm</span>
     </a>`;
 }
 
-// ==========================================
-// 5. TRANG CHỦ
-// ==========================================
-
 async function renderKingShopProducts() {
   const grid = document.querySelector(".do-hieu-king-shop .category-grid");
   if (!grid) return;
 
   try {
-    const allProducts = await loadProducts();
-    const categories = [];
     const categoryMap = new Map();
-
-    allProducts.forEach((product) => {
+    (await loadProducts()).forEach((product) => {
       if (!categoryMap.has(product.categoryName)) {
-        const category = {
+        categoryMap.set(product.categoryName, {
           name: product.categoryName,
           slug: product.category,
           products: [],
-        };
-        categoryMap.set(product.categoryName, category);
-        categories.push(category);
+        });
       }
       categoryMap.get(product.categoryName).products.push(product);
     });
 
-    grid.innerHTML = categories.map(renderCategoryCard).join("");
+    grid.innerHTML = [...categoryMap.values()].map(renderCategoryCard).join("");
   } catch (error) {
-    grid.innerHTML = "<p>Không thể tải sản phẩm lúc này.</p>";
+    grid.innerHTML = LOAD_ERROR_HTML;
     console.error(error);
   }
 }
 
-function renderProductsByCategory(selector, allProducts, category) {
+function renderProductsByCategory(selector, allProducts, category, limit) {
   const grid = document.querySelector(selector);
   if (!grid) return;
 
-  const categoryProducts = Array.isArray(allProducts)
+  let list = Array.isArray(allProducts)
     ? allProducts.filter((product) => !category || product.category === category)
     : [];
-  grid.innerHTML = categoryProducts.map(renderProductCard).join("");
+  if (limit) list = list.slice(0, limit);
+  grid.innerHTML = list.map(renderProductCard).join("");
 }
 
 function renderHomeProductSections(allProducts) {
-  renderProductsByCategory(
-    ".recommendation-grid",
-    allProducts.filter((product) => product.category === "ao-xuan-he").slice(0, 3),
-    "ao-xuan-he"
-  );
-  renderProductsByCategory(
-    ".collection-grid",
-    allProducts.filter((product) => product.category === "lego").slice(0, 5),
-    "lego"
-  );
+  renderProductsByCategory(".recommendation-grid", allProducts, "ao-xuan-he", 3);
+  renderProductsByCategory(".collection-grid", allProducts, "lego", 5);
 }
 
 async function renderHotProductTabs() {
-  // Chỉ chạy khi trang có các vùng chứa này (tránh tải thừa ở trang khác)
   const hasHomeGrids = document.querySelector(
     ".recommendation-grid, .collection-grid, .new-product-grid, .winter-product-grid"
   );
@@ -308,7 +221,7 @@ async function renderHotProductTabs() {
     renderProductsByCategory(".winter-product-grid", allProducts, "do-thu-dong");
   } catch (error) {
     document.querySelectorAll(".hot-product-grid").forEach((grid) => {
-      grid.innerHTML = "<p>Không thể tải sản phẩm lúc này.</p>";
+      grid.innerHTML = LOAD_ERROR_HTML;
     });
     console.error(error);
   }
@@ -329,10 +242,6 @@ function setupHotProductTabs() {
     });
   });
 }
-
-// ==========================================
-// 6. FORM CHỌN SIZE / MÀU / SỐ LƯỢNG (dùng chung cho chi tiết và xem nhanh)
-// ==========================================
 
 function optionButtons(items, name, selected, labelFn) {
   if (!items || !items.length) return "";
@@ -370,47 +279,39 @@ function promoBox() {
     </div>`;
 }
 
-function selectedValue(root, name) {
-  return root.querySelector(`input[name="${name}"]:checked`)?.value || "";
-}
+const selectedValue = (root, name) => root.querySelector(`input[name="${name}"]:checked`)?.value || "";
+const selectedQty = (root) => clamp(Number(root.querySelector(".qty-box__input")?.value) || 1);
 
-function selectedQty(root) {
-  const value = Number(root.querySelector(".qty-box__input")?.value) || 1;
-  return Math.min(99, Math.max(1, value));
-}
-
-/** Kiểm tra lựa chọn rồi thêm vào giỏ. goCheckout = true thì chuyển sang trang giỏ hàng */
 function handleAddToCart(product, root, goCheckout) {
   if (!product.inStock) {
-    if (typeof showToast === "function") showToast("Sản phẩm đã hết hàng", "error");
+    notify("Sản phẩm đã hết hàng", "error");
     return;
   }
   const size = selectedValue(root, "size");
   if (product.sizes?.length && !size) {
-    if (typeof showToast === "function") showToast("Vui lòng chọn kích thước", "error");
+    notify("Vui lòng chọn kích thước", "error");
     return;
   }
-  // Quy ước: sản phẩm không có size/màu thì truyền null (không truyền chuỗi rỗng)
-  // Thông báo "Đã thêm vào giỏ" do addToCart (cart.js) tự hiện
+
   addToCart(product.id, size || null, selectedValue(root, "color") || null, selectedQty(root));
   if (goCheckout) location.href = `${ROOT}pages/gio-hang.html`;
 }
 
+function optionRow(label, content) {
+  return content
+    ? `<div class="option-row"><span>${label}:</span>${content}</div>`
+    : "";
+}
+
 function productFormHtml(product, extraActions) {
-  const sizeRow = product.sizes?.length
-    ? `<div class="option-row"><span>Kích thước:</span><div class="option-list">${optionButtons(product.sizes, "size")}</div></div>`
-    : "";
-  const colorRow = product.colors?.length
-    ? `<div class="option-row"><span>Màu sắc:</span><div class="option-list">${optionButtons(product.colors, "color", "", colorLabel)}</div></div>`
-    : "";
+  const list = (items, name, labelFn) =>
+    items?.length ? `<div class="option-list">${optionButtons(items, name, "", labelFn)}</div>` : "";
   const addDisabled = product.inStock ? "" : " disabled";
+
   return `
-    ${sizeRow}
-    ${colorRow}
-    <div class="option-row">
-      <span>Số lượng:</span>
-      ${qtyControl(product.id)}
-    </div>
+    ${optionRow("Kích thước", list(product.sizes, "size"))}
+    ${optionRow("Màu sắc", list(product.colors, "color", colorLabel))}
+    ${optionRow("Số lượng", qtyControl(product.id))}
     <div class="product-cta">
       <button type="button" class="btn btn--outline js-add-cart"${addDisabled}>THÊM VÀO GIỎ</button>
       <button type="button" class="btn btn--primary js-buy-now"${addDisabled}>${product.inStock ? "MUA NGAY" : "HẾT HÀNG"}</button>
@@ -423,53 +324,11 @@ function bindProductForm(root, product) {
     const qtyBtn = event.target.closest("[data-qty]");
     if (qtyBtn) {
       const input = root.querySelector(".qty-box__input");
-      input.value = Math.min(99, Math.max(1, Number(input.value || 1) + Number(qtyBtn.dataset.qty)));
+      input.value = clamp(Number(input.value || 1) + Number(qtyBtn.dataset.qty));
     }
     if (event.target.closest(".js-add-cart")) handleAddToCart(product, root, false);
     if (event.target.closest(".js-buy-now")) handleAddToCart(product, root, true);
   });
-}
-
-// ==========================================
-// 7. POPUP XEM NHANH
-// ==========================================
-
-async function openQuickView(id) {
-  ensureShopFallbacks();
-  const product = await getProductById(id);
-  const box = document.getElementById("quick-view") || createQuickViewHost();
-  if (!product) return;
-
-  const image = product.images?.[0] ? getImageUrl(product.images[0]) : PLACEHOLDER_IMG;
-  box.hidden = false;
-  box.innerHTML = `
-    <div class="quick-view__backdrop" data-close-quick></div>
-    <div class="quick-view__dialog" role="dialog" aria-modal="true" aria-label="Xem nhanh ${product.name}">
-      <button class="quick-view__close" type="button" data-close-quick aria-label="Đóng">×</button>
-      <div class="quick-view__grid">
-        <img src="${image}" alt="${product.name}">
-        <div class="quick-view__info">
-          <p class="product-card__vendor">${product.categoryName}</p>
-          <h2>${product.name}</h2>
-          <div class="product-card__price">
-            <span class="price-sale">${formatPrice(getFinalPrice(product))}</span>
-            ${product.salePrice ? `<del class="price-old">${formatPrice(product.price)}</del>` : ""}
-          </div>
-          ${promoBox()}
-          ${productFormHtml(product, `<a class="quick-view__detail" href="${ROOT}pages/chi-tiet.html?id=${product.id}">Xem chi tiết</a>`)}
-        </div>
-      </div>
-    </div>`;
-  bindProductForm(box.querySelector(".quick-view__info"), product);
-  document.body.classList.add("no-scroll");
-}
-
-function closeQuickView() {
-  const box = document.getElementById("quick-view");
-  if (!box) return;
-  box.hidden = true;
-  box.innerHTML = "";
-  document.body.classList.remove("no-scroll");
 }
 
 function createQuickViewHost() {
@@ -481,24 +340,141 @@ function createQuickViewHost() {
   return box;
 }
 
-// ==========================================
-// 8. TRANG CHI TIẾT SẢN PHẨM
-// ==========================================
+async function openQuickView(id) {
+  ensureShopFallbacks();
+  const product = await getProductById(id);
+  const box = document.getElementById("quick-view") || createQuickViewHost();
+  if (!product) return;
+
+  box.hidden = false;
+  box.innerHTML = `
+    <div class="quick-view__backdrop" data-close-quick></div>
+    <div class="quick-view__dialog" role="dialog" aria-modal="true" aria-label="Xem nhanh ${product.name}">
+      <button class="quick-view__close" type="button" data-close-quick aria-label="Đóng">×</button>
+      <div class="quick-view__grid">
+        ${galleryHtml(product)}
+        <div class="quick-view__info">
+          <p class="product-card__vendor">${product.categoryName}</p>
+          <h2>${product.name}</h2>
+          <div class="product-card__price">${priceHtml(product)}</div>
+          ${promoBox()}
+          ${productFormHtml(product, `<a class="quick-view__detail" href="${detailUrl(product.id)}">Xem chi tiết</a>`)}
+        </div>
+      </div>
+    </div>`;
+  bindProductForm(box.querySelector(".quick-view__info"), product);
+  bindGallery(box.querySelector(".product-gallery"));
+  document.body.classList.add("no-scroll");
+}
+
+function closeQuickView() {
+  const box = document.getElementById("quick-view");
+  if (!box) return;
+  box.hidden = true;
+  box.innerHTML = "";
+  document.body.classList.remove("no-scroll");
+}
 
 function galleryHtml(product) {
   const images = (product.images || []).map(getImageUrl);
   if (!images.length) images.push(PLACEHOLDER_IMG);
+
   const thumbs = images.map((src, index) => `
-    <button type="button" class="gallery-thumb${index === 0 ? " is-active" : ""}" data-src="${src}">
+    <button type="button" class="gallery-thumb${index === 0 ? " is-active" : ""}" data-src="${src}" data-index="${index}">
       <img src="${src}" alt="${product.name} ${index + 1}">
     </button>`).join("");
+
+  const arrows = images.length > 1
+    ? `<button type="button" class="gallery-arrow gallery-prev" aria-label="Ảnh trước">‹</button>
+       <button type="button" class="gallery-arrow gallery-next" aria-label="Ảnh sau">›</button>`
+    : "";
+
   return `
-    <div class="product-gallery">
+    <div class="product-gallery" data-index="0">
       <div class="product-gallery__thumbs">${thumbs}</div>
       <div class="product-gallery__main">
-        <img id="gallery-main" src="${images[0]}" alt="${product.name}">
+        <div class="gallery-track">${images.map((src) => `<img class="gallery-main-img" src="${src}" alt="${product.name}" draggable="false">`).join("")}</div>
+        ${arrows}
       </div>
     </div>`;
+}
+
+function showGalleryImage(root, index) {
+  const thumbs = root.querySelectorAll(".gallery-thumb");
+  const track = root.querySelector(".gallery-track");
+  if (!thumbs.length) return;
+
+  index = (index + thumbs.length) % thumbs.length;
+  root.dataset.index = index;
+  thumbs.forEach((thumb, i) => thumb.classList.toggle("is-active", i === index));
+  track.style.transition = "";
+  track.style.transform = `translateX(${-index * 100}%)`;
+}
+
+function bindGallerySwipe(root) {
+  const main = root.querySelector(".product-gallery__main");
+  const track = root.querySelector(".gallery-track");
+  const count = root.querySelectorAll(".gallery-thumb").length;
+  if (!main || !track || count < 2) return;
+
+  let startX = 0;
+  let dx = 0;
+  let dragging = false;
+
+  main.addEventListener("pointerdown", (event) => {
+    if (event.target.closest(".gallery-arrow")) return;
+    dragging = true;
+    startX = event.clientX;
+    dx = 0;
+    track.style.transition = "none";
+    main.setPointerCapture(event.pointerId);
+  });
+
+  main.addEventListener("pointermove", (event) => {
+    if (!dragging) return;
+    dx = event.clientX - startX;
+    const index = Number(root.dataset.index || 0);
+    const atEdge = (index === 0 && dx > 0) || (index === count - 1 && dx < 0);
+    track.style.transform = `translateX(calc(${-index * 100}% + ${atEdge ? dx / 3 : dx}px))`;
+  });
+
+  const end = () => {
+    if (!dragging) return;
+    dragging = false;
+    const index = Number(root.dataset.index || 0);
+    const threshold = main.offsetWidth * 0.2;
+    let next = index;
+    if (dx < -threshold) next = Math.min(index + 1, count - 1);
+    else if (dx > threshold) next = Math.max(index - 1, 0);
+    showGalleryImage(root, next);
+  };
+
+  main.addEventListener("pointerup", end);
+  main.addEventListener("pointercancel", end);
+}
+
+function injectGalleryStyles() {
+  if (document.getElementById("gallery-swipe-style")) return;
+  const style = document.createElement("style");
+  style.id = "gallery-swipe-style";
+  style.textContent = `
+    .product-gallery__main{overflow:hidden;touch-action:pan-y;user-select:none;cursor:grab}
+    .product-gallery__main:active{cursor:grabbing}
+    .gallery-track{display:flex;transition:transform .35s cubic-bezier(.22,.61,.36,1);will-change:transform}
+    .gallery-track .gallery-main-img{flex:0 0 100%;width:100%;min-width:0;pointer-events:none;opacity:1}`;
+  document.head.appendChild(style);
+}
+
+function bindGallery(root) {
+  if (!root) return;
+  bindGallerySwipe(root);
+  root.addEventListener("click", (event) => {
+    const current = Number(root.dataset.index || 0);
+    const thumb = event.target.closest(".gallery-thumb");
+    if (thumb) showGalleryImage(root, Number(thumb.dataset.index));
+    if (event.target.closest(".gallery-prev")) showGalleryImage(root, current - 1);
+    if (event.target.closest(".gallery-next")) showGalleryImage(root, current + 1);
+  });
 }
 
 async function initProductDetail() {
@@ -510,7 +486,7 @@ async function initProductDetail() {
   try {
     product = await getProductById(getQueryParam("id"));
   } catch (error) {
-    mount.innerHTML = "<p>Không thể tải sản phẩm lúc này.</p>";
+    mount.innerHTML = LOAD_ERROR_HTML;
     console.error(error);
     return;
   }
@@ -528,7 +504,7 @@ async function initProductDetail() {
       <span>/</span>
       <a href="${ROOT}pages/san-pham.html">Sản phẩm</a>
       <span>/</span>
-      <a href="${ROOT}pages/san-pham.html?category=${product.category}">${product.categoryName}</a>
+      <a href="${categoryUrl(product.category)}">${product.categoryName}</a>
       <span>/</span>
       <span>${product.name}</span>`;
   }
@@ -541,12 +517,9 @@ async function initProductDetail() {
         <p class="product-meta">
           Thương hiệu: <strong>${SHOP_NAME}</strong>
           · Mã sản phẩm: <strong>KS${String(product.id).padStart(3, "0")}</strong>
-          · Danh mục: <a href="${ROOT}pages/san-pham.html?category=${product.category}">${product.categoryName}</a>
+          · Danh mục: <a href="${categoryUrl(product.category)}">${product.categoryName}</a>
         </p>
-        <div class="product-info__price">
-          <span class="price-sale">${formatPrice(getFinalPrice(product))}</span>
-          ${product.salePrice ? `<del class="price-old">${formatPrice(product.price)}</del>` : ""}
-        </div>
+        <div class="product-info__price">${priceHtml(product)}</div>
         ${promoBox()}
         ${productFormHtml(product)}
         <div class="product-assures">
@@ -562,24 +535,17 @@ async function initProductDetail() {
     </div>`;
 
   bindProductForm(mount.querySelector(".product-info"), product);
-  mount.querySelectorAll(".gallery-thumb").forEach((thumb) => {
-    thumb.addEventListener("click", () => {
-      mount.querySelectorAll(".gallery-thumb").forEach((item) => item.classList.remove("is-active"));
-      thumb.classList.add("is-active");
-      document.getElementById("gallery-main").src = thumb.dataset.src;
-    });
-  });
+  bindGallery(mount.querySelector(".product-gallery"));
 
-  const related = products
-    .filter((item) => item.category === product.category && item.id !== product.id)
-    .slice(0, 5);
   const relatedGrid = document.getElementById("related-products");
-  if (relatedGrid) relatedGrid.innerHTML = related.map(renderProductCard).join("");
+  if (relatedGrid) {
+    relatedGrid.innerHTML = products
+      .filter((item) => item.category === product.category && item.id !== product.id)
+      .slice(0, 5)
+      .map(renderProductCard)
+      .join("");
+  }
 }
-
-// ==========================================
-// 9. SỰ KIỆN CHUNG (event delegation)
-// ==========================================
 
 function bindProductEvents() {
   document.addEventListener("click", (event) => {
@@ -591,13 +557,10 @@ function bindProductEvents() {
     }
     if (event.target.closest("[data-close-quick]")) closeQuickView();
 
-    // Nút yêu thích: nếu wishlist.js (Vương) đã tự xử lý click thì bỏ qua để không bị bật/tắt 2 lần.
-    // Vương chỉ cần đặt window.WISHLIST_HANDLES_CLICKS = true ở đầu wishlist.js.
     if (window.WISHLIST_HANDLES_CLICKS) return;
     const wish = event.target.closest(".btn-wishlist[data-id]");
     if (wish && typeof toggleWishlist === "function") {
-      const active = toggleWishlist(wish.dataset.id);
-      wish.classList.toggle("is-active", active);
+      wish.classList.toggle("is-active", toggleWishlist(wish.dataset.id));
     }
   });
   document.addEventListener("keydown", (event) => {
@@ -607,6 +570,7 @@ function bindProductEvents() {
 
 document.addEventListener("DOMContentLoaded", () => {
   ensureShopFallbacks();
+  injectGalleryStyles();
   bindProductEvents();
   renderKingShopProducts();
   renderHotProductTabs();
