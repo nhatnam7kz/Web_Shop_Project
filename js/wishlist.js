@@ -5,6 +5,7 @@
 
 // Báo cho products.js (Kiệt) biết file này đã tự xử lý click nút tim,
 // để products.js không xử lý thêm lần nữa (nếu không sẽ bật rồi tắt ngay).
+// Sua loi conflict
 window.WISHLIST_HANDLES_CLICKS = true;
 
 // ---------- Hàm dùng chung (giao diện giữa các thành viên) ----------
