@@ -1,12 +1,12 @@
-/* wishlist.js – Yêu thích (Người phụ trách: Vương)
-   Cần viết (xem CONVENTIONS.md mục 7):
-   getWishlist(), isInWishlist(id), toggleWishlist(id)
-   Lắng nghe click trên .btn-wishlist[data-id] bằng event delegation.
-   Nên viết thêm updateWishlistBadge() để cập nhật số trên #wishlist-badge (main.js sẽ tự gọi). */
 /* wishlist.js – Vương
  * Danh sách yêu thích (mảng id sản phẩm trong shop_wishlist) + logic trang yeu-thich.
  * Tự lắng nghe click trên mọi .btn-wishlist[data-id] nên trang khác chỉ cần in đúng nút.
  */
+
+// Báo cho products.js (Kiệt) biết file này đã tự xử lý click nút tim,
+// để products.js không xử lý thêm lần nữa (nếu không sẽ bật rồi tắt ngay).
+// Sua loi conflict
+window.WISHLIST_HANDLES_CLICKS = true;
 
 // ---------- Hàm dùng chung (giao diện giữa các thành viên) ----------
 
@@ -28,6 +28,9 @@ function updateWishlistButtons() {
     const active = saved.includes(Number(button.dataset.id));
     button.classList.toggle("is-active", active);
     button.setAttribute("aria-pressed", String(active));
+    // Nút của Kiệt chỉ chứa ký tự trái tim: đổi ♡ (rỗng) / ♥ (đặc) theo trạng thái.
+    if (["♡", "♥"].includes(button.textContent.trim()))
+      button.textContent = active ? "♥" : "♡";
     button.setAttribute(
       "aria-label",
       active ? "Bỏ khỏi yêu thích" : "Thêm vào yêu thích",
@@ -74,8 +77,15 @@ async function renderWishlistPage() {
   if (!listEl) return;
 
   const saved = getWishlist();
-  const products = await loadProducts();
-  const items = products.filter((product) => saved.includes(product.id));
+  let items = [];
+  try {
+    const allProducts = await loadProducts();
+    items = allProducts.filter((product) => saved.includes(product.id));
+  } catch (error) {
+    listEl.innerHTML =
+      "<p>Không thể tải sản phẩm lúc này, vui lòng thử lại.</p>";
+    return;
+  }
 
   if (countEl) countEl.textContent = `${items.length} sản phẩm`;
   if (emptyEl) emptyEl.hidden = items.length > 0;
