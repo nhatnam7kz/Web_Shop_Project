@@ -53,70 +53,110 @@ async function getProductById(id) {
   return list.find((product) => product.id === Number(id));
 }
 
-const getFinalPrice = (product) => product.salePrice ?? product.price;
-const formatPrice = (number) => `${Number(number).toLocaleString("vi-VN")}₫`;
-const getImageUrl = (fileName) => `${IMAGE_DIR}${fileName}`;
-const colorLabel = (slug) => COLOR_LABELS[slug] || slug;
-const detailUrl = (id) => `${ROOT}pages/chi-tiet.html?id=${id}`;
-const categoryUrl = (slug) => `${ROOT}pages/san-pham.html?category=${slug}`;
-const clamp = (value) => Math.min(99, Math.max(1, value));
-
-function notify(message, type) {
-  if (typeof showToast === "function") showToast(message, type);
+/** Giá bán thực tế = giá sale nếu có, không thì giá gốc */
+function getFinalPrice(product) {
+  return product.salePrice ?? product.price;
 }
 
-function readList(key) {
-  try {
-    return JSON.parse(localStorage.getItem(key) || "[]");
-  } catch (error) {
-    return [];
+/** 250000 -> "250.000₫" */
+function formatPrice(number) {
+  return `${Number(number).toLocaleString("vi-VN")}₫`;
+}
+
+/** Ghép đường dẫn ảnh từ tên file */
+function getImageUrl(fileName) {
+  return `${IMAGE_DIR}${fileName}`;
+}
+
+function colorLabel(slug) {
+  return COLOR_LABELS[slug] || slug;
+}
+
+// ==========================================
+// 3. HÀM DỰ PHÒNG (khi cart.js / wishlist.js chưa có)
+// ==========================================
+
+function ensureShopFallbacks() {
+  if (typeof window.getCart !== "function") {
+    window.getCart = function () {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEYS.cart) || "[]");
+      } catch (error) {
+        return [];
+      }
+    };
+  }
+  if (typeof window.addToCart !== "function") {
+    window.addToCart = function (id, size, color, qty) {
+      const cart = getCart();
+      const nextQty = Number(qty) || 1;
+      const match = cart.find(
+        (item) =>
+          Number(item.id) === Number(id) &&
+          (item.size || null) === (size || null) &&
+          (item.color || null) === (color || null)
+      );
+      if (match) match.qty = Number(match.qty || 0) + nextQty;
+      else cart.push({ id: Number(id), size: size || null, color: color || null, qty: nextQty });
+      localStorage.setItem(STORAGE_KEYS.cart, JSON.stringify(cart));
+      if (typeof updateCartBadge === "function") updateCartBadge();
+      if (typeof showToast === "function") showToast("Đã thêm vào giỏ");
+    };
+  }
+  if (typeof window.getCartCount !== "function") {
+    window.getCartCount = function () {
+      return getCart().reduce((sum, item) => sum + Number(item.qty || 0), 0);
+    };
+  }
+  if (typeof window.updateCartBadge !== "function") {
+    window.updateCartBadge = function () {
+      const el = document.getElementById("cart-badge");
+      if (el) el.textContent = getCartCount();
+    };
+  }
+  if (typeof window.getWishlist !== "function") {
+    window.getWishlist = function () {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEYS.wishlist) || "[]");
+      } catch (error) {
+        return [];
+      }
+    };
+  }
+  if (typeof window.isInWishlist !== "function") {
+    window.isInWishlist = function (id) {
+      return getWishlist().some((item) => Number(item) === Number(id));
+    };
+  }
+  if (typeof window.toggleWishlist !== "function") {
+    window.toggleWishlist = function (id) {
+      const list = getWishlist().map(Number);
+      const index = list.indexOf(Number(id));
+      if (index >= 0) list.splice(index, 1);
+      else list.push(Number(id));
+      localStorage.setItem(STORAGE_KEYS.wishlist, JSON.stringify(list));
+      if (typeof updateWishlistBadge === "function") updateWishlistBadge();
+      return isInWishlist(id);
+    };
+  }
+  if (typeof window.updateWishlistBadge !== "function") {
+    window.updateWishlistBadge = function () {
+      const el = document.getElementById("wishlist-badge");
+      if (el) el.textContent = getWishlist().length;
+    };
   }
 }
 
-function setBadge(id, value) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = value;
-}
+// ==========================================
+// 4. THẺ SẢN PHẨM VÀ THẺ DANH MỤC
+// ==========================================
 
-function ensureShopFallbacks() {
-  window.getCart ||= () => readList(STORAGE_KEYS.cart);
-
-  window.addToCart ||= (id, size, color, qty) => {
-    const cart = getCart();
-    const nextQty = Number(qty) || 1;
-    const match = cart.find(
-      (item) =>
-        Number(item.id) === Number(id) &&
-        (item.size || null) === (size || null) &&
-        (item.color || null) === (color || null)
-    );
-    if (match) match.qty = Number(match.qty || 0) + nextQty;
-    else cart.push({ id: Number(id), size: size || null, color: color || null, qty: nextQty });
-    localStorage.setItem(STORAGE_KEYS.cart, JSON.stringify(cart));
-    if (typeof updateCartBadge === "function") updateCartBadge();
-    notify("Đã thêm vào giỏ");
-  };
-
-  window.getCartCount ||= () => getCart().reduce((sum, item) => sum + Number(item.qty || 0), 0);
-  window.updateCartBadge ||= () => setBadge("cart-badge", getCartCount());
-
-  window.getWishlist ||= () => readList(STORAGE_KEYS.wishlist);
-  window.isInWishlist ||= (id) => getWishlist().some((item) => Number(item) === Number(id));
-
-  window.toggleWishlist ||= (id) => {
-    const list = getWishlist().map(Number);
-    const index = list.indexOf(Number(id));
-    if (index >= 0) list.splice(index, 1);
-    else list.push(Number(id));
-    localStorage.setItem(STORAGE_KEYS.wishlist, JSON.stringify(list));
-    if (typeof updateWishlistBadge === "function") updateWishlistBadge();
-    return isInWishlist(id);
-  };
-
-  window.updateWishlistBadge ||= () => setBadge("wishlist-badge", getWishlist().length);
-}
-
-function priceHtml(product) {
+/** Trả về chuỗi HTML của một thẻ sản phẩm */
+function renderProductCard(product) {
+  const image = product.images && product.images[0]
+    ? getImageUrl(product.images[0])
+    : PLACEHOLDER_IMG;
+  const salePrice = getFinalPrice(product);
   const oldPrice = product.salePrice
     ? `<del class="price-old">${formatPrice(product.price)}</del>`
     : "";
@@ -292,7 +332,8 @@ function handleAddToCart(product, root, goCheckout) {
     notify("Vui lòng chọn kích thước", "error");
     return;
   }
-
+  // Quy ước: sản phẩm không có size/màu thì truyền null (không truyền chuỗi rỗng)
+  // Thông báo "Đã thêm vào giỏ" do addToCart (cart.js) tự hiện
   addToCart(product.id, size || null, selectedValue(root, "color") || null, selectedQty(root));
   if (goCheckout) location.href = `${ROOT}pages/gio-hang.html`;
 }
