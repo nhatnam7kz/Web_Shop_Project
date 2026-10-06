@@ -4,6 +4,7 @@
  *
  * Thay đổi so với bản cũ:
  *  - addToCart yêu cầu đăng nhập, trả về true/false
+ *  - Mỗi tài khoản một giỏ riêng (key shop_cart_<email>), đăng xuất không cần xóa giỏ
  *  - Chuẩn hóa id (số), size/color (null nếu rỗng) ở mọi hàm -> xóa/sửa số lượng không bị lệch
  *  - Trang giỏ hàng tải danh sách sản phẩm 1 lần, không còn bị trống do chạy đua dữ liệu
  *  - Hiện tên màu tiếng Việt, có cảnh báo trong Console khi không tìm thấy sản phẩm
@@ -13,8 +14,13 @@
 // 0. HÀM HỖ TRỢ NỘI BỘ
 // ==========================================
 
+/**
+ * Key localStorage của giỏ hàng: MỖI NGƯỜI MỘT GIỎ (shop_cart_<email>).
+ * Trả về null nếu chưa đăng nhập (lúc đó coi như không có giỏ).
+ */
 function cartStorageKey() {
-  return (typeof STORAGE_KEYS !== "undefined" && STORAGE_KEYS.cart) ? STORAGE_KEYS.cart : "shop_cart";
+  const base = (typeof STORAGE_KEYS !== "undefined" && STORAGE_KEYS.cart) ? STORAGE_KEYS.cart : "shop_cart";
+  return typeof userStorageKey === "function" ? userStorageKey(base) : base;
 }
 
 /** Chuẩn hóa 1 dòng giỏ hàng: id là số, size/color rỗng thì thành null */
@@ -47,8 +53,10 @@ function ensureLoggedIn(message) {
  * @returns {Array} Mảng các phần tử [{ id, size, color, qty }]
  */
 function getCart() {
+  const key = cartStorageKey();
+  if (!key) return [];
   try {
-    const raw = localStorage.getItem(cartStorageKey());
+    const raw = localStorage.getItem(key);
     const data = raw ? JSON.parse(raw) : [];
     return Array.isArray(data) ? data : [];
   } catch (error) {
@@ -61,8 +69,9 @@ function getCart() {
  * @param {Array} cart Mảng giỏ hàng cần lưu
  */
 function saveCart(cart) {
+  const key = cartStorageKey();
   try {
-    localStorage.setItem(cartStorageKey(), JSON.stringify(cart));
+    if (key) localStorage.setItem(key, JSON.stringify(cart));
   } catch (error) {
     console.error("Lỗi khi lưu giỏ hàng:", error);
   }
@@ -148,7 +157,8 @@ function removeFromCart(id, size, color) {
  * Xóa toàn bộ giỏ hàng
  */
 function clearCart() {
-  localStorage.removeItem(cartStorageKey());
+  const key = cartStorageKey();
+  if (key) localStorage.removeItem(key);
   updateCartBadge();
 }
 

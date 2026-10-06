@@ -2,7 +2,8 @@
  * Danh sách yêu thích (mảng id sản phẩm trong shop_wishlist) + logic trang yeu-thich.
  * Tự lắng nghe click trên mọi .btn-wishlist[data-id] nên trang khác chỉ cần in đúng nút.
  *
- * Thay đổi: yêu cầu đăng nhập, sửa vòng lặp vô hạn của MutationObserver.
+ * Thay đổi: yêu cầu đăng nhập, sửa vòng lặp vô hạn của MutationObserver,
+ * mỗi tài khoản một danh sách riêng (key shop_wishlist_<email>).
  */
 
 // Báo cho products.js (Kiệt) biết file này đã tự xử lý click nút tim,
@@ -11,11 +12,23 @@ window.WISHLIST_HANDLES_CLICKS = true;
 
 const WISHLIST_LOGIN_MESSAGE = "Vui lòng đăng nhập để dùng danh sách yêu thích";
 
+/**
+ * Key localStorage của yêu thích: MỖI NGƯỜI MỘT DANH SÁCH (shop_wishlist_<email>).
+ * Trả về null nếu chưa đăng nhập.
+ */
+function wishlistKey() {
+  return typeof userStorageKey === "function"
+    ? userStorageKey(STORAGE_KEYS.wishlist)
+    : STORAGE_KEYS.wishlist;
+}
+
 // ---------- Hàm dùng chung (giao diện giữa các thành viên) ----------
 
 /** Trả về mảng id yêu thích (rỗng nếu chưa có). */
 function getWishlist() {
-  const list = readJsonStorage(STORAGE_KEYS.wishlist, []);
+  const key = wishlistKey();
+  if (!key) return [];
+  const list = readJsonStorage(key, []);
   return Array.isArray(list) ? list.map(Number) : [];
 }
 
@@ -67,6 +80,9 @@ function toggleWishlist(id) {
     return isInWishlist(id);
   }
 
+  const key = wishlistKey();
+  if (!key) return false;
+
   const numericId = Number(id);
   const saved = getWishlist();
   const wasSaved = saved.includes(numericId);
@@ -74,7 +90,7 @@ function toggleWishlist(id) {
     ? saved.filter((item) => item !== numericId)
     : [...saved, numericId];
 
-  writeJsonStorage(STORAGE_KEYS.wishlist, next);
+  writeJsonStorage(key, next);
   updateWishlistButtons();
   updateWishlistBadge();
   document.dispatchEvent(new CustomEvent("wishlist:changed"));

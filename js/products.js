@@ -78,14 +78,22 @@ function setBadge(id, value) {
   if (el) el.textContent = value;
 }
 
+// Key theo từng tài khoản (userStorageKey nằm trong config.js); null nếu chưa đăng nhập
+const userKey = (base) => (typeof userStorageKey === "function" ? userStorageKey(base) : base);
+
 function ensureShopFallbacks() {
-  window.getCart ||= () => readList(STORAGE_KEYS.cart);
+  window.getCart ||= () => {
+    const key = userKey(STORAGE_KEYS.cart);
+    return key ? readList(key) : [];
+  };
 
   // Bản dự phòng khi cart.js chưa có: cũng yêu cầu đăng nhập và trả về true/false
   window.addToCart ||= (id, size, color, qty) => {
     if (typeof requireLogin === "function" && !requireLogin("Vui lòng đăng nhập để thêm vào giỏ hàng")) {
       return false;
     }
+    const cartKey = userKey(STORAGE_KEYS.cart);
+    if (!cartKey) return false;
     const cart = getCart();
     const nextQty = Number(qty) || 1;
     const match = cart.find(
@@ -96,7 +104,7 @@ function ensureShopFallbacks() {
     );
     if (match) match.qty = Number(match.qty || 0) + nextQty;
     else cart.push({ id: Number(id), size: size || null, color: color || null, qty: nextQty });
-    localStorage.setItem(STORAGE_KEYS.cart, JSON.stringify(cart));
+    localStorage.setItem(cartKey, JSON.stringify(cart));
     if (typeof updateCartBadge === "function") updateCartBadge();
     notify("Đã thêm vào giỏ");
     return true;
@@ -105,7 +113,10 @@ function ensureShopFallbacks() {
   window.getCartCount ||= () => getCart().reduce((sum, item) => sum + Number(item.qty || 0), 0);
   window.updateCartBadge ||= () => setBadge("cart-badge", getCartCount());
 
-  window.getWishlist ||= () => readList(STORAGE_KEYS.wishlist);
+  window.getWishlist ||= () => {
+    const key = userKey(STORAGE_KEYS.wishlist);
+    return key ? readList(key) : [];
+  };
   window.isInWishlist ||= (id) => getWishlist().some((item) => Number(item) === Number(id));
 
   // Bản dự phòng khi wishlist.js chưa có: cũng yêu cầu đăng nhập
@@ -113,11 +124,13 @@ function ensureShopFallbacks() {
     if (typeof requireLogin === "function" && !requireLogin("Vui lòng đăng nhập để dùng danh sách yêu thích")) {
       return isInWishlist(id);
     }
+    const wishKey = userKey(STORAGE_KEYS.wishlist);
+    if (!wishKey) return false;
     const list = getWishlist().map(Number);
     const index = list.indexOf(Number(id));
     if (index >= 0) list.splice(index, 1);
     else list.push(Number(id));
-    localStorage.setItem(STORAGE_KEYS.wishlist, JSON.stringify(list));
+    localStorage.setItem(wishKey, JSON.stringify(list));
     if (typeof updateWishlistBadge === "function") updateWishlistBadge();
     return isInWishlist(id);
   };

@@ -2,8 +2,8 @@
  * Đăng ký / đăng nhập giả lập bằng localStorage + logic các trang dang-nhap, dang-ky, tai-khoan.
  * LƯU Ý: mật khẩu lưu dạng chữ thường chỉ vì đây là bài tập giả lập, thực tế không bao giờ làm vậy.
  *
- * Thay đổi: requireLogin nhận thông báo và chuyển trang chậm 1 giây để người dùng kịp đọc,
- * logoutUser xóa giỏ hàng và yêu thích (vì 2 key này dùng chung cho mọi tài khoản trên máy).
+ * Thay đổi: requireLogin nhận thông báo và chuyển trang chậm 1 giây để người dùng kịp đọc.
+ * Giỏ hàng và yêu thích lưu riêng theo email nên đăng xuất không cần xóa.
  */
 
 const PASSWORD_MIN_LENGTH = 6;
@@ -74,17 +74,15 @@ function loginUser(email, password) {
 
 /**
  * Đăng xuất: xóa shop_currentUser.
- * Giỏ hàng và yêu thích dùng chung 1 key cho cả máy nên cũng xóa,
- * để người đăng nhập sau không thấy dữ liệu của người trước.
+ * Giỏ hàng và yêu thích lưu riêng theo từng email nên KHÔNG xóa:
+ * đăng nhập lại sẽ thấy đúng giỏ của mình, người khác đăng nhập thì thấy giỏ của họ.
  */
 function logoutUser() {
   try {
     localStorage.removeItem(STORAGE_KEYS.currentUser);
-    localStorage.removeItem(STORAGE_KEYS.wishlist);
   } catch (error) {
     // Bỏ qua: trình duyệt chặn localStorage thì coi như chưa đăng nhập.
   }
-  if (typeof clearCart === "function") clearCart();
 }
 
 /** Trả về object user (không có password) hoặc null nếu chưa đăng nhập. */
