@@ -1,6 +1,9 @@
 /* auth.js – Vương
  * Đăng ký / đăng nhập giả lập bằng localStorage + logic các trang dang-nhap, dang-ky, tai-khoan.
  * LƯU Ý: mật khẩu lưu dạng chữ thường chỉ vì đây là bài tập giả lập, thực tế không bao giờ làm vậy.
+ *
+ * Thay đổi: requireLogin nhận thông báo và chuyển trang chậm 1 giây để người dùng kịp đọc,
+ * logoutUser xóa giỏ hàng và yêu thích (vì 2 key này dùng chung cho mọi tài khoản trên máy).
  */
 
 const PASSWORD_MIN_LENGTH = 6;
@@ -69,13 +72,19 @@ function loginUser(email, password) {
   return { ok: true };
 }
 
-/** Đăng xuất: xóa shop_currentUser. */
+/**
+ * Đăng xuất: xóa shop_currentUser.
+ * Giỏ hàng và yêu thích dùng chung 1 key cho cả máy nên cũng xóa,
+ * để người đăng nhập sau không thấy dữ liệu của người trước.
+ */
 function logoutUser() {
   try {
     localStorage.removeItem(STORAGE_KEYS.currentUser);
+    localStorage.removeItem(STORAGE_KEYS.wishlist);
   } catch (error) {
     // Bỏ qua: trình duyệt chặn localStorage thì coi như chưa đăng nhập.
   }
+  if (typeof clearCart === "function") clearCart();
 }
 
 /** Trả về object user (không có password) hoặc null nếu chưa đăng nhập. */
@@ -88,11 +97,26 @@ function getCurrentUser() {
   return safeUser;
 }
 
-/** Chưa đăng nhập thì chuyển sang trang đăng nhập (kèm ?redirect=) và trả về false. */
-function requireLogin() {
+let isRedirectingToLogin = false;
+
+/**
+ * Chưa đăng nhập thì báo lỗi, rồi chuyển sang trang đăng nhập (kèm ?redirect= để quay lại).
+ * @param {string} message Thông báo hiển thị
+ * @returns {boolean} true nếu đã đăng nhập, false nếu bị chặn
+ */
+function requireLogin(message = "Vui lòng đăng nhập để tiếp tục") {
   if (getCurrentUser()) return true;
-  const back = location.pathname + location.search;
-  location.href = `${ROOT}pages/dang-nhap.html?redirect=${encodeURIComponent(back)}`;
+
+  if (typeof showToast === "function") showToast(message, "error");
+
+  // Tránh đặt nhiều lệnh chuyển trang khi người dùng bấm liên tục
+  if (!isRedirectingToLogin) {
+    isRedirectingToLogin = true;
+    const back = location.pathname + location.search;
+    setTimeout(() => {
+      location.href = `${ROOT}pages/dang-nhap.html?redirect=${encodeURIComponent(back)}`;
+    }, 1000);
+  }
   return false;
 }
 

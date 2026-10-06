@@ -81,7 +81,11 @@ function setBadge(id, value) {
 function ensureShopFallbacks() {
   window.getCart ||= () => readList(STORAGE_KEYS.cart);
 
+  // Bản dự phòng khi cart.js chưa có: cũng yêu cầu đăng nhập và trả về true/false
   window.addToCart ||= (id, size, color, qty) => {
+    if (typeof requireLogin === "function" && !requireLogin("Vui lòng đăng nhập để thêm vào giỏ hàng")) {
+      return false;
+    }
     const cart = getCart();
     const nextQty = Number(qty) || 1;
     const match = cart.find(
@@ -95,6 +99,7 @@ function ensureShopFallbacks() {
     localStorage.setItem(STORAGE_KEYS.cart, JSON.stringify(cart));
     if (typeof updateCartBadge === "function") updateCartBadge();
     notify("Đã thêm vào giỏ");
+    return true;
   };
 
   window.getCartCount ||= () => getCart().reduce((sum, item) => sum + Number(item.qty || 0), 0);
@@ -103,7 +108,11 @@ function ensureShopFallbacks() {
   window.getWishlist ||= () => readList(STORAGE_KEYS.wishlist);
   window.isInWishlist ||= (id) => getWishlist().some((item) => Number(item) === Number(id));
 
+  // Bản dự phòng khi wishlist.js chưa có: cũng yêu cầu đăng nhập
   window.toggleWishlist ||= (id) => {
+    if (typeof requireLogin === "function" && !requireLogin("Vui lòng đăng nhập để dùng danh sách yêu thích")) {
+      return isInWishlist(id);
+    }
     const list = getWishlist().map(Number);
     const index = list.indexOf(Number(id));
     if (index >= 0) list.splice(index, 1);
@@ -293,8 +302,9 @@ function handleAddToCart(product, root, goCheckout) {
     return;
   }
 
-  addToCart(product.id, size || null, selectedValue(root, "color") || null, selectedQty(root));
-  if (goCheckout) location.href = `${ROOT}pages/gio-hang.html`;
+  // addToCart trả về false khi bị chặn (chưa đăng nhập) -> không chuyển sang giỏ hàng
+  const added = addToCart(product.id, size || null, selectedValue(root, "color") || null, selectedQty(root));
+  if (added !== false && goCheckout) location.href = `${ROOT}pages/gio-hang.html`;
 }
 
 function optionRow(label, content) {
