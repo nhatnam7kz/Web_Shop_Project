@@ -33,6 +33,7 @@
 
 .page-header__lead {
   margin: 10px 0 0;
+  max-width: 60ch;
   color: var(--color-muted);
   line-height: 1.6;
 }
@@ -278,6 +279,7 @@ textarea.form-block__input {
 
 .about-section__text {
   margin: 0;
+  max-width: 70ch;
   line-height: 1.75;
 }
 
@@ -379,6 +381,7 @@ textarea.form-block__input {
 
 .policy-content__text,
 .policy-content__list {
+  max-width: 70ch;
   line-height: 1.75;
 }
 
