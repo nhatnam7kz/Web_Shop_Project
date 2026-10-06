@@ -16,7 +16,24 @@
 <body>
   <div id="site-header"></div>
     <main>
-    <div class="banner-container"><img src="assets/images/banner/banner.png" class="banner-img"></div>
+        <section class="banner-container" aria-label="Banner nổi bật">
+            <div class="banner-slider" data-slider>
+                <div class="banner-slides">
+                    <a class="banner-slide banner-slide--active" href="./pages/san-pham.html">
+                        <img src="./assets/images/banner/banner.png" class="banner-img" alt="Khám phá sản phẩm nổi bật của King Shop">
+                    </a>
+                    <a class="banner-slide" href="./pages/san-pham.html?category=ao-xuan-he" tabindex="-1">
+                        <img src="./assets/images/products/sp01-1.jpg" class="banner-img" alt="Sản phẩm thời trang mới tại King Shop" loading="lazy">
+                    </a>
+                    <a class="banner-slide" href="./pages/san-pham.html?category=lego" tabindex="-1">
+                        <img src="./assets/images/products/sp23-1.jpg" class="banner-img" alt="Bộ sưu tập Lego tại King Shop" loading="lazy">
+                    </a>
+                </div>
+                <button class="banner-control banner-control--prev" type="button" data-slide-prev aria-label="Ảnh trước">&#10094;</button>
+                <button class="banner-control banner-control--next" type="button" data-slide-next aria-label="Ảnh tiếp theo">&#10095;</button>
+                <div class="banner-dots" data-slide-dots aria-label="Chọn ảnh banner"></div>
+            </div>
+        </section>
     <section class="section">
         <div class="container">
             <div class="feature-list">
@@ -196,6 +213,8 @@
   <script src="./js/wishlist.js"></script>
   <script src="./js/auth.js"></script>
   <script src="./js/main.js"></script>
+    <script src="./js/countdown.js"></script>
+    <script src="./js/slider.js"></script>
   <!-- JS riêng của trang: thêm dòng script ở đây (luôn nạp cuối), ví dụ <script src="./js/search.js"></script> -->
 </body>
 </html>

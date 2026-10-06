@@ -2,6 +2,10 @@
    Mỗi người tự lo responsive cho trang của mình trong file CSS riêng. */
 
 @media (max-width: 767px) {
+  .banner-img {
+    height: 220px;
+  }
+
   .section {
     padding: 24px 0;
   }
