@@ -1,7 +1,42 @@
 /**
  * js/cart.js - Quản lý Giỏ hàng (Phụ trách: Nam)
  * Quy ước: CONVENTIONS.md
+ *
+ * Thay đổi so với bản cũ:
+ *  - addToCart yêu cầu đăng nhập, trả về true/false
+ *  - Chuẩn hóa id (số), size/color (null nếu rỗng) ở mọi hàm -> xóa/sửa số lượng không bị lệch
+ *  - Trang giỏ hàng tải danh sách sản phẩm 1 lần, không còn bị trống do chạy đua dữ liệu
+ *  - Hiện tên màu tiếng Việt, có cảnh báo trong Console khi không tìm thấy sản phẩm
  */
+
+// ==========================================
+// 0. HÀM HỖ TRỢ NỘI BỘ
+// ==========================================
+
+function cartStorageKey() {
+  return (typeof STORAGE_KEYS !== "undefined" && STORAGE_KEYS.cart) ? STORAGE_KEYS.cart : "shop_cart";
+}
+
+/** Chuẩn hóa 1 dòng giỏ hàng: id là số, size/color rỗng thì thành null */
+function normalizeLine(id, size, color) {
+  return { id: Number(id), size: size || null, color: color || null };
+}
+
+/** So sánh dòng giỏ hàng với (id, size, color) đã chuẩn hóa */
+function isSameLine(item, line) {
+  return Number(item.id) === line.id
+    && (item.size || null) === line.size
+    && (item.color || null) === line.color;
+}
+
+/**
+ * Kiểm tra đăng nhập (auth.js của Vương cung cấp requireLogin).
+ * Nếu auth.js chưa có thì cho qua để không làm hỏng lúc đang phát triển.
+ */
+function ensureLoggedIn(message) {
+  if (typeof requireLogin === "function") return requireLogin(message);
+  return true;
+}
 
 // ==========================================
 // 1. CÁC HÀM XỬ LÝ DỮ LIỆU DÙNG CHUNG (API)
@@ -13,9 +48,9 @@
  */
 function getCart() {
   try {
-    const key = (typeof STORAGE_KEYS !== "undefined" && STORAGE_KEYS.cart) ? STORAGE_KEYS.cart : "shop_cart";
-    const raw = localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : [];
+    const raw = localStorage.getItem(cartStorageKey());
+    const data = raw ? JSON.parse(raw) : [];
+    return Array.isArray(data) ? data : [];
   } catch (error) {
     return [];
   }
@@ -27,8 +62,7 @@ function getCart() {
  */
 function saveCart(cart) {
   try {
-    const key = (typeof STORAGE_KEYS !== "undefined" && STORAGE_KEYS.cart) ? STORAGE_KEYS.cart : "shop_cart";
-    localStorage.setItem(key, JSON.stringify(cart));
+    localStorage.setItem(cartStorageKey(), JSON.stringify(cart));
   } catch (error) {
     console.error("Lỗi khi lưu giỏ hàng:", error);
   }
@@ -36,32 +70,30 @@ function saveCart(cart) {
 }
 
 /**
- * Thêm sản phẩm vào giỏ hàng (cộng dồn nếu trùng id, size, color)
+ * Thêm sản phẩm vào giỏ hàng (cộng dồn nếu trùng id, size, color).
+ * Yêu cầu đăng nhập.
  * @param {number} id Mã sản phẩm
  * @param {string|null} size Kích thước
  * @param {string|null} color Màu sắc
  * @param {number} qty Số lượng muốn thêm (mặc định 1)
+ * @returns {boolean} true nếu thêm thành công, false nếu bị chặn hoặc dữ liệu sai
  */
 function addToCart(id, size = null, color = null, qty = 1) {
-  const quantityToAdd = parseInt(qty, 10);
-  if (isNaN(quantityToAdd) || quantityToAdd <= 0) return;
+  if (!ensureLoggedIn("Vui lòng đăng nhập để thêm vào giỏ hàng")) return false;
 
+  const quantityToAdd = parseInt(qty, 10);
+  if (isNaN(quantityToAdd) || quantityToAdd <= 0) return false;
+
+  const line = normalizeLine(id, size, color);
   const cart = getCart();
-  const existingIndex = cart.findIndex(
-    item => item.id === id && item.size === size && item.color === color
-  );
+  const existingIndex = cart.findIndex((item) => isSameLine(item, line));
 
   if (existingIndex !== -1) {
     // Trùng cả id, size, color -> Cộng dồn số lượng (tối đa 99)
-    cart[existingIndex].qty = Math.min(cart[existingIndex].qty + quantityToAdd, 99);
+    cart[existingIndex].qty = Math.min((Number(cart[existingIndex].qty) || 0) + quantityToAdd, 99);
   } else {
     // Món mới
-    cart.push({
-      id: id,
-      size: size,
-      color: color,
-      qty: Math.min(quantityToAdd, 99)
-    });
+    cart.push({ ...line, qty: Math.min(quantityToAdd, 99) });
   }
 
   saveCart(cart);
@@ -69,6 +101,7 @@ function addToCart(id, size = null, color = null, qty = 1) {
   if (typeof showToast === "function") {
     showToast("Đã thêm sản phẩm vào giỏ hàng!", "success");
   }
+  return true;
 }
 
 /**
@@ -76,7 +109,7 @@ function addToCart(id, size = null, color = null, qty = 1) {
  * @param {number} id Mã sản phẩm
  * @param {string|null} size Kích thước
  * @param {string|null} color Màu sắc
- * @param {number} qty Số lượng mới
+ * @param {number} qty Số lượng mới (<= 0 thì xóa dòng)
  */
 function updateCartQty(id, size, color, qty) {
   const newQty = parseInt(qty, 10);
@@ -85,10 +118,9 @@ function updateCartQty(id, size, color, qty) {
     return;
   }
 
+  const line = normalizeLine(id, size, color);
   const cart = getCart();
-  const index = cart.findIndex(
-    item => item.id === id && item.size === size && item.color === color
-  );
+  const index = cart.findIndex((item) => isSameLine(item, line));
 
   if (index !== -1) {
     cart[index].qty = Math.min(newQty, 99);
@@ -103,10 +135,8 @@ function updateCartQty(id, size, color, qty) {
  * @param {string|null} color Màu sắc
  */
 function removeFromCart(id, size, color) {
-  const cart = getCart();
-  const newCart = cart.filter(
-    item => !(item.id === id && item.size === size && item.color === color)
-  );
+  const line = normalizeLine(id, size, color);
+  const newCart = getCart().filter((item) => !isSameLine(item, line));
   saveCart(newCart);
 
   if (typeof showToast === "function") {
@@ -118,8 +148,7 @@ function removeFromCart(id, size, color) {
  * Xóa toàn bộ giỏ hàng
  */
 function clearCart() {
-  const key = (typeof STORAGE_KEYS !== "undefined" && STORAGE_KEYS.cart) ? STORAGE_KEYS.cart : "shop_cart";
-  localStorage.removeItem(key);
+  localStorage.removeItem(cartStorageKey());
   updateCartBadge();
 }
 
@@ -128,8 +157,25 @@ function clearCart() {
  * @returns {number}
  */
 function getCartCount() {
-  const cart = getCart();
-  return cart.reduce((total, item) => total + (item.qty || 0), 0);
+  return getCart().reduce((total, item) => total + (Number(item.qty) || 0), 0);
+}
+
+/**
+ * Tải danh sách sản phẩm (dùng chung cho tính tiền và vẽ giỏ hàng).
+ * Lỗi tải thì trả về mảng rỗng và báo trong Console.
+ */
+async function getCatalogForCart() {
+  try {
+    if (typeof loadProducts === "function") return await loadProducts();
+  } catch (error) {
+    console.error("Không tải được danh sách sản phẩm:", error);
+  }
+  return [];
+}
+
+/** Giá bán thực tế của 1 sản phẩm */
+function unitPriceOf(product) {
+  return typeof getFinalPrice === "function" ? getFinalPrice(product) : (product.salePrice ?? product.price);
 }
 
 /**
@@ -140,16 +186,15 @@ async function getCartTotal() {
   const cart = getCart();
   if (cart.length === 0) return 0;
 
+  const catalog = await getCatalogForCart();
   let total = 0;
   for (const item of cart) {
-    let product = null;
-    if (typeof getProductById === "function") {
-      product = await getProductById(item.id);
+    const product = catalog.find((p) => Number(p.id) === Number(item.id));
+    if (!product) {
+      console.warn("Giỏ hàng: không tìm thấy sản phẩm", item, "| số SP đã tải:", catalog.length);
+      continue;
     }
-    if (product) {
-      const price = typeof getFinalPrice === "function" ? getFinalPrice(product) : (product.salePrice ?? product.price);
-      total += price * item.qty;
-    }
+    total += unitPriceOf(product) * (Number(item.qty) || 0);
   }
   return total;
 }
@@ -194,29 +239,35 @@ async function renderCartPage() {
     return;
   }
 
+  // Tải danh sách sản phẩm 1 lần rồi tra cứu, không gọi từng dòng
+  const catalog = await getCatalogForCart();
+  const imgDir = typeof IMAGE_DIR !== "undefined" ? IMAGE_DIR : `${rootPath}assets/images/products/`;
+  const placeholder = typeof PLACEHOLDER_IMG !== "undefined" ? PLACEHOLDER_IMG : `${imgDir}placeholder.jpg`;
+
   let itemsHtml = "";
   let subtotal = 0;
 
   for (const item of cart) {
-    let product = null;
-    if (typeof getProductById === "function") {
-      product = await getProductById(item.id);
+    const product = catalog.find((p) => Number(p.id) === Number(item.id));
+
+    if (!product) {
+      console.warn("Giỏ hàng: không tìm thấy sản phẩm", item, "| số SP đã tải:", catalog.length);
+      continue;
     }
 
-    if (!product) continue;
-
-    const unitPrice = typeof getFinalPrice === "function" ? getFinalPrice(product) : (product.salePrice ?? product.price);
+    const unitPrice = unitPriceOf(product);
     const lineTotal = unitPrice * item.qty;
     subtotal += lineTotal;
 
-    const imgDir = typeof IMAGE_DIR !== "undefined" ? IMAGE_DIR : `${rootPath}assets/images/products/`;
-    const placeholder = typeof PLACEHOLDER_IMG !== "undefined" ? PLACEHOLDER_IMG : `${imgDir}placeholder.jpg`;
     const imgUrl = (typeof getImageUrl === "function" && product.images && product.images[0])
       ? getImageUrl(product.images[0])
       : (product.images && product.images[0] ? `${imgDir}${product.images[0]}` : placeholder);
 
+    const colorName = item.color
+      ? (typeof colorLabel === "function" ? colorLabel(item.color) : item.color)
+      : "";
     const sizeText = item.size ? `Size: ${item.size}` : "";
-    const colorText = item.color ? `Màu: ${item.color}` : "";
+    const colorText = colorName ? `Màu: ${colorName}` : "";
     const variantText = [sizeText, colorText].filter(Boolean).join(" | ");
 
     itemsHtml += `
@@ -242,6 +293,17 @@ async function renderCartPage() {
         </td>
       </tr>
     `;
+  }
+
+  // Giỏ có dữ liệu nhưng không khớp sản phẩm nào (vd: dữ liệu cũ bị lỗi) -> báo rõ thay vì hiện bảng trống
+  if (!itemsHtml) {
+    cartContainer.innerHTML = `
+      <div class="cart-empty">
+        <p>Không hiển thị được sản phẩm trong giỏ hàng. Vui lòng thử tải lại trang.</p>
+        <button type="button" id="btn-clear-cart" class="btn btn--outline">Xóa giỏ hàng</button>
+      </div>
+    `;
+    return;
   }
 
   const grandTotal = subtotal + shippingFee;
@@ -295,10 +357,14 @@ async function renderCartPage() {
 // Bắt sự kiện trên giao diện Giỏ hàng
 document.addEventListener("DOMContentLoaded", () => {
   updateCartBadge();
-  renderCartPage();
 
   const cartPage = document.getElementById("cart-page-content");
   if (!cartPage) return;
+
+  // Trang giỏ hàng yêu cầu đăng nhập
+  if (!ensureLoggedIn("Vui lòng đăng nhập để xem giỏ hàng")) return;
+
+  renderCartPage();
 
   // Lắng nghe sự kiện click: Tăng/giảm/xóa dòng/xóa hết
   cartPage.addEventListener("click", (e) => {
