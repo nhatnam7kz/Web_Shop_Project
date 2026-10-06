@@ -1,0 +1,524 @@
+/* pages.css – Vương
+ * Style chung cho mọi trang của Vương + trang liên hệ, giới thiệu, chính sách.
+ * Chỉ dùng biến trong :root của base.css (không viết mã màu trực tiếp).
+ * Màu nhạt, bóng đổ được tạo bằng color-mix() từ các biến có sẵn.
+ * Mobile-first: 768px (tablet), 1024px (desktop).
+ */
+
+/* ============ KHUNG TRANG ============ */
+/*  Sua loi conlict     */
+.page-container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 24px 16px 56px;
+}
+
+.page-header {
+  margin-bottom: 28px;
+  padding: 28px 20px;
+  background: color-mix(in srgb, var(--color-primary) 6%, var(--color-bg));
+  border: 1px solid
+    color-mix(in srgb, var(--color-primary) 14%, var(--color-bg));
+  border-radius: calc(var(--radius) * 2);
+}
+
+.page-header__title {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.page-header__lead {
+  margin: 10px 0 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+/* ============ FORM DÙNG CHUNG (đăng nhập, đăng ký, liên hệ, tài khoản) ============ */
+
+.form-block {
+  display: grid;
+  gap: 18px;
+}
+
+.form-block__field {
+  display: grid;
+  gap: 6px;
+}
+
+.form-block__label {
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.form-block__input {
+  width: 100%;
+  padding: 12px 14px;
+  font: inherit;
+  color: var(--color-text);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.form-block__input::placeholder {
+  color: var(--color-muted);
+}
+
+.form-block__input:hover {
+  border-color: var(--color-muted);
+}
+
+.form-block__input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--color-primary) 18%, transparent);
+}
+
+.form-block__input[readonly] {
+  color: var(--color-muted);
+  cursor: not-allowed;
+  background: color-mix(in srgb, var(--color-border) 40%, var(--color-bg));
+}
+
+textarea.form-block__input {
+  min-height: 150px;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.form-block__hint {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+/* Lỗi chung của cả form (ví dụ "Email hoặc mật khẩu không đúng") */
+.form-block__error {
+  margin: 0;
+  color: var(--color-primary);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.form-block__error:empty {
+  display: none;
+}
+
+/* Lỗi dưới từng ô: validate.js tự tạo (trang thanh toán của Nam cũng dùng) */
+.is-invalid,
+.is-invalid:hover {
+  border-color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 4%, var(--color-bg));
+}
+
+.field-error {
+  margin: 0;
+  color: var(--color-primary);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+/* Nút trong các trang của Vương: đủ đẹp kể cả khi chưa có components.css của Nguyên */
+.form-block .btn,
+.wishlist-empty .btn,
+.account-logout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 22px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--color-text);
+  text-decoration: none;
+  cursor: pointer;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  transition:
+    background-color 0.15s,
+    border-color 0.15s,
+    transform 0.1s;
+}
+
+.form-block .btn:hover,
+.wishlist-empty .btn:hover,
+.account-logout:hover {
+  border-color: var(--color-muted);
+}
+
+.form-block .btn:active,
+.wishlist-empty .btn:active {
+  transform: translateY(1px);
+}
+
+.form-block .btn--primary,
+.wishlist-empty .btn--primary {
+  color: var(--color-bg);
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.form-block .btn--primary:hover,
+.wishlist-empty .btn--primary:hover {
+  background: color-mix(in srgb, var(--color-primary) 88%, var(--color-text));
+  border-color: color-mix(in srgb, var(--color-primary) 88%, var(--color-text));
+}
+
+.form-block .btn:focus-visible,
+.wishlist-empty .btn:focus-visible,
+.account-logout:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--color-primary) 35%, transparent);
+  outline-offset: 2px;
+}
+
+/* ============ TRANG LIÊN HỆ ============ */
+
+.contact-layout {
+  display: grid;
+  gap: 28px;
+}
+
+.contact-layout > .form-block {
+  align-self: start;
+  padding: 22px 18px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: calc(var(--radius) * 2);
+}
+
+.contact-info {
+  align-self: start;
+  padding: 22px 18px;
+  background: color-mix(in srgb, var(--color-border) 30%, var(--color-bg));
+  border-radius: calc(var(--radius) * 2);
+}
+
+.contact-info__title {
+  margin: 0 0 16px;
+  font-size: 1.125rem;
+}
+
+.contact-info__list {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contact-info__list li {
+  padding-left: 14px;
+  line-height: 1.5;
+  border-left: 3px solid var(--color-primary);
+}
+
+.contact-info__label {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--color-muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.contact-info__link {
+  color: var(--color-text);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.contact-info__link:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.contact-map {
+  display: block;
+  width: 100%;
+  height: 300px;
+  margin-top: 20px;
+  border: 0;
+  border-radius: var(--radius);
+}
+
+.contact-map-link {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--color-primary);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.contact-map-link:hover {
+  text-decoration: underline;
+}
+
+/* ============ TRANG GIỚI THIỆU ============ */
+
+.about-section {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 44px;
+}
+
+.about-section__title {
+  margin: 0;
+  padding-left: 12px;
+  font-size: 1.375rem;
+  border-left: 4px solid var(--color-primary);
+}
+
+.about-section__text {
+  margin: 0;
+  line-height: 1.75;
+}
+
+.about-values {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-values__item {
+  padding: 22px 20px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-top: 4px solid var(--color-primary);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--color-text) 6%, transparent);
+  transition:
+    box-shadow 0.2s,
+    transform 0.2s;
+}
+
+.about-values__item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--color-text) 12%, transparent);
+}
+
+.about-values__title {
+  margin: 0 0 8px;
+  font-size: 1.0625rem;
+}
+
+.about-values__text {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+/* ============ TRANG CHÍNH SÁCH ============ */
+
+.policy-layout {
+  display: grid;
+  gap: 24px;
+}
+
+.policy-menu {
+  display: flex;
+  gap: 8px;
+  padding-bottom: 8px;
+  overflow-x: auto;
+}
+
+.policy-menu__link {
+  flex: none;
+  padding: 9px 16px;
+  color: var(--color-text);
+  font-size: 0.9375rem;
+  text-decoration: none;
+  white-space: nowrap;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  transition:
+    color 0.15s,
+    border-color 0.15s,
+    background-color 0.15s;
+}
+
+.policy-menu__link:hover,
+.policy-menu__link:focus-visible {
+  color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 6%, var(--color-bg));
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+.policy-content__section {
+  margin-bottom: 20px;
+  padding: 22px 20px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-border);
+  border-radius: var(--radius);
+  scroll-margin-top: 90px;
+  transition: border-left-color 0.2s;
+}
+
+/* Mục đang được chọn từ menu */
+.policy-content__section:target,
+.policy-content__section.is-linked {
+  border-left-color: var(--color-primary);
+}
+
+.policy-content__title {
+  margin: 0 0 12px;
+  font-size: 1.25rem;
+}
+
+.policy-content__text,
+.policy-content__list {
+  line-height: 1.75;
+}
+
+.policy-content__text {
+  margin: 0 0 12px;
+}
+
+.policy-content__text:last-child,
+.policy-content__list:last-child {
+  margin-bottom: 0;
+}
+
+.policy-content__list {
+  margin: 0 0 12px;
+  padding-left: 22px;
+}
+
+.policy-content__list li::marker {
+  color: var(--color-primary);
+}
+
+/* ============ LIÊN KẾT NEO ============ */
+
+.page-header__lead a,
+.about-values__text a,
+.form-block__hint a {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.about-nav {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.about-nav__link {
+  padding: 8px 16px;
+  color: var(--color-text);
+  font-size: 0.9375rem;
+  text-decoration: none;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+}
+
+.about-nav__link:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.about-section {
+  scroll-margin-top: 90px;
+}
+
+.back-to-top {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.back-to-top:hover {
+  color: var(--color-primary);
+}
+
+/* Cuộn mượt khi bấm liên kết neo (tôn trọng người tắt chuyển động) */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ============ MÀN HÌNH LỚN HƠN ============ */
+
+@media (min-width: 768px) {
+  .page-container {
+    padding: 40px 24px 72px;
+  }
+
+  .page-header {
+    padding: 40px 36px;
+  }
+
+  .page-header__title {
+    font-size: 2.25rem;
+  }
+
+  .contact-layout > .form-block,
+  .contact-info {
+    padding: 30px 28px;
+  }
+
+  .about-values {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .policy-content__section {
+    padding: 28px 28px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .contact-layout {
+    grid-template-columns: 3fr 2fr;
+    gap: 40px;
+  }
+
+  .policy-layout {
+    grid-template-columns: 250px 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .policy-menu {
+    position: sticky;
+    top: 90px;
+    flex-direction: column;
+    padding-bottom: 0;
+    overflow: visible;
+  }
+
+  .policy-menu__link {
+    border-radius: var(--radius);
+  }
+}
+
+/* Người dùng tắt hiệu ứng chuyển động trong hệ điều hành */
+@media (prefers-reduced-motion: reduce) {
+  .form-block__input,
+  .form-block .btn,
+  .wishlist-empty .btn,
+  .account-logout,
+  .about-values__item,
+  .policy-menu__link,
+  .policy-content__section {
+    transition: none;
+  }
+
+  .about-values__item:hover {
+    transform: none;
+  }
+}

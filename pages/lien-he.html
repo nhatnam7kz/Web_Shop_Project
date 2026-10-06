@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Liên hệ | King Shop</title>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+    <link rel="stylesheet" href="../css/pages.css" />
+  </head>
+  <body>
+    <div id="site-header"></div>
+    <main>
+      <div class="page-container">
+        <header class="page-header">
+          <h1 class="page-header__title">Liên hệ với chúng tôi</h1>
+          <p class="page-header__lead">
+            Gửi câu hỏi về sản phẩm, đơn hàng hoặc đổi trả (xem trước
+            <a href="chinh-sach.html#doi-tra">chính sách đổi trả</a> và
+            <a href="chinh-sach.html#giao-nhan">giao nhận</a>). King Shop sẽ
+            phản hồi qua email hoặc điện thoại bạn để lại.
+          </p>
+        </header>
+        <div class="contact-layout">
+          <form class="form-block" id="contact-form" novalidate>
+            <div class="form-block__field">
+              <label class="form-block__label" for="contact-name"
+                >Họ và tên</label
+              >
+              <input
+                class="form-block__input"
+                id="contact-name"
+                name="contact-name"
+                type="text"
+                autocomplete="name"
+              />
+            </div>
+            <div class="form-block__field">
+              <label class="form-block__label" for="contact-email">Email</label>
+              <input
+                class="form-block__input"
+                id="contact-email"
+                name="contact-email"
+                type="email"
+                autocomplete="email"
+              />
+            </div>
+            <div class="form-block__field">
+              <label class="form-block__label" for="contact-phone"
+                >Số điện thoại (không bắt buộc)</label
+              >
+              <input
+                class="form-block__input"
+                id="contact-phone"
+                name="contact-phone"
+                type="tel"
+                autocomplete="tel"
+              />
+            </div>
+            <div class="form-block__field">
+              <label class="form-block__label" for="contact-message"
+                >Nội dung</label
+              >
+              <textarea
+                class="form-block__input"
+                id="contact-message"
+                name="contact-message"
+              ></textarea>
+            </div>
+            <button class="btn btn--primary" type="submit">Gửi liên hệ</button>
+          </form>
+          <aside class="contact-info">
+            <h2 class="contact-info__title">Thông tin King Shop</h2>
+            <ul class="contact-info__list">
+              <li>
+                <span class="contact-info__label">Địa chỉ</span>Trường Đại học
+                Giao thông Vận tải, số 3 phố Cầu Giấy, phường Láng, Hà Nội
+              </li>
+              <li>
+                <span class="contact-info__label">Hotline</span
+                ><a class="contact-info__link" href="tel:0123456789"
+                  >0123 456 789</a
+                >
+              </li>
+              <li>
+                <span class="contact-info__label">Email</span
+                ><a
+                  class="contact-info__link"
+                  href="mailto:kingshop.support@gmail.com"
+                  >kingshop.support@gmail.com</a
+                >
+              </li>
+              <li>
+                <span class="contact-info__label">Messenger</span
+                ><a
+                  class="contact-info__link"
+                  href="https://www.facebook.com/people/King-Shop/61594758165722/"
+                  target="_blank"
+                  rel="noopener"
+                  >Nhắn tin cho King Shop</a
+                >
+              </li>
+              <li>
+                <span class="contact-info__label">Giờ làm việc</span>8:00 –
+                21:00, tất cả các ngày trong tuần
+              </li>
+            </ul>
+            <!-- Địa chỉ sau q= có thể thay bằng địa chỉ khác, hoặc dán mã nhúng lấy từ Google Maps -->
+            <iframe
+              class="contact-map"
+              title="Vị trí cửa hàng trên Google Maps"
+              src="https://www.google.com/maps?q=Tr%C6%B0%E1%BB%9Dng%20%C4%90%E1%BA%A1i%20h%E1%BB%8Dc%20Giao%20th%C3%B4ng%20V%E1%BA%ADn%20t%E1%BA%A3i%2C%203%20C%E1%BA%A7u%20Gi%E1%BA%A5y%2C%20L%C3%A1ng%2C%20H%C3%A0%20N%E1%BB%99i&output=embed"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+            ></iframe>
+            <a
+              class="contact-map-link"
+              href="https://www.google.com/maps/search/?api=1&query=Tr%C6%B0%E1%BB%9Dng%20%C4%90%E1%BA%A1i%20h%E1%BB%8Dc%20Giao%20th%C3%B4ng%20V%E1%BA%ADn%20t%E1%BA%A3i%2C%203%20C%E1%BA%A7u%20Gi%E1%BA%A5y%2C%20L%C3%A1ng%2C%20H%C3%A0%20N%E1%BB%99i"
+              target="_blank"
+              rel="noopener"
+              >Mở trên Google Maps để xem đường đi</a
+            >
+          </aside>
+        </div>
+      </div>
+    </main>
+    <div id="site-footer"></div>
+    <div id="toast-container"></div>
+    <!-- Thứ tự script: KHÔNG ĐỔI -->
+    <script src="../js/config.js"></script>
+    <script src="../js/validate.js"></script>
+    <script src="../js/products.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/wishlist.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>
