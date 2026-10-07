@@ -326,6 +326,12 @@ function optionRow(label, content) {
     : "";
 }
 
+function optionRow(label, content) {
+  return content
+    ? `<div class="option-row"><span>${label}:</span>${content}</div>`
+    : "";
+}
+
 function productFormHtml(product, extraActions) {
   const list = (items, name, labelFn) =>
     items?.length ? `<div class="option-list">${optionButtons(items, name, "", labelFn)}</div>` : "";
