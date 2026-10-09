@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="./css/base.css">
   <link rel="stylesheet" href="./css/layout.css">
   <link rel="stylesheet" href="./css/components.css">
+    <link rel="stylesheet" href="./css/product.css">
   <link rel="stylesheet" href="./css/responsive.css">
 </head>
 <body>
@@ -129,22 +130,50 @@
     <section class="reviews-section section">
         <div class="container">
             <h2 class="home-section-title">Khách hàng đã nói gì</h2>
-            <div class="review-grid">
-                <article class="review-card">
-                    <strong>Hoàng Nhất Nam</strong>
-                    <div class="review-stars" aria-label="5 trên 5 sao">★★★★★</div>
-                    <p>Sản phẩm chất lượng, đóng gói cẩn thận và giao hàng nhanh.</p>
-                </article>
-                <article class="review-card">
-                    <strong>Đinh Đức Vương</strong>
-                    <div class="review-stars" aria-label="5 trên 5 sao">★★★★★</div>
-                    <p>Tư vấn nhiệt tình, mẫu mã đẹp, sẽ tiếp tục ủng hộ shop.</p>
-                </article>
-                <article class="review-card">
-                    <strong>Tuấn Kiệt</strong>
-                    <div class="review-stars" aria-label="5 trên 5 sao">★★★★★</div>
-                    <p>Đặt hàng nhanh, sản phẩm đúng mô tả và đóng gói rất kỹ.</p>
-                </article>
+            <div class="review-slider" data-review-slider>
+                <div class="review-viewport">
+                    <div class="review-grid">
+                        <div class="review-slide">
+                            <article class="review-card">
+                                <strong>Hoàng Nhất Nam</strong>
+                                <div class="review-stars" aria-label="5 trên 5 sao">★★★★★</div>
+                                <p>Sản phẩm chất lượng, đóng gói cẩn thận và giao hàng nhanh.</p>
+                            </article>
+                            <article class="review-card">
+                                <strong>Đinh Đức Vương</strong>
+                                <div class="review-stars" aria-label="5 trên 5 sao">★★★★★</div>
+                                <p>Tư vấn nhiệt tình, mẫu mã đẹp, sẽ tiếp tục ủng hộ shop.</p>
+                            </article>
+                            <article class="review-card">
+                                <strong>Tuấn Kiệt</strong>
+                                <div class="review-stars" aria-label="5 trên 5 sao">★★★★★</div>
+                                <p>Đặt hàng nhanh, sản phẩm đúng mô tả và đóng gói rất kỹ.</p>
+                            </article>
+                        </div>
+                        <div class="review-slide">
+                            <article class="review-card">
+                                <strong>Hoàng Nhất Vua</strong>
+                                <div class="review-stars" aria-label="5 trên 5 sao">★★★★★</div>
+                                <p>Sản phẩm đẹp hơn mong đợi, shop tư vấn nhanh và rất dễ thương.</p>
+                            </article>
+                            <article class="review-card">
+                                <strong>Đinh Đức Vua</strong>
+                                <div class="review-stars" aria-label="5 trên 5 sao">★★★★★</div>
+                                <p>Hàng giao đúng mẫu, chất lượng tốt và đóng gói cẩn thận.</p>
+                            </article>
+                            <article class="review-card">
+                                <strong>Phạm Tuấn Vua</strong>
+                                <div class="review-stars" aria-label="5 trên 5 sao">★★★★★</div>
+                                <p>Mua hàng thuận tiện, sản phẩm vừa đẹp vừa đúng mô tả.</p>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-controls">
+                    <button class="review-control" type="button" data-review-prev aria-label="Nhóm đánh giá trước">&#10094;</button>
+                    <div class="review-dots" data-review-dots aria-label="Chọn nhóm đánh giá"></div>
+                    <button class="review-control" type="button" data-review-next aria-label="Nhóm đánh giá tiếp theo">&#10095;</button>
+                </div>
             </div>
         </div>
     </section>
@@ -162,12 +191,23 @@
             <p class="discord-section__eyebrow">Cộng đồng King Shop</p>
             <h2 class="home-section-title">@Discord</h2>
             <p class="discord-section__text">Tham gia Discord để nhận thông báo sản phẩm mới và ưu đãi sớm.</p>
-            <div class="discord-gallery" aria-label="Hình ảnh sản phẩm King Shop">
-                <img src="./assets/images/products/sp01-1.jpg" alt="Áo gaming King Shop" loading="lazy">
-                <img src="./assets/images/products/sp18-1.jpg" alt="Cốc in logo King Shop" loading="lazy">
-                <img src="./assets/images/products/sp23-1.jpg" alt="Mô hình Lego gaming" loading="lazy">
-                <img src="./assets/images/products/sp30-1.jpg" alt="Pad chuột gaming" loading="lazy">
-                <img src="./assets/images/products/sp34-1.jpg" alt="Túi tote King Shop" loading="lazy">
+            <div class="discord-gallery" aria-label="Thành viên KingShop">
+                <figure class="discord-member">
+                    <img src="https://cdn.discordapp.com/avatars/1002018505601863730/ce38dc9ddd116275365a31a403cab2cc.png?size=1024" alt="Đức Nguyên" loading="lazy">
+                    <figcaption>Đức Nguyên</figcaption>
+                </figure>
+                <figure class="discord-member">
+                    <img src="https://cdn.discordapp.com/avatars/1293971058453516450/9ad6e9457bd91d9be994fa99719ec6ee.png?size=1024" alt="Tuấn Kiệt" loading="lazy">
+                    <figcaption>Tuấn Kiệt</figcaption>
+                </figure>
+                <figure class="discord-member">
+                    <img src="https://cdn.discordapp.com/avatars/599249216392658944/885f879aa546789b5a5d84ec2b998899.png?size=1024" alt="Nhất Nam" loading="lazy">
+                    <figcaption>Nhất Nam</figcaption>
+                </figure>
+                <figure class="discord-member">
+                    <img src="https://cdn.discordapp.com/avatars/1421821610590998740/cb5623038d941d134af07b808ca20fe4.png?size=1024" alt="Đức Vương" loading="lazy">
+                    <figcaption>Đức Vương</figcaption>
+                </figure>
             </div>
             <a class="discord-section__button" href="https://discord.com/" target="_blank" rel="noopener">Tham gia Discord</a>
         </div>
@@ -215,6 +255,7 @@
   <script src="./js/main.js"></script>
     <script src="./js/countdown.js"></script>
     <script src="./js/slider.js"></script>
+    <script src="./js/reviews.js"></script>
   <!-- JS riêng của trang: thêm dòng script ở đây (luôn nạp cuối), ví dụ <script src="./js/search.js"></script> -->
 </body>
 </html>
