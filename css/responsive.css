@@ -2,6 +2,10 @@
    Mỗi người tự lo responsive cho trang của mình trong file CSS riêng. */
 
 @media (max-width: 767px) {
+  .banner-img {
+    height: 220px;
+  }
+
   .section {
     padding: 24px 0;
   }
@@ -69,19 +73,49 @@
   }
 
   .review-grid {
+    width: 100%;
+  }
+
+  .review-slide {
     grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 2px;
+  }
+
+  .reviews-section .home-section-title {
+    margin-bottom: 14px;
+    font-size: 1.45rem;
+  }
+
+  .review-card {
+    min-height: 0;
+    padding: 18px;
+    border-radius: 10px;
+  }
+
+  .review-card strong {
+    font-size: 1rem;
+  }
+
+  .review-stars {
+    margin: 9px 0 6px;
+    font-size: .95rem;
   }
 
   .discord-gallery {
     display: flex;
-    gap: 8px;
+    gap: 12px;
     margin-right: -16px;
     overflow-x: auto;
-    padding-bottom: 8px;
+    padding: 4px 16px 12px 0;
+    scroll-snap-type: x mandatory;
+    scrollbar-color: #5865f2 #e1e4ff;
+    scrollbar-width: thin;
   }
 
-  .discord-gallery img {
+  .discord-member {
     flex: 0 0 42vw;
+    scroll-snap-align: start;
   }
 
   .collection-tabs {
