@@ -32,3 +32,16 @@ const CATEGORIES = [
   { slug: "do-luu-niem", name: "Đồ lưu niệm" },
   { slug: "combo", name: "Combo quà tặng" },
 ];
+
+/**
+ * Key localStorage riêng cho từng tài khoản: userStorageKey("shop_cart") -> "shop_cart_a@gmail.com".
+ * Trả về null nếu chưa đăng nhập. Đọc thẳng localStorage nên không phụ thuộc thứ tự nạp auth.js.
+ */
+function userStorageKey(baseKey) {
+  try {
+    const email = JSON.parse(localStorage.getItem(STORAGE_KEYS.currentUser));
+    return email ? `${baseKey}_${email}` : null;
+  } catch (error) {
+    return null;
+  }
+}
