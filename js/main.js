@@ -131,8 +131,12 @@ function renderFooter() {
       <div class="footer__bottom">© ${new Date().getFullYear()} ${SHOP_NAME} – Bài tập lớn môn Thiết kế Web</div>
     </footer>
     <div class="floating">
-      <a class="floating__btn" href="tel:${HOTLINE.replace(/\s/g, "")}" title="Gọi điện">📞</a>
-      <a class="floating__btn" href="${MESSENGER_URL}" target="_blank" rel="noopener" title="Messenger">💬</a>
+      <a class="floating__btn floating__phone" href="tel:${HOTLINE.replace(/\s/g, "")}" title="Gọi điện" aria-label="Gọi điện">
+        <img src="https://theme.hstatic.net/200000881795/1001243022/14/addthis-phone.svg?v=181" alt="">
+      </a>
+      <a class="floating__btn floating__messenger" href="${MESSENGER_URL}" target="_blank" rel="noopener" title="Messenger" aria-label="Mở Messenger">
+        <img src="${ROOT}assets/images/banner/mess.png" alt="">
+      </a>
       <button class="floating__btn floating__top" id="back-to-top" title="Lên đầu trang">↑</button>
     </div>`;
 }
