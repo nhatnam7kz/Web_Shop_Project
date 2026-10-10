@@ -93,6 +93,10 @@ button { cursor: pointer; }
   display: block;   
 }
 
+.banner-slide:nth-child(2) .banner-img {
+  object-position: center 40%;
+}
+
 .banner-control {
   position: absolute;
   top: 50%;
