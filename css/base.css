@@ -60,11 +60,86 @@ button { cursor: pointer; }
   box-sizing: border-box;
 }
 
+.banner-slider {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.banner-slides {
+  display: flex;
+}
+
+.banner-slide {
+  display: none;
+  width: 100%;
+  flex: 0 0 100%;
+}
+
+.banner-slide--active {
+  display: block;
+  animation: banner-fade-in .45s ease;
+}
+
+@keyframes banner-fade-in {
+  from { opacity: .45; }
+  to { opacity: 1; }
+}
+
 .banner-img {
   width: 100%;
-  height: auto;      
+  height: 360px;
+  object-fit: cover;
   display: block;   
-  border-radius: 12px; 
+}
+
+.banner-control {
+  position: absolute;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, .45);
+  color: #fff;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: background .2s ease;
+}
+
+.banner-control:hover,
+.banner-control:focus-visible {
+  background: rgba(0, 0, 0, .7);
+}
+
+.banner-control--prev { left: 14px; }
+.banner-control--next { right: 14px; }
+
+.banner-dots {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  display: flex;
+  gap: 8px;
+  transform: translateX(-50%);
+}
+
+.banner-dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .65);
+  cursor: pointer;
+}
+
+.banner-dot--active,
+.banner-dot:hover,
+.banner-dot:focus-visible {
+  background: #fff;
 }
 .do-hieu-king-shop p {
   margin: 0 0 28px;
@@ -217,24 +292,87 @@ button { cursor: pointer; }
   color: var(--color-text);
 }
 .review-grid {
+  display: flex;
+  transition: transform .45s ease;
+}
+.review-viewport {
+  overflow: hidden;
+}
+.review-slide {
+  flex: 0 0 100%;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
+  padding: 2px;
+}
+.reviews-section {
+  background: linear-gradient(180deg, #f8fafc 0%, #fff 100%);
+  overflow: hidden;
 }
 .review-card {
-  min-height: 150px;
-  padding: 20px;
-  background: var(--color-bg-soft);
-  border-radius: 4px;
+  min-width: 0;
+  min-height: 170px;
+  padding: 24px;
+  background: rgba(255, 255, 255, .92);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: 0 8px 22px rgba(34, 34, 34, .06);
+}
+.review-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 18px;
+}
+.review-control {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.review-control:hover,
+.review-control:focus-visible {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: #fff;
+}
+.review-dots {
+  display: flex;
+  gap: 7px;
+}
+.review-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-border);
+}
+.review-dot--active {
+  background: var(--color-primary);
+}
+.review-card strong {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 700;
 }
 .review-stars {
   margin: 12px 0 8px;
   color: #f4b400;
   letter-spacing: 2px;
+  font-size: 1.05rem;
 }
 .review-card p {
+  margin-bottom: 0;
   color: var(--color-muted);
   font-size: .9rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
 }
 .home-cta__link {
   display: block;
@@ -244,10 +382,13 @@ button { cursor: pointer; }
   border-radius: 4px;
 }
 .discord-section {
-  background: #f3f5ff;
+  background: #f4f5ff;
+  border-top: 1px solid #e1e4ff;
+  border-bottom: 1px solid #e1e4ff;
 }
 .discord-section__inner {
   text-align: center;
+  max-width: 900px;
 }
 .discord-section__eyebrow {
   margin-bottom: 8px;
@@ -257,30 +398,57 @@ button { cursor: pointer; }
   text-transform: uppercase;
 }
 .discord-section__text {
+  max-width: 520px;
+  margin: 0 auto;
   color: var(--color-muted);
 }
 .discord-gallery {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 6px;
-  margin: 24px 0;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 28px 0;
 }
-.discord-gallery img {
+.discord-member {
+  min-width: 0;
+  margin: 0;
+  padding: 10px 10px 12px;
+  border: 1px solid #dfe2fb;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .8);
+  box-shadow: 0 8px 20px rgba(88, 101, 242, .08);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.discord-member:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 26px rgba(88, 101, 242, .16);
+}
+.discord-member img {
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
+  border-radius: 8px;
+}
+.discord-member figcaption {
+  margin-top: 10px;
+  color: var(--color-text);
+  font-size: .85rem;
+  font-weight: 600;
 }
 .discord-section__button {
   display: inline-block;
   margin-top: 8px;
   padding: 10px 20px;
-  border-radius: 4px;
+  border-radius: 8px;
   background: #5865f2;
   color: #fff;
   font-weight: 600;
+  box-shadow: 0 6px 14px rgba(88, 101, 242, .22);
+  transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
 }
 .discord-section__button:hover {
   background: #4752c4;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(88, 101, 242, .3);
 }
 .countdown-wrapper {
   display: flex;
