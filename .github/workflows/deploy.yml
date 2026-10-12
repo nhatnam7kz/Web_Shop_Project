@@ -1,10 +1,10 @@
-name: Deploy static site to GitHub Pages
+
+name: Deploy Vanilla JS to GitHub Pages
 
 on:
   push:
     branches:
       - main
-      - master
   workflow_dispatch:
 
 permissions:
@@ -21,21 +21,21 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Configure GitHub Pages
+      - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
-      - name: Upload site artifact
+      - name: Upload website
         uses: actions/upload-pages-artifact@v3
         with:
           path: .
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy website
         id: deployment
         uses: actions/deploy-pages@v4
