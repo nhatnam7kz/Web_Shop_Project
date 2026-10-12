@@ -1,261 +1,387 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Trang chủ | King Shop</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Trang chủ | King Shop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-  <link rel="stylesheet" href="./css/base.css">
-  <link rel="stylesheet" href="./css/layout.css">
-  <link rel="stylesheet" href="./css/components.css">
-    <link rel="stylesheet" href="./css/product.css">
-  <link rel="stylesheet" href="./css/responsive.css">
-</head>
-<body>
-  <div id="site-header"></div>
+    <link rel="stylesheet" href="./css/base.css" />
+    <link rel="stylesheet" href="./css/layout.css" />
+    <link rel="stylesheet" href="./css/components.css" />
+    <link rel="stylesheet" href="./css/product.css" />
+    <link rel="stylesheet" href="./css/responsive.css" />
+    <link rel="stylesheet" href="./css/search-animation.css" />
+  </head>
+  <body>
+    <div id="site-header"></div>
     <main>
-        <section class="banner-container" aria-label="Banner nổi bật">
-            <div class="banner-slider" data-slider>
-                <div class="banner-slides">
-                    <a class="banner-slide banner-slide--active" href="./pages/san-pham.html">
-                        <img src="./assets/images/banner/banner.png" class="banner-img" alt="Khám phá sản phẩm nổi bật của King Shop">
-                    </a>
-                    <a class="banner-slide" href="./pages/san-pham.html?category=ao-xuan-he" tabindex="-1">
-                        <img src="./assets/images/products/sp01-1.jpg" class="banner-img" alt="Sản phẩm thời trang mới tại King Shop" loading="lazy">
-                    </a>
-                    <a class="banner-slide" href="./pages/san-pham.html?category=lego" tabindex="-1">
-                        <img src="./assets/images/products/sp23-1.jpg" class="banner-img" alt="Bộ sưu tập Lego tại King Shop" loading="lazy">
-                    </a>
-                </div>
-                <button class="banner-control banner-control--prev" type="button" data-slide-prev aria-label="Ảnh trước">&#10094;</button>
-                <button class="banner-control banner-control--next" type="button" data-slide-next aria-label="Ảnh tiếp theo">&#10095;</button>
-                <div class="banner-dots" data-slide-dots aria-label="Chọn ảnh banner"></div>
-            </div>
-        </section>
-    <section class="section">
-        <div class="container">
-            <div class="feature-list">
-                <div class="feature">
-                    <div class="feature-con"><img src="./assets/images/banner/ship.png"></div>
-                    <h3>Vận chuyển toàn Hà Nội</h3>
-                    <p>Vận chuyển nhanh chóng</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-con"><img src="./assets/images/banner/gift.png"></div>
-                    <h3>Ưu đãi hấp dẫn</h3>
-                    <p>Nhiều khuyến mãi hot</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-con"><img src="./assets/images/banner/quality.png"></div>
-                    <h3>Chất lượng đảm bảo</h3>
-                    <p>Sản phẩm đạt chất lượng</p>
-                </div>
-                <div class="feature">
-                    <div class="feature-con"><img src="./assets/images/banner/hotline.png"></div>
-                    <h3>Hotline:0123456789</h3>
-                    <p>Vui lòng gọi tới hotline để nhận hỗ trợ</p>
-                </div>
-            </div>    
-        </div>
-    </section>
-    <section class="do-hieu-king-shop">
-        <p>Đồ hiệu KING SHOP</p>
-      <div class="container">
-          <div class="category-grid"></div>
-      </div>
-    </section>
-    <section class="hot-deals-section">
-        <div class="hot-deals-container">
-            <div class="hot-deals-heading">
-                <a class="hot-deals-title" href="./pages/san-pham.html">Hàng hot</a>
-                <img class="hot-deals-badge" src="https://theme.hstatic.net/200000990840/1001345885/14/flashsale-hot.png?v=1763" alt="Hot deals">
-            </div>
-            <div class="hot-deals-toolbar">
-                <nav class="hot-deals-tabs" aria-label="Danh mục hàng hot">
-                    <div class="tab-buttons">
-                        <button class="tab-btn" data-tab="me-di-sinh">Hàng mới về</button>
-                        <button class="tab-btn tab-btn--active" data-tab="me-di-lam">Ấm áp ngày đông</button>
-                    </div>
-                        <div class="tab-content" id="me-di-sinh" hidden>
-                            <div class="product-grid hot-product-grid new-product-grid"></div>
-                        </div>
-                        <div class="tab-content" id="me-di-lam">
-                            <div class="product-grid hot-product-grid winter-product-grid"></div>
-                    </div>
-                </nav>
-                <div class="countdown-wrapper">
-                    <span class="countdown-label">Kết thúc sau</span>
-                    <div class="timer">
-                        <div class="time-box">
-                            <span id="hours">04</span>
-                            <small>Giờ</small>
-                        </div>
-                        <div class="time-box">
-                            <span id="minutes">27</span>
-                            <small>Phút</small>
-                        </div>
-                        <div class="time-box">
-                            <span id="seconds">59</span>
-                            <small>Giây</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="recommendations section">
-        <div class="container">
-            <h2 class="home-section-title">Đồ hè cho bạn</h2>
-            <div class="product-grid recommendation-grid"></div>
-            <a class="view-all-link" href="./pages/san-pham.html?category=ao-xuan-he">Xem tất cả <span aria-hidden="true">›</span></a>
-        </div>
-    </section>
-
-    <section class="collection-section section">
-        <div class="container">
-            <h2 class="home-section-title">Bộ sưu tập</h2>
-            <div class="collection-tabs" role="tablist" aria-label="Bộ sưu tập sản phẩm">
-                <button class="collection-tab collection-tab--active" type="button">Lego</button>
-                <a class="collection-tab" href="./pages/san-pham.html?category=ao-xuan-he">Đồ xuân hè</a>
-                <a class="collection-tab" href="./pages/san-pham.html?category=do-thu-dong">Đồ thu đông</a>
-            </div>
-            <div class="product-grid collection-grid"></div>
-            <a class="view-all-link" href="./pages/san-pham.html?category=lego">Xem tất cả <span aria-hidden="true">›</span></a>
-        </div>
-    </section>
-
-    <section class="reviews-section section">
-        <div class="container">
-            <h2 class="home-section-title">Khách hàng đã nói gì</h2>
-            <div class="review-slider" data-review-slider>
-                <div class="review-viewport">
-                    <div class="review-grid">
-                        <div class="review-slide">
-                            <article class="review-card">
-                                <strong>Hoàng Nhất Nam</strong>
-                                <div class="review-stars" aria-label="5 trên 5 sao">★★★★★</div>
-                                <p>Sản phẩm chất lượng, đóng gói cẩn thận và giao hàng nhanh.</p>
-                            </article>
-                            <article class="review-card">
-                                <strong>Đinh Đức Vương</strong>
-                                <div class="review-stars" aria-label="5 trên 5 sao">★★★★★</div>
-                                <p>Tư vấn nhiệt tình, mẫu mã đẹp, sẽ tiếp tục ủng hộ shop.</p>
-                            </article>
-                            <article class="review-card">
-                                <strong>Tuấn Kiệt</strong>
-                                <div class="review-stars" aria-label="5 trên 5 sao">★★★★★</div>
-                                <p>Đặt hàng nhanh, sản phẩm đúng mô tả và đóng gói rất kỹ.</p>
-                            </article>
-                        </div>
-                        <div class="review-slide">
-                            <article class="review-card">
-                                <strong>Hoàng Nhất Vua</strong>
-                                <div class="review-stars" aria-label="5 trên 5 sao">★★★★★</div>
-                                <p>Sản phẩm đẹp hơn mong đợi, shop tư vấn nhanh và rất dễ thương.</p>
-                            </article>
-                            <article class="review-card">
-                                <strong>Đinh Đức Vua</strong>
-                                <div class="review-stars" aria-label="5 trên 5 sao">★★★★★</div>
-                                <p>Hàng giao đúng mẫu, chất lượng tốt và đóng gói cẩn thận.</p>
-                            </article>
-                            <article class="review-card">
-                                <strong>Phạm Tuấn Vua</strong>
-                                <div class="review-stars" aria-label="5 trên 5 sao">★★★★★</div>
-                                <p>Mua hàng thuận tiện, sản phẩm vừa đẹp vừa đúng mô tả.</p>
-                            </article>
-                        </div>
-                    </div>
-                </div>
-                <div class="review-controls">
-                    <button class="review-control" type="button" data-review-prev aria-label="Nhóm đánh giá trước">&#10094;</button>
-                    <div class="review-dots" data-review-dots aria-label="Chọn nhóm đánh giá"></div>
-                    <button class="review-control" type="button" data-review-next aria-label="Nhóm đánh giá tiếp theo">&#10095;</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="home-cta section">
-        <div class="container">
-            <a class="home-cta__link" href="./pages/san-pham.html">
-                <img src="./assets/images/banner/banner.png" alt="Khám phá sản phẩm King Shop" loading="lazy">
+      <section class="banner-container" aria-label="Banner nổi bật">
+        <div class="banner-slider" data-slider>
+          <div class="banner-slides">
+            <a
+              class="banner-slide banner-slide--active"
+              href="./pages/san-pham.html"
+            >
+              <img
+                src="./assets/images/banner/banner.png"
+                class="banner-img"
+                alt="Khám phá sản phẩm nổi bật của King Shop"
+              />
             </a>
+            <a
+              class="banner-slide"
+              href="./pages/san-pham.html?category=ao-xuan-he"
+              tabindex="-1"
+            >
+              <img
+                src="./assets/images/products/sp01-1.jpg"
+                class="banner-img"
+                alt="Sản phẩm thời trang mới tại King Shop"
+                loading="lazy"
+              />
+            </a>
+            <a
+              class="banner-slide"
+              href="./pages/san-pham.html?category=lego"
+              tabindex="-1"
+            >
+              <img
+                src="./assets/images/products/sp23-1.jpg"
+                class="banner-img"
+                alt="Bộ sưu tập Lego tại King Shop"
+                loading="lazy"
+              />
+            </a>
+          </div>
+          <button
+            class="banner-control banner-control--prev"
+            type="button"
+            data-slide-prev
+            aria-label="Ảnh trước"
+          >
+            &#10094;
+          </button>
+          <button
+            class="banner-control banner-control--next"
+            type="button"
+            data-slide-next
+            aria-label="Ảnh tiếp theo"
+          >
+            &#10095;
+          </button>
+          <div
+            class="banner-dots"
+            data-slide-dots
+            aria-label="Chọn ảnh banner"
+          ></div>
         </div>
-    </section>
-
-    <section class="discord-section section">
-        <div class="container discord-section__inner">
-            <p class="discord-section__eyebrow">Cộng đồng King Shop</p>
-            <h2 class="home-section-title">@Discord</h2>
-            <p class="discord-section__text">Tham gia Discord để nhận thông báo sản phẩm mới và ưu đãi sớm.</p>
-            <div class="discord-gallery" aria-label="Thành viên KingShop">
-                <figure class="discord-member">
-                    <img src="https://cdn.discordapp.com/avatars/1002018505601863730/ce38dc9ddd116275365a31a403cab2cc.png?size=1024" alt="Đức Nguyên" loading="lazy">
-                    <figcaption>Đức Nguyên</figcaption>
-                </figure>
-                <figure class="discord-member">
-                    <img src="https://cdn.discordapp.com/avatars/1293971058453516450/9ad6e9457bd91d9be994fa99719ec6ee.png?size=1024" alt="Tuấn Kiệt" loading="lazy">
-                    <figcaption>Tuấn Kiệt</figcaption>
-                </figure>
-                <figure class="discord-member">
-                    <img src="https://cdn.discordapp.com/avatars/599249216392658944/885f879aa546789b5a5d84ec2b998899.png?size=1024" alt="Nhất Nam" loading="lazy">
-                    <figcaption>Nhất Nam</figcaption>
-                </figure>
-                <figure class="discord-member">
-                    <img src="https://cdn.discordapp.com/avatars/1421821610590998740/cb5623038d941d134af07b808ca20fe4.png?size=1024" alt="Đức Vương" loading="lazy">
-                    <figcaption>Đức Vương</figcaption>
-                </figure>
+      </section>
+      <section class="section">
+        <div class="container">
+          <div class="feature-list">
+            <div class="feature">
+              <div class="feature-con">
+                <img src="./assets/images/banner/ship.png" />
+              </div>
+              <h3>Vận chuyển toàn Hà Nội</h3>
+              <p>Vận chuyển nhanh chóng</p>
             </div>
-            <a class="discord-section__button" href="https://discord.com/" target="_blank" rel="noopener">Tham gia Discord</a>
+            <div class="feature">
+              <div class="feature-con">
+                <img src="./assets/images/banner/gift.png" />
+              </div>
+              <h3>Ưu đãi hấp dẫn</h3>
+              <p>Nhiều khuyến mãi hot</p>
+            </div>
+            <div class="feature">
+              <div class="feature-con">
+                <img src="./assets/images/banner/quality.png" />
+              </div>
+              <h3>Chất lượng đảm bảo</h3>
+              <p>Sản phẩm đạt chất lượng</p>
+            </div>
+            <div class="feature">
+              <div class="feature-con">
+                <img src="./assets/images/banner/hotline.png" />
+              </div>
+              <h3>Hotline:0123456789</h3>
+              <p>Vui lòng gọi tới hotline để nhận hỗ trợ</p>
+            </div>
+          </div>
         </div>
-    </section>
+      </section>
+      <section class="do-hieu-king-shop">
+        <h2 class="do-hieu-king-shop__title">Đồ hiệu KING SHOP</h2>
+        <div class="container">
+          <div class="category-grid"></div>
+        </div>
+      </section>
+      <section class="hot-deals-section">
+        <div class="hot-deals-container">
+          <div class="hot-deals-heading">
+            <a class="hot-deals-title" href="./pages/san-pham.html">Hàng hot</a>
+            <img
+              class="hot-deals-badge"
+              src="https://theme.hstatic.net/200000990840/1001345885/14/flashsale-hot.png?v=1763"
+              alt="Hot deals"
+            />
+          </div>
+          <div class="hot-deals-toolbar">
+            <nav class="hot-deals-tabs" aria-label="Danh mục hàng hot">
+              <div class="tab-buttons">
+                <button class="tab-btn" data-tab="me-di-sinh">
+                  Hàng mới về
+                </button>
+                <button class="tab-btn tab-btn--active" data-tab="me-di-lam">
+                  Ấm áp ngày đông
+                </button>
+              </div>
+              <div class="tab-content" id="me-di-sinh" hidden>
+                <div
+                  class="product-grid hot-product-grid new-product-grid"
+                ></div>
+              </div>
+              <div class="tab-content" id="me-di-lam">
+                <div
+                  class="product-grid hot-product-grid winter-product-grid"
+                ></div>
+              </div>
+            </nav>
+            <div class="countdown-wrapper">
+              <span class="countdown-label">Kết thúc sau</span>
+              <div class="timer">
+                <div class="time-box">
+                  <span id="hours">04</span>
+                  <small>Giờ</small>
+                </div>
+                <div class="time-box">
+                  <span id="minutes">27</span>
+                  <small>Phút</small>
+                </div>
+                <div class="time-box">
+                  <span id="seconds">59</span>
+                  <small>Giây</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="recommendations section">
+        <div class="container">
+          <h2 class="home-section-title">Đồ hè cho bạn</h2>
+          <div class="product-grid recommendation-grid"></div>
+          <a
+            class="view-all-link"
+            href="./pages/san-pham.html?category=ao-xuan-he"
+            >Xem tất cả <span aria-hidden="true">›</span></a
+          >
+        </div>
+      </section>
 
+      <section class="collection-section section">
+        <div class="container">
+          <h2 class="home-section-title">Bộ sưu tập</h2>
+          <div
+            class="collection-tabs"
+            role="tablist"
+            aria-label="Bộ sưu tập sản phẩm"
+          >
+            <button class="collection-tab collection-tab--active" type="button">
+              Lego
+            </button>
+            <a
+              class="collection-tab"
+              href="./pages/san-pham.html?category=ao-xuan-he"
+              >Đồ xuân hè</a
+            >
+            <a
+              class="collection-tab"
+              href="./pages/san-pham.html?category=do-thu-dong"
+              >Đồ thu đông</a
+            >
+          </div>
+          <div class="product-grid collection-grid"></div>
+          <a class="view-all-link" href="./pages/san-pham.html?category=lego"
+            >Xem tất cả <span aria-hidden="true">›</span></a
+          >
+        </div>
+      </section>
 
+      <section class="reviews-section section">
+        <div class="container">
+          <h2 class="home-section-title">Khách hàng đã nói gì</h2>
+          <div class="review-slider" data-review-slider>
+            <div class="review-viewport">
+              <div class="review-grid">
+                <div class="review-slide">
+                  <article class="review-card">
+                    <strong>Hoàng Nhất Nam</strong>
+                    <div class="review-stars" aria-label="5 trên 5 sao">
+                      ★★★★★
+                    </div>
+                    <p>
+                      Sản phẩm chất lượng, đóng gói cẩn thận và giao hàng nhanh.
+                    </p>
+                  </article>
+                  <article class="review-card">
+                    <strong>Đinh Đức Vương</strong>
+                    <div class="review-stars" aria-label="5 trên 5 sao">
+                      ★★★★★
+                    </div>
+                    <p>
+                      Tư vấn nhiệt tình, mẫu mã đẹp, sẽ tiếp tục ủng hộ shop.
+                    </p>
+                  </article>
+                  <article class="review-card">
+                    <strong>Tuấn Kiệt</strong>
+                    <div class="review-stars" aria-label="5 trên 5 sao">
+                      ★★★★★
+                    </div>
+                    <p>
+                      Đặt hàng nhanh, sản phẩm đúng mô tả và đóng gói rất kỹ.
+                    </p>
+                  </article>
+                </div>
+                <div class="review-slide">
+                  <article class="review-card">
+                    <strong>Hoàng Nhất Vua</strong>
+                    <div class="review-stars" aria-label="5 trên 5 sao">
+                      ★★★★★
+                    </div>
+                    <p>
+                      Sản phẩm đẹp hơn mong đợi, shop tư vấn nhanh và rất dễ
+                      thương.
+                    </p>
+                  </article>
+                  <article class="review-card">
+                    <strong>Đinh Đức Vua</strong>
+                    <div class="review-stars" aria-label="5 trên 5 sao">
+                      ★★★★★
+                    </div>
+                    <p>
+                      Hàng giao đúng mẫu, chất lượng tốt và đóng gói cẩn thận.
+                    </p>
+                  </article>
+                  <article class="review-card">
+                    <strong>Phạm Tuấn Vua</strong>
+                    <div class="review-stars" aria-label="5 trên 5 sao">
+                      ★★★★★
+                    </div>
+                    <p>Mua hàng thuận tiện, sản phẩm vừa đẹp vừa đúng mô tả.</p>
+                  </article>
+                </div>
+              </div>
+            </div>
+            <div class="review-controls">
+              <button
+                class="review-control"
+                type="button"
+                data-review-prev
+                aria-label="Nhóm đánh giá trước"
+              >
+                &#10094;
+              </button>
+              <div
+                class="review-dots"
+                data-review-dots
+                aria-label="Chọn nhóm đánh giá"
+              ></div>
+              <button
+                class="review-control"
+                type="button"
+                data-review-next
+                aria-label="Nhóm đánh giá tiếp theo"
+              >
+                &#10095;
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
 
+      <section class="home-cta section">
+        <div class="container">
+          <a class="home-cta__link" href="./pages/san-pham.html">
+            <img
+              src="./assets/images/banner/banner.png"
+              alt="Khám phá sản phẩm King Shop"
+              loading="lazy"
+            />
+          </a>
+        </div>
+      </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      <section class="discord-section section">
+        <div class="container discord-section__inner">
+          <p class="discord-section__eyebrow">Cộng đồng King Shop</p>
+          <h2 class="home-section-title">@Discord</h2>
+          <p class="discord-section__text">
+            Tham gia Discord để nhận thông báo sản phẩm mới và ưu đãi sớm.
+          </p>
+          <div class="discord-gallery" aria-label="Thành viên KingShop">
+            <figure class="discord-member">
+              <img
+                src="https://cdn.discordapp.com/avatars/1002018505601863730/ce38dc9ddd116275365a31a403cab2cc.png?size=1024"
+                alt="Đức Nguyên"
+                loading="lazy"
+              />
+              <figcaption>Đức Nguyên</figcaption>
+            </figure>
+            <figure class="discord-member">
+              <img
+                src="https://cdn.discordapp.com/avatars/1293971058453516450/9ad6e9457bd91d9be994fa99719ec6ee.png?size=1024"
+                alt="Tuấn Kiệt"
+                loading="lazy"
+              />
+              <figcaption>Tuấn Kiệt</figcaption>
+            </figure>
+            <figure class="discord-member">
+              <img
+                src="https://cdn.discordapp.com/avatars/599249216392658944/885f879aa546789b5a5d84ec2b998899.png?size=1024"
+                alt="Nhất Nam"
+                loading="lazy"
+              />
+              <figcaption>Nhất Nam</figcaption>
+            </figure>
+            <figure class="discord-member">
+              <img
+                src="https://cdn.discordapp.com/avatars/1421821610590998740/cb5623038d941d134af07b808ca20fe4.png?size=1024"
+                alt="Đức Vương"
+                loading="lazy"
+              />
+              <figcaption>Đức Vương</figcaption>
+            </figure>
+          </div>
+          <a
+            class="discord-section__button"
+            href="https://discord.com/"
+            target="_blank"
+            rel="noopener"
+            >Tham gia Discord</a
+          >
+        </div>
+      </section>
     </main>
 
-  <div id="site-footer"></div>
-  <div id="toast-container"></div>
-  <script src="./js/config.js"></script>
-  <script src="./js/validate.js"></script>
-  <script src="./js/products.js"></script>
-  <script src="./js/cart.js"></script>
-  <script src="./js/wishlist.js"></script>
-  <script src="./js/auth.js"></script>
-  <script src="./js/main.js"></script>
+    <div id="site-footer"></div>
+    <div id="toast-container"></div>
+    <script src="./js/config.js"></script>
+    <script src="./js/validate.js"></script>
+    <script src="./js/products.js"></script>
+    <script src="./js/cart.js"></script>
+    <script src="./js/wishlist.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/main.js"></script>
     <script src="./js/countdown.js"></script>
     <script src="./js/slider.js"></script>
     <script src="./js/reviews.js"></script>
-  <!-- JS riêng của trang: thêm dòng script ở đây (luôn nạp cuối), ví dụ <script src="./js/search.js"></script> -->
-</body>
+    <!-- JS riêng của trang: thêm dòng script ở đây (luôn nạp cuối), ví dụ <script src="./js/search.js"></script> -->
+  </body>
 </html>
