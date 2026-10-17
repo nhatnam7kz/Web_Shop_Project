@@ -2,18 +2,22 @@ document.addEventListener("DOMContentLoaded", () => {
 	const slider = document.querySelector("[data-slider]");
 	if (!slider) return;
 
+	const track = slider.querySelector(".banner-slides");
 	const slides = [...slider.querySelectorAll(".banner-slide")];
 	const dotsContainer = slider.querySelector("[data-slide-dots]");
 	const previousButton = slider.querySelector("[data-slide-prev]");
 	const nextButton = slider.querySelector("[data-slide-next]");
+	if (!track || !slides.length) return;
+
+	const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 	let currentIndex = 0;
 	let autoplayId;
 
 	const showSlide = (index) => {
 		currentIndex = (index + slides.length) % slides.length;
+		track.style.transform = `translateX(-${currentIndex * 100}%)`;
 		slides.forEach((slide, slideIndex) => {
 			const isActive = slideIndex === currentIndex;
-			slide.classList.toggle("banner-slide--active", isActive);
 			slide.tabIndex = isActive ? 0 : -1;
 			slide.setAttribute("aria-hidden", String(!isActive));
 		});
@@ -37,6 +41,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	const restartAutoplay = () => {
 		clearInterval(autoplayId);
+		if (slides.length < 2 || reducedMotion.matches || document.hidden ||
+			slider.matches(":hover") || slider.contains(document.activeElement)) return;
 		autoplayId = setInterval(() => showSlide(currentIndex + 1), 5000);
 	};
 
@@ -51,7 +57,9 @@ document.addEventListener("DOMContentLoaded", () => {
 	slider.addEventListener("mouseenter", () => clearInterval(autoplayId));
 	slider.addEventListener("mouseleave", restartAutoplay);
 	slider.addEventListener("focusin", () => clearInterval(autoplayId));
-	slider.addEventListener("focusout", restartAutoplay);
+	slider.addEventListener("focusout", () => setTimeout(restartAutoplay, 0));
+	document.addEventListener("visibilitychange", restartAutoplay);
+	reducedMotion.addEventListener("change", restartAutoplay);
 
 	showSlide(0);
 	restartAutoplay();

@@ -53,44 +53,41 @@ button { cursor: pointer; }
   gap: 16px;
 }
 .banner-container {
-  max-width: 1200px; 
+  max-width: var(--container-width);
   width: 100%;
-  margin: 0 auto;   
-  padding: 0 16px;  
-  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 0 16px;
 }
 
 .banner-slider {
   position: relative;
   overflow: hidden;
   border-radius: 12px;
+  background: var(--color-bg-soft);
 }
 
 .banner-slides {
   display: flex;
+  transition: transform .45s ease;
 }
 
 .banner-slide {
-  display: none;
-  width: 100%;
-  flex: 0 0 100%;
-}
-
-.banner-slide--active {
   display: block;
-  animation: banner-fade-in .45s ease;
-}
-
-@keyframes banner-fade-in {
-  from { opacity: .45; }
-  to { opacity: 1; }
+  min-width: 0;
+  flex: 0 0 100%;
+  aspect-ratio: 1672 / 941;
 }
 
 .banner-img {
   width: 100%;
-  height: 360px;
-  object-fit: cover;
-  display: block;   
+  height: 100%;
+  object-fit: contain;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .banner-slides {
+    transition: none;
+  }
 }
 
 .banner-control {
