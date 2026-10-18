@@ -19,8 +19,20 @@
  * Trả về null nếu chưa đăng nhập (lúc đó coi như không có giỏ).
  */
 function cartStorageKey() {
-  const base = (typeof STORAGE_KEYS !== "undefined" && STORAGE_KEYS.cart) ? STORAGE_KEYS.cart : "shop_cart";
-  return typeof userStorageKey === "function" ? userStorageKey(base) : base;
+  // Dòng 1: chọn tên gốc
+  let base;
+  if (typeof STORAGE_KEYS !== "undefined" && STORAGE_KEYS.cart) {
+    base = STORAGE_KEYS.cart;   // lấy từ file config
+  } else {
+    base = "shop_cart";         // không có thì dùng tên mặc định
+  }
+
+  // Dòng 2: gắn thêm email người dùng
+  if (typeof userStorageKey === "function") {
+    return userStorageKey(base);  // vd: "shop_cart_a@gmail.com"
+  } else {
+    return base;                  // không có hàm đó thì dùng tên gốc
+  }
 }
 
 /** Chuẩn hóa 1 dòng giỏ hàng: id là số, size/color rỗng thì thành null */
