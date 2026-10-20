@@ -1,15 +1,6 @@
-/* ==========================================================================
-   1. TIỆN ÍCH CHUNG
-   ========================================================================== */
-
 /* Khóa cuộn trang. JS thêm class này vào <body> khi mở popup Quick View
    để người dùng không cuộn được trang nền phía sau popup. */
 .no-scroll { overflow: hidden; }
-
-
-/* ==========================================================================
-   2. BREADCRUMB (đường dẫn: Trang chủ / Sản phẩm / Danh mục / Tên SP)
-   ========================================================================== */
 
 .breadcrumb {
   display: flex;                    /* các mục (link và dấu "/") xếp thành 1 hàng ngang */
@@ -21,11 +12,6 @@
 }
 /* Rê chuột vào link breadcrumb thì đổi sang màu chủ đạo của web */
 .breadcrumb a:hover { color: var(--color-primary); }
-
-
-/* ==========================================================================
-   3. TRANG DANH MỤC SẢN PHẨM (CATALOG)
-   ========================================================================== */
 
 /* Khoảng trống phía dưới cùng của trang để nội dung không dính sát footer */
 .catalog-page { padding-bottom: 40px; }
@@ -48,8 +34,9 @@
   color: #3b4fd8;                   /* màu chữ xanh dương đậm */
 }
 /* Hình tròn mờ trang trí ở góc phải trên banner (pseudo-element, không có trong HTML) */
-.catalog-banner::after {
-  content: "";                      /* bắt buộc phải có để ::after hiển thị */
+.catalog-banner::after { 
+  z-index: -0.5;           /* Thuộc tính ::after giúp thêm phần tử mà ko cần html */
+  content: "";                      
   position: absolute;               /* đặt tự do, không chiếm chỗ trong flex */
   right: -40px;                     /* lệch ra ngoài mép phải 40px (bị overflow cắt bớt -> thấy nửa hình tròn) */
   top: -40px;                       /* lệch ra ngoài mép trên 40px */
@@ -61,10 +48,9 @@
 }
 /* Khối chữ (tiêu đề + dòng mô tả) xếp dọc */
 .catalog-banner__text {
-  position: relative;               /* cần có để z-index có tác dụng */
   z-index: 1;                       /* nằm TRÊN hình tròn trang trí */
   display: flex;
-  flex-direction: column;           /* xếp tiêu đề và mô tả theo chiều dọc */
+  flex-direction: column;           /* xếp tiêu đề và mô tả có display flex theo chiều dọc */
   gap: 4px;
 }
 /* Tiêu đề lớn của banner */
@@ -81,6 +67,7 @@
 }
 /* Ảnh lớn hơn khung và bị cắt phía dưới, tạo hiệu ứng nhân vật "nhô lên" từ đáy banner */
 .catalog-banner__logos img {
+  z-index: 1;
   position: absolute;
   left: 30%;                        /* điểm giữa ảnh nằm ở 30% chiều ngang khung */
   bottom: -100px;                   /* hạ ảnh xuống 100px dưới đáy -> phần dưới bị overflow cắt */
@@ -89,7 +76,7 @@
   max-width: none;                  /* gỡ giới hạn max-width của CSS reset để ảnh không bị ép nhỏ */
   max-height: none;                 /* tương tự cho chiều cao */
   transform: translateX(-50%);      /* dịch ảnh sang trái nửa chiều rộng của chính nó -> căn giữa quanh điểm left:30% */
-  pointer-events: none;             /* ảnh không bắt chuột */
+  pointer-events: none;             /* Khi di ảnh vào chuột không bị mất đi pointer của banner gốc*/
 }
 /* Nút kêu gọi hành động (CTA) trên banner */
 .catalog-banner__cta {
@@ -115,7 +102,7 @@
 
 /* ---------- 3.3 THANH CÔNG CỤ: TIÊU ĐỀ + SẮP XẾP + SỐ LƯỢNG ---------- */
 
-.catalog-toolbar {
+.catalog-toolbar {                   /* Thanh chứa dòng chữ sản phẩm  */
   display: flex;
   flex-wrap: wrap;                  /* mobile: tiêu đề và ô sắp xếp tự xuống dòng */
   align-items: center;
@@ -192,15 +179,6 @@
   padding: 6px 0;
   font-size: .9rem;
 }
-/* Nút "Xóa bộ lọc" trông như link chữ */
-.filter-clear {
-  margin-top: 6px;
-  border: 0;
-  background: none;
-  color: var(--color-primary);
-  font-size: .8rem;
-}
-
 /* ---------- 3.5 Ô MÀU (SWATCH) CHO BỘ LỌC MÀU ---------- */
 
 /* Chấm tròn nhỏ hiển thị màu */
@@ -243,7 +221,7 @@
   object-position: center;          /* khi cắt thì giữ phần chính giữa của ảnh */
 }
 /* Thanh 2 nút ở đáy ảnh (Tùy chọn | Xem nhanh): mặc định ẩn, hiện khi rê chuột vào thẻ */
-.product-card__actions {
+.product-card__actions {            
   position: absolute;               /* ba dòng right/bottom/left = 0 làm thanh nằm sát đáy và rộng bằng cả khung ảnh */
   right: 0;
   bottom: 0;
@@ -253,8 +231,8 @@
   transform: translateY(8px);       /* hạ xuống 8px để khi hiện sẽ trượt nhẹ lên */
   transition: .2s;                  /* mọi thay đổi diễn ra trong 0.2 giây (tạo hiệu ứng mượt) */
 }
-/* Rê chuột vào cả thẻ -> thanh nút hiện rõ và về đúng vị trí */
-.product-card:hover .product-card__actions {
+/* Khi đưa chuột vào thẻ product-card thì sẽ áp dụng hết các thẻ con khác nằm trong thẻ product-card cho product-carf__actions */
+.product-card:hover .product-card__actions { 
   opacity: 1;
   transform: none;
 }
@@ -315,11 +293,6 @@
   text-align: center;
 }
 
-
-/* ==========================================================================
-   4. TRANG CHI TIẾT SẢN PHẨM
-   ========================================================================== */
-
 /* Bố cục 2 phần: gallery ảnh và thông tin.
    Mobile: 1 cột (ảnh trên, thông tin dưới). Từ 768px: 2 cột cạnh nhau. */
 .product-detail {
@@ -349,14 +322,11 @@
   border: 1px solid transparent;
   background: var(--color-bg-soft);
   transition: border-color .2s;     /* viền đổi màu mượt trong 0.2s */
+  aspect-ratio: 4 / 5;              /* Thumbnail có tỉ lệ 4:5 tỉ lệ rộng : cao */
+  overflow: hidden; /* cắt phần bị nội dung bị thừa ra */
 }
 /* Thumbnail đang được chọn: viền màu chủ đạo */
 .gallery-thumb.is-active { border-color: var(--color-primary); }
-/* Thumbnail có tỉ lệ 4:5 (hơi cao) */
-.gallery-thumb {
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
-}
 /* Ảnh (cả thumbnail lẫn ảnh lớn) phủ kín khung, cắt giữa, không méo */
 .gallery-thumb img,
 .product-gallery__main img {
@@ -366,8 +336,6 @@
   object-fit: cover;
   object-position: center;
 }
-/* Khung ảnh lớn cũng tỉ lệ 4:5 */
-.product-gallery__main { aspect-ratio: 4 / 5; }
 
 /* ---------- 4.2 THÔNG TIN SẢN PHẨM ---------- */
 
@@ -481,7 +449,7 @@
 /* 3 ô cam kết (giao hàng, ưu đãi, chính hãng) chia đều 3 cột */
 .product-assures {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 cột bằng nhau */
+  grid-template-columns: repeat(3, 1fr); /* chia 3 cột với tỉ lệ bằng nhau*/
   gap: 8px;
   padding: 14px 0;
   border-top: 1px solid var(--color-border);
@@ -504,11 +472,6 @@
   font-size: 1.4rem;
   font-weight: 500;
 }
-
-
-/* ==========================================================================
-   5. QUICK VIEW (POPUP XEM NHANH SẢN PHẨM)
-   ========================================================================== */
 
 /* Lớp phủ toàn màn hình chứa popup */
 .quick-view {
@@ -554,7 +517,7 @@
   gap: 20px;
 }
 /* Ảnh nằm trực tiếp trong grid (dấu > nghĩa là con trực tiếp): hình vuông, phủ kín */
-.quick-view__grid > img {
+.quick-view__grid > img { /* nghia là áp dụng mọi thuộc tính bên dưới cho img nằm trong phần tử grid cảu khối quick_view */ 
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
@@ -566,11 +529,6 @@
   margin-top: 8px;
   color: #2b6ce4;
 }
-
-
-/* ==========================================================================
-   6. MŨI TÊN CHUYỂN ẢNH TRONG GALLERY
-   ========================================================================== */
 
 /* Nút mũi tên tròn trắng mờ, nằm giữa chiều cao ảnh, mặc định ẩn */
 .gallery-arrow {
@@ -592,11 +550,11 @@
 .gallery-next { right: 8px; }       /* mũi tên phải, cách mép phải 8px */
 /* Khung ảnh lớn là mốc định vị cho mũi tên */
 .product-gallery__main {
+  aspect-ratio: 4 / 5;              /* Khung ảnh lớn cũng tỉ lệ 4:5 */
   position: relative;
   overflow: hidden;                 /* các ảnh xếp ngang trong track chỉ thấy 1 ảnh, phần còn lại bị cắt */
   align-self: start;                /* không bị kéo cao bằng cột thumbnail (tránh ảnh bị giãn) */
 }
-.gallery-main-img { display: block; }
 /* Rê chuột vào ảnh lớn -> hiện mũi tên */
 .product-gallery__main:hover .gallery-arrow { opacity: 1; }
 .gallery-arrow:hover { background: #fff; } /* rê vào chính nút thì nền trắng đặc */
@@ -609,11 +567,6 @@
   overflow-x: auto;                 /* nhiều ảnh thì cuộn ngang */
 }
 .quick-view .gallery-thumb { flex: 0 0 56px; } /* mỗi thumbnail rộng cố định 56px, không co */
-
-
-/* ==========================================================================
-   7. RESPONSIVE (THAY ĐỔI GIAO DIỆN THEO KÍCH THƯỚC MÀN HÌNH)
-   ========================================================================== */
 
 /* ---------- Từ 768px trở lên (tablet, laptop) ---------- */
 @media (min-width: 768px) {
@@ -637,8 +590,8 @@
 }
 
 /* ---------- Từ 800px trở xuống (mobile) ---------- */
-@media (max-width: 800px) {
-  /* Banner thấp hơn, đệm và khoảng cách nhỏ lại cho vừa màn hình hẹp */
+@media (max-width: 800px) { /* cho CSS biết “chỉ áp dụng các style bên trong khi điều kiện đúng”*/
+   /* Banner thấp hơn, đệm và khoảng cách nhỏ lại cho vừa màn hình hẹp */
   .catalog-banner { height: 100px; padding: 0 12px; gap: 6px; }
   /* Khối chữ chiếm phần còn lại; min-width:0 cho phép nó co nhỏ thay vì chống tràn banner */
   .catalog-banner__text { flex: 1 1 0; min-width: 0; gap: 2px; }
