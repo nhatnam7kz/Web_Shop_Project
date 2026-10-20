@@ -43,3 +43,9 @@ Nếu ảnh hoặc sản phẩm không hiện, hãy mở dự án bằng VS Code
 ## Lưu ý
 
 Website chỉ có phần giao diện, không có máy chủ hay cơ sở dữ liệu thật. Tài khoản và đơn hàng chỉ được lưu trong trình duyệt của máy đang dùng; việc thanh toán chỉ là mô phỏng.
+
+## SEO cơ bản
+
+- Tiêu đề trang rõ ràng, thống nhất tên King Shop.
+- Mỗi trang có meta description mô tả nội dung.
+- Trang chủ có H1, đoạn giới thiệu và liên kết đến danh sách sản phẩm.
