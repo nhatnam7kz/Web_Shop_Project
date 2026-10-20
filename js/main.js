@@ -119,7 +119,6 @@ function renderFooter() {
         </div>
         <div>
           <h3 class="footer__title">Nhận tin khuyến mãi</h3>
-          <!-- Logic xử lý form này do Vương làm (validate email, thông báo) -->
           <form id="newsletter-form" class="footer__newsletter" novalidate>
             <input type="email" id="newsletter-email" placeholder="Email của bạn">
             <button type="submit" class="btn btn--primary">Đăng ký</button>
@@ -164,7 +163,6 @@ function initHeaderEvents() {
     });
   }
 }
-
 /** Gắn icon cho tab trình duyệt */
 function setFavicon() {
   let link = document.querySelector('link[rel="icon"]');
