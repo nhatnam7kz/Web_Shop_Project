@@ -4,7 +4,7 @@
  */
 
 // ---------- Hàm đọc/ghi localStorage dùng chung (an toàn, có try/catch) ----------
-
+// Tầng lưu trữ an toàn (readJsonStorage, writeJsonStorage)
 /**
  * Đọc JSON từ localStorage.
  * @param {string} key - key lấy từ STORAGE_KEYS
@@ -30,7 +30,7 @@ function writeJsonStorage(key, value) {
 }
 
 // ---------- Hàm kiểm tra giá trị ----------
-
+// Bộ lọc kiểm tra dữ liệu (isValidEmail, isValidPhone, isNotEmpty)
 /** Email hợp lệ cơ bản: có @, có tên miền, không có khoảng trắng. */
 function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(value).trim());
@@ -47,7 +47,7 @@ function isNotEmpty(value) {
 }
 
 // ---------- Hiện / xóa lỗi dưới ô nhập ----------
-
+// Thao tác giao diện báo lỗi trực quan (showFieldError, clearFieldError)
 /**
  * Hiện lỗi ngay dưới ô nhập.
  * @param {HTMLElement} inputEl - ô nhập bị lỗi
@@ -166,6 +166,7 @@ function handleNewsletterSubmit(form) {
 }
 
 // Footer do main.js đổ vào sau khi tải trang, nên dùng event delegation trên document.
+// Bắt sự kiện toàn trang bằng Event Delegation
 document.addEventListener("submit", (event) => {
   const form = event.target;
   if (form.id === "contact-form") {
@@ -185,7 +186,7 @@ document.addEventListener("input", (event) => {
 });
 
 // ---------- Nhảy đúng tới mục khi mở link dạng trang.html#id ----------
-
+// Tự động cuộn đến vị trí nội dung (scrollToHashTarget)
 /**
  * Cuộn tới đúng mục khi mở link dạng trang.html#id hoặc trang.html?p=id
  * (footer của Nguyên dùng ?p=). Mục tìm được sẽ được đánh dấu bằng class "is-linked".
