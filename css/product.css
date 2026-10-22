@@ -1,4 +1,3 @@
-
 .no-scroll { overflow: hidden; }
 
 .breadcrumb {
@@ -89,10 +88,9 @@
   font-weight: 700;                 /* chữ đậm */
 }
 
-/* ---------- 3.2 BỐ CỤC CHÍNH: SIDEBAR LỌC + LƯỚI SẢN PHẨM ---------- */
+/* ---------- 3.2 BỐ CỤC CHÍNH: LƯỚI SẢN PHẨM ---------- */
 
-/* Mặc định (mobile) chỉ 1 cột: sidebar nằm trên, lưới sản phẩm nằm dưới.
-   Từ 768px trở lên sẽ đổi thành 2 cột  */
+/* Chỉ 1 cột: lưới sản phẩm chiếm toàn bộ chiều ngang */
 .catalog-layout {
   display: grid;
   grid-template-columns: 1fr;       /* 1 cột chiếm toàn bộ chiều ngang */
@@ -135,49 +133,6 @@
   font-size: .85rem;
 }
 
-/* ---------- 3.4 BỘ LỌC Ở SIDEBAR ---------- */
-
-/* Một nhóm lọc (ví dụ: Danh mục, Màu sắc, Giá). Là thẻ <details> nên bấm vào để thu gọn/mở ra. */
-.filter-group {
-  padding: 12px 0;
-  border-bottom: 1px solid var(--color-border); /* đường kẻ ngăn cách giữa các nhóm */
-}
-/* Tiêu đề của nhóm lọc (thẻ <summary>) */
-.filter-group summary {
-  cursor: pointer;                  /* con trỏ bàn tay báo hiệu bấm được */
-  font-size: .8rem;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;        /* viết HOA toàn bộ */
-}
-/* Link danh mục và nút lọc màu: làm cho trông giống nhau (mỗi mục là 1 dòng danh sách) */
-.filter-links a,
-.filter-color {
-  display: flex;
-  align-items: center;
-  gap: 8px;                         /* khoảng cách giữa chấm màu và tên màu */
-  width: 100%;                      /* chiếm hết chiều ngang để dễ bấm */
-  padding: 7px 0;
-  border: 0;                        /* các thuộc tính border/background/text-align này dùng để */
-  background: none;                 /* xóa giao diện mặc định của <button>, */
-  color: var(--color-text);         /* khiến nút nhìn giống chữ thường như thẻ <a> */
-  text-align: left;
-}
-/* Rê chuột hoặc đang được chọn (class is-active do JS thêm) -> chữ xanh */
-.filter-links a:hover,
-.filter-links a.is-active,
-.filter-color:hover,
-.filter-color.is-active {
-  color: #2b6ce4;
-}
-/* Ô checkbox lọc (ví dụ: lọc theo khoảng giá) */
-.filter-check {
-  display: flex;
-  align-items: center;
-  gap: 8px;                         /* cách giữa checkbox và nhãn */
-  padding: 6px 0;
-  font-size: .9rem;
-}
 /* ---------- 3.5 Ô MÀU (SWATCH) CHO BỘ LỌC MÀU ---------- */
 
 /* Chấm tròn nhỏ hiển thị màu */
@@ -569,11 +524,7 @@
 
 /* ---------- Từ 768px trở lên (tablet, laptop) ---------- */
 @media (min-width: 768px) {
-  /* Giữ chiều cao tối thiểu để trang không bị "giật" khi lọc ra ít sản phẩm */
-  .catalog-sidebar,
   .catalog-grid { min-height: 600px; }
-  /* Đổi bố cục catalog thành 2 cột: sidebar 220px | lưới sản phẩm chiếm phần còn lại */
-  .catalog-layout { grid-template-columns: 220px 1fr; }
   /* Lưới sản phẩm 3 cột. minmax(0, 1fr) cho phép cột co nhỏ được (không bị nội dung dài chống rộng).
      !important để đè các style khác (vd style inline đặt từ JS hoặc file CSS khác). */
   .catalog-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }

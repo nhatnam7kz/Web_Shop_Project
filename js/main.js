@@ -31,11 +31,6 @@ function renderHeader() {
   const el = document.getElementById("site-header");
   if (!el) return;
   const page = (name) => `${ROOT}pages/${name}.html`;
-  const catLinks = CATEGORIES.map(
-    (c) =>
-      `<li><a href="${page("san-pham")}?category=${c.slug}">${c.name}</a></li>`,
-  ).join("");
-
   el.innerHTML = `
     <div class="topbar" id="topbar">
       <span>Website chính thức của ${SHOP_NAME}</span>
@@ -52,10 +47,7 @@ function renderHeader() {
         <nav class="nav" id="main-nav">
           <ul class="nav__list">
             <li><a href="${ROOT}index.html">Trang chủ</a></li>
-            <li class="nav__item--dropdown">
-              <a href="${page("san-pham")}">Sản phẩm</a>
-              <ul class="nav__dropdown">${catLinks}</ul>
-            </li>
+            <li><a href="${page("san-pham")}">Sản phẩm</a></li>
             <li><a href="${page("gioi-thieu")}">Giới thiệu</a></li>
             <li><a href="${page("lien-he")}">Liên hệ</a></li>
           </ul>
