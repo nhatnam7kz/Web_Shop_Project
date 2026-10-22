@@ -1,5 +1,4 @@
-/* Khóa cuộn trang. JS thêm class này vào <body> khi mở popup Quick View
-   để người dùng không cuộn được trang nền phía sau popup. */
+
 .no-scroll { overflow: hidden; }
 
 .breadcrumb {
@@ -93,7 +92,7 @@
 /* ---------- 3.2 BỐ CỤC CHÍNH: SIDEBAR LỌC + LƯỚI SẢN PHẨM ---------- */
 
 /* Mặc định (mobile) chỉ 1 cột: sidebar nằm trên, lưới sản phẩm nằm dưới.
-   Từ 768px trở lên sẽ đổi thành 2 cột (xem phần responsive cuối file). */
+   Từ 768px trở lên sẽ đổi thành 2 cột  */
 .catalog-layout {
   display: grid;
   grid-template-columns: 1fr;       /* 1 cột chiếm toàn bộ chiều ngang */
@@ -191,17 +190,17 @@
   border-radius: 50%;               /* hình tròn */
 }
 /* Mỗi class tô 1 màu. Tên class là slug màu trong dữ liệu sản phẩm (JS ghép: swatch--${slug}) */
-.swatch--den { background: #111; }          /* đen */
-.swatch--trang { background: #fff; }        /* trắng */
-.swatch--xam { background: #8a8a8a; }       /* xám */
-.swatch--be { background: #d8c4a8; }        /* be */
-.swatch--hong { background: #e8899b; }      /* hồng */
-.swatch--xanh-navy { background: #173a63; } /* xanh navy */
-.swatch--do { background: #d62828; }        /* đỏ */
-.swatch--vang { background: #f4c430; }      /* vàng */
-.swatch--xanh-reu { background: #4a5d23; }  /* xanh rêu */
+.swatch--den { background: #111; }          
+.swatch--trang { background: #fff; }        
+.swatch--xam { background: #8a8a8a; }      
+.swatch--be { background: #d8c4a8; }        
+.swatch--hong { background: #e8899b; }      
+.swatch--xanh-navy { background: #173a63; } 
+.swatch--do { background: #d62828; }        
+.swatch--vang { background: #f4c430; }    
+.swatch--xanh-reu { background: #4a5d23; }  
 .swatch--trong { background: linear-gradient(135deg, #fff 50%, #cde 50%); } /* "trong suốt": chia chéo nửa trắng nửa xanh nhạt */
-.swatch--xanh-la { background: #2a9d5c; }   /* xanh lá */
+.swatch--xanh-la { background: #2a9d5c; }   
 
 /* ---------- 3.6 THẺ SẢN PHẨM (PRODUCT CARD) ---------- */
 
@@ -590,7 +589,7 @@
 }
 
 /* ---------- Từ 800px trở xuống (mobile) ---------- */
-@media (max-width: 800px) { /* cho CSS biết “chỉ áp dụng các style bên trong khi điều kiện đúng”*/
+@media (max-width: 800px) { /* cho CSS biết “chỉ áp dụng các style bên trong khi điều kiện đúng”*/ /* @media được gọi là truy vấn */
    /* Banner thấp hơn, đệm và khoảng cách nhỏ lại cho vừa màn hình hẹp */
   .catalog-banner { height: 100px; padding: 0 12px; gap: 6px; }
   /* Khối chữ chiếm phần còn lại; min-width:0 cho phép nó co nhỏ thay vì chống tràn banner */
