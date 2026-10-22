@@ -12,16 +12,6 @@ const COLOR_LABELS = {
   "xanh-la": "Xanh lá",
 };
 
-const TAG_LABELS = { trending: "Trending", new: "Mới", sale: "Giảm giá" };
-
-const PRICE_RANGES = [
-  { id: "under-150", label: "Giá dưới 150.000₫", min: 0, max: 150000 },
-  { id: "150-200", label: "150.000₫ - 200.000₫", min: 150000, max: 200000 },
-  { id: "200-250", label: "200.000₫ - 250.000₫", min: 200000, max: 250000 },
-  { id: "250-350", label: "250.000₫ - 350.000₫", min: 250000, max: 350000 },
-  { id: "over-350", label: "Giá trên 350.000₫", min: 350000, max: Infinity },
-];
-
 const LOAD_ERROR_HTML = "<p>Không thể tải sản phẩm lúc này.</p>";
 
 /* ---------- Dữ liệu ---------- */
@@ -122,9 +112,6 @@ function firstImageUrl(product) {
 }
 
 function renderProductCard(product) {
-  const tag = product.tag
-    ? `<span class="product-card__tag">${TAG_LABELS[product.tag] || product.tag}</span>`
-    : "";
   const soldOutClass = product.inStock ? "" : " product-card--sold-out";
   const optionLabel = product.inStock ? "Tùy chọn" : "Hết hàng";
   const url = detailUrl(product.id);
@@ -134,7 +121,6 @@ function renderProductCard(product) {
       <div class="product-card__media">
         <a class="product-card__image" href="${url}">
           <img src="${firstImageUrl(product)}" alt="${product.name}" loading="lazy">
-          ${tag}
         </a>
         <div class="product-card__actions">
           <a class="product-card__option" href="${url}">${optionLabel}</a>

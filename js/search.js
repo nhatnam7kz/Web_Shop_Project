@@ -7,8 +7,6 @@ function catalogStateFromUrl() {
   return {
     q: (params.get("q") || "").trim(),
     category: params.get("category") || "",
-    color: params.get("color") || "",
-    price: params.get("price") || "",
     sort: params.get("sort") || "alpha-asc",
     page: Math.max(1, Number(params.get("page")) || 1),
   };
@@ -18,8 +16,6 @@ function writeCatalogUrl(state) {
   const params = new URLSearchParams();
   if (state.q) params.set("q", state.q);
   if (state.category) params.set("category", state.category);
-  if (state.color) params.set("color", state.color);
-  if (state.price) params.set("price", state.price);
   if (state.sort && state.sort !== "alpha-asc") params.set("sort", state.sort);
   if (state.page > 1) params.set("page", String(state.page));
   const query = params.toString();
@@ -36,19 +32,8 @@ function matchesQuery(product, q) {
 }
 
 function filterCatalog(list, state) {
-  const range = PRICE_RANGES.find((item) => item.id === state.price);
   return list.filter((product) => {
     if (state.category && product.category !== state.category) return false;
-    if (state.color && !(product.colors || []).includes(state.color)) return false;
-    if (range) {
-      const price = getFinalPrice(product);
-      const inRange = range.max === Infinity
-        ? price >= range.min
-        : range.min === 0
-          ? price < range.max
-          : price >= range.min && price <= range.max;
-      if (!inRange) return false;
-    }
     return matchesQuery(product, state.q);
   });
 }
@@ -63,54 +48,6 @@ function sortCatalog(list, sort) {
     return a.name.localeCompare(b.name, "vi");
   });
   return copy;
-}
-
-function availableColors(list) {
-  const set = new Set();
-  list.forEach((product) => (product.colors || []).forEach((color) => set.add(color)));
-  return [...set];
-}
-
-function renderSidebar(state, allProducts) {
-  const sidebar = document.getElementById("catalog-sidebar");
-  if (!sidebar) return;
-  const colors = availableColors(allProducts);
-  const categoryLinks = `<li><a href="${ROOT}pages/san-pham.html" class="${state.category ? "" : "is-active"}">Tất cả sản phẩm</a></li>` +
-    CATEGORIES.map((category) => `
-      <li>
-        <a href="${ROOT}pages/san-pham.html?category=${category.slug}" class="${state.category === category.slug ? "is-active" : ""}">${category.name}</a>
-      </li>`).join("");
-
-  const colorItems = colors.map((color) => `
-    <li>
-      <button type="button" class="filter-color${state.color === color ? " is-active" : ""}" data-filter="color" data-value="${color}">
-        <span class="swatch swatch--${color}"></span>
-        ${colorLabel(color)}
-      </button>
-    </li>`).join("");
-
-  const priceItems = PRICE_RANGES.map((range) => `
-    <li>
-      <label class="filter-check">
-        <input type="checkbox" data-filter="price" data-value="${range.id}" ${state.price === range.id ? "checked" : ""}>
-        <span>${range.label}</span>
-      </label>
-    </li>`).join("");
-
-  sidebar.innerHTML = `
-    <details class="filter-group" open>
-      <summary>Danh mục</summary>
-      <ul class="filter-links">${categoryLinks}</ul>
-    </details>
-    <details class="filter-group" open>
-      <summary>Màu sắc</summary>
-      <ul class="filter-colors">${colorItems || "<li>Không có dữ liệu màu</li>"}</ul>
-      ${state.color ? `<button type="button" class="filter-clear" data-filter="color" data-value="">Xóa lọc màu</button>` : ""}
-    </details>
-    <details class="filter-group" open>
-      <summary>Mức giá</summary>
-      <ul>${priceItems}</ul>
-    </details>`;
 }
 
 function renderPagination(total, page) {
@@ -165,7 +102,6 @@ async function renderCatalog() {
   const sortSelect = document.getElementById("sort-select");
   if (sortSelect) sortSelect.value = state.sort;
 
-  renderSidebar(state, products);
   grid.innerHTML = pageItems.length
     ? pageItems.map(renderProductCard).join("")
     : `<p class="empty-state">Không tìm thấy sản phẩm phù hợp.</p>`;
@@ -177,27 +113,6 @@ function bindCatalogEvents() {
   sortSelect?.addEventListener("change", () => {
     const params = new URLSearchParams(location.search);
     params.set("sort", sortSelect.value);
-    params.delete("page");
-    history.pushState({}, "", `${location.pathname}?${params.toString()}`);
-    renderCatalog();
-  });
-
-  document.getElementById("catalog-sidebar")?.addEventListener("click", (event) => {
-    const colorBtn = event.target.closest("[data-filter='color']");
-    const priceInput = event.target.closest("[data-filter='price']");
-    if (!colorBtn && !priceInput) return;
-    const params = new URLSearchParams(location.search);
-    if (colorBtn) {
-      const value = colorBtn.dataset.value;
-      if (value) params.set("color", value);
-      else params.delete("color");
-    }
-    if (priceInput) {
-      event.preventDefault();
-      const value = priceInput.dataset.value;
-      if (params.get("price") === value) params.delete("price");
-      else params.set("price", value);
-    }
     params.delete("page");
     history.pushState({}, "", `${location.pathname}?${params.toString()}`);
     renderCatalog();
