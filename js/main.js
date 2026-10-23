@@ -31,10 +31,6 @@ function renderHeader() {
   const el = document.getElementById("site-header");
   if (!el) return;
   const page = (name) => `${ROOT}pages/${name}.html`;
-  const catLinks = CATEGORIES.map(
-    (c) => `<li><a href="${page("san-pham")}?category=${c.slug}">${c.name}</a></li>`
-  ).join("");
-
   el.innerHTML = `
     <div class="topbar" id="topbar">
       <span>Website chính thức của ${SHOP_NAME}</span>
@@ -51,10 +47,7 @@ function renderHeader() {
         <nav class="nav" id="main-nav">
           <ul class="nav__list">
             <li><a href="${ROOT}index.html">Trang chủ</a></li>
-            <li class="nav__item--dropdown">
-              <a href="${page("san-pham")}">Sản phẩm</a>
-              <ul class="nav__dropdown">${catLinks}</ul>
-            </li>
+            <li><a href="${page("san-pham")}">Sản phẩm</a></li>
             <li><a href="${page("gioi-thieu")}">Giới thiệu</a></li>
             <li><a href="${page("lien-he")}">Liên hệ</a></li>
           </ul>
@@ -68,10 +61,6 @@ function renderHeader() {
         <div class="header__actions">
           <a href="${page("tai-khoan")}" id="user-link" class="header__icon" title="Tài khoản" aria-label="Tài khoản">
             <svg class="header__icon-svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M4.5 20c.8-3.3 3.2-5 7.5-5s6.7 1.7 7.5 5"></path></svg>
-          </a>
-          <a href="${page("yeu-thich")}" class="header__icon" title="Yêu thích" aria-label="Yêu thích">
-            <svg class="header__icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 8.7c0 5.2-8.8 10.1-8.8 10.1S3.2 13.9 3.2 8.7A4.3 4.3 0 0 1 12 6.2a4.3 4.3 0 0 1 8.8 2.5Z"></path></svg>
-            <span class="badge" id="wishlist-badge">0</span>
           </a>
           <a href="${page("gio-hang")}" class="header__icon" title="Giỏ hàng" aria-label="Giỏ hàng">
             <svg class="header__icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 1.9-1.5L20.5 8H6"></path><circle cx="9" cy="20" r="1"></circle><circle cx="17" cy="20" r="1"></circle></svg>
@@ -87,7 +76,8 @@ function renderFooter() {
   const el = document.getElementById("site-footer");
   if (!el) return;
   const page = (name) => `${ROOT}pages/${name}.html`;
-  const policy = (key, label) => `<li><a href="${page("chinh-sach")}?p=${key}">${label}</a></li>`;
+  const policy = (key, label) =>
+    `<li><a href="${page("chinh-sach")}?p=${key}">${label}</a></li>`;
 
   el.innerHTML = `
     <footer class="footer">
@@ -121,7 +111,6 @@ function renderFooter() {
         </div>
         <div>
           <h3 class="footer__title">Nhận tin khuyến mãi</h3>
-          <!-- Logic xử lý form này do Vương làm (validate email, thông báo) -->
           <form id="newsletter-form" class="footer__newsletter" novalidate>
             <input type="email" id="newsletter-email" placeholder="Email của bạn">
             <button type="submit" class="btn btn--primary">Đăng ký</button>
@@ -153,17 +142,19 @@ function initHeaderEvents() {
   document.getElementById("search-form")?.addEventListener("submit", (e) => {
     e.preventDefault();
     const q = document.getElementById("search-input").value.trim();
-    if (q) location.href = `${ROOT}pages/tim-kiem.html?q=${encodeURIComponent(q)}`;
+    if (q)
+      location.href = `${ROOT}pages/tim-kiem.html?q=${encodeURIComponent(q)}`;
   });
   const topBtn = document.getElementById("back-to-top");
   if (topBtn) {
-    topBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+    topBtn.addEventListener("click", () =>
+      window.scrollTo({ top: 0, behavior: "smooth" }),
+    );
     window.addEventListener("scroll", () => {
       topBtn.classList.toggle("floating__top--show", window.scrollY > 300);
     });
   }
 }
-
 /** Gắn icon cho tab trình duyệt */
 function setFavicon() {
   let link = document.querySelector('link[rel="icon"]');
@@ -176,7 +167,7 @@ function setFavicon() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  setFavicon(); 
+  setFavicon();
   renderHeader();
   renderFooter();
   initHeaderEvents();

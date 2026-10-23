@@ -1,99 +1,118 @@
 .no-scroll { overflow: hidden; }
 
 .breadcrumb {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  padding: 16px 0 12px;
-  color: var(--color-muted);
-  font-size: .85rem;
+  display: flex;                    /* các mục (link và dấu "/") xếp thành 1 hàng ngang */
+  flex-wrap: wrap;                  /* hết chỗ thì tự xuống dòng thay vì tràn ra ngoài (quan trọng trên mobile) */
+  gap: 6px;                         /* khoảng cách giữa các mục */
+  padding: 16px 0 12px;             /* đệm trên 16px, hai bên 0, dưới 12px */
+  color: var(--color-muted);        /* màu chữ nhạt (biến CSS định nghĩa ở file CSS chung) */ /* var() là một hàm để đọc giá trị biến */
+  font-size: .85rem;                /* chữ nhỏ hơn chữ thường (85%) */
 }
+/* Rê chuột vào link breadcrumb thì đổi sang màu chủ đạo của web */
 .breadcrumb a:hover { color: var(--color-primary); }
 
+/* Khoảng trống phía dưới cùng của trang để nội dung không dính sát footer */
 .catalog-page { padding-bottom: 40px; }
 
+/* ---------- 3.1 BANNER QUẢNG CÁO ĐẦU TRANG ---------- */
+
+/* Khung banner: chữ bên trái, ảnh bên phải, nền gradient xanh ngọc */
 .catalog-banner {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  height: 130px;
-  margin-bottom: 28px;
-  padding: 0 28px;
-  overflow: hidden;
-  border-radius: 10px;
-  background: linear-gradient(90deg, #7fe0dd 0%, #9ee8e6 55%, #c8f3f1 100%);
-  color: #3b4fd8;
+  position: relative;               /* làm "mốc" để định vị ::after và các phần tử con tuyệt đối */
+  display: flex;                    /* chia banner thành các cột: chữ | ảnh | nút */
+  align-items: center;              /* căn giữa các phần theo chiều dọc */
+  justify-content: space-between;   /* dàn đều, đẩy các phần ra hai đầu */
+  gap: 24px;                        /* khoảng cách giữa chữ, ảnh, nút */
+  height: 130px;                    /* chiều cao cố định của banner */
+  margin-bottom: 28px;              /* cách khối bên dưới 28px */
+  padding: 0 28px;                  /* chỉ đệm trái/phải, không đệm trên/dưới */
+  overflow: hidden;                 /* cắt phần ảnh/hình tròn nhô ra ngoài khung banner */
+  border-radius: 10px;              /* bo góc */
+  background: linear-gradient(90deg, #7fe0dd 0%, #9ee8e6 55%, #c8f3f1 100%); /* màu chuyển từ trái sang phải, đậm -> nhạt */
+  color: #3b4fd8;                   /* màu chữ xanh dương đậm */
 }
-.catalog-banner::after {
-  content: "";
-  position: absolute;
-  right: -40px;
-  top: -40px;
+/* Hình tròn mờ trang trí ở góc phải trên banner (pseudo-element, không có trong HTML) */
+.catalog-banner::after { 
+  z-index: -0.5;           /* Thuộc tính ::after giúp thêm phần tử mà ko cần html */
+  content: "";                      
+  position: absolute;               /* đặt tự do, không chiếm chỗ trong flex */
+  right: -40px;                     /* lệch ra ngoài mép phải 40px (bị overflow cắt bớt -> thấy nửa hình tròn) */
+  top: -40px;                       /* lệch ra ngoài mép trên 40px */
   width: 150px;
   height: 150px;
-  border-radius: 50%;
-  background: rgba(110, 150, 255, .4);
-  pointer-events: none;
+  border-radius: 50%;               /* biến hình vuông thành hình tròn */
+  background: rgba(110, 150, 255, .4); /* xanh dương, trong suốt 40% */
+  pointer-events: none;             /* bỏ qua chuột để không chặn việc bấm nút CTA phía dưới */
 }
+/* Khối chữ (tiêu đề + dòng mô tả) xếp dọc */
 .catalog-banner__text {
-  position: relative;
-  z-index: 1;
+  z-index: 1;                       /* nằm TRÊN hình tròn trang trí */
   display: flex;
-  flex-direction: column;
+  flex-direction: column;           /* xếp tiêu đề và mô tả có display flex theo chiều dọc */
   gap: 4px;
 }
+/* Tiêu đề lớn của banner */
 .catalog-banner__text strong {
-  font-size: clamp(1.6rem, 4vw, 2.4rem);
-  letter-spacing: .04em;
+  font-size: clamp(1.6rem, 4vw, 2.4rem); /* clamp(nhỏ nhất, ưu tiên, lớn nhất): chữ co giãn theo độ rộng màn hình nhưng luôn nằm trong 1.6rem..2.4rem */
+  letter-spacing: .04em;            /* giãn khoảng cách giữa các chữ cho thoáng */
 }
+/* Vùng chứa ảnh/logo ở bên phải banner */
 .catalog-banner__logos {
-  position: relative;
-  flex: 0 0 150px;
-  height: 100%;
-  margin-left: auto;
+  position: relative;               /* làm mốc để định vị ảnh bên trong */
+  flex: 0 0 150px;                  /* không co, không giãn, rộng cố định 150px */
+  height: 100%;                     /* cao bằng banner */
+  margin-left: auto;                /* đẩy sát về bên phải */
 }
+/* Ảnh lớn hơn khung và bị cắt phía dưới, tạo hiệu ứng nhân vật "nhô lên" từ đáy banner */
 .catalog-banner__logos img {
+  z-index: 1;
   position: absolute;
-  left: 30%;
-  bottom: -100px;
-  height: 300px;
-  width: auto;
-  max-width: none;
-  max-height: none;
-  transform: translateX(-50%);
-  pointer-events: none;
+  left: 30%;                        /* điểm giữa ảnh nằm ở 30% chiều ngang khung */
+  bottom: -100px;                   /* hạ ảnh xuống 100px dưới đáy -> phần dưới bị overflow cắt */
+  height: 300px;                    /* ảnh cao 300px, lớn hơn banner (130px) */
+  width: auto;                      /* chiều rộng tự tính theo tỉ lệ ảnh */
+  max-width: none;                  /* gỡ giới hạn max-width của CSS reset để ảnh không bị ép nhỏ */
+  max-height: none;                 /* tương tự cho chiều cao */
+  transform: translateX(-50%);      /* dịch ảnh sang trái nửa chiều rộng của chính nó -> căn giữa quanh điểm left:30% */
+  pointer-events: none;             /* Khi di ảnh vào chuột không bị mất đi pointer của banner gốc*/
 }
+/* Nút kêu gọi hành động (CTA) trên banner */
 .catalog-banner__cta {
   position: relative;
-  z-index: 1;
-  flex-shrink: 0;
+  z-index: 1;                       /* nổi lên trên hình tròn trang trí */
+  flex-shrink: 0;                   /* không cho nút bị co lại khi thiếu chỗ */
   padding: 10px 18px;
   border-radius: 8px;
-  background: #5b4dff;
+  background: #5b4dff;              /* nền tím */
   color: #fff;
-  font-weight: 700;
+  font-weight: 700;                 /* chữ đậm */
 }
 
+/* ---------- 3.2 BỐ CỤC CHÍNH: LƯỚI SẢN PHẨM ---------- */
+
+/* Chỉ 1 cột: lưới sản phẩm chiếm toàn bộ chiều ngang */
 .catalog-layout {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr;       /* 1 cột chiếm toàn bộ chiều ngang */
   gap: 28px;
 }
-.catalog-toolbar {
+
+/* ---------- 3.3 THANH CÔNG CỤ: TIÊU ĐỀ + SẮP XẾP + SỐ LƯỢNG ---------- */
+
+.catalog-toolbar {                   /* Thanh chứa dòng chữ sản phẩm  */
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap;                  /* mobile: tiêu đề và ô sắp xếp tự xuống dòng */
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between;   /* tiêu đề bên trái, ô sắp xếp bên phải */
   gap: 12px;
   margin-bottom: 8px;
 }
 .catalog-toolbar h1 {
-  margin: 0;
+  margin: 0;                        /* bỏ margin mặc định của h1 */
   font-size: 1.7rem;
-  font-weight: 500;
+  font-weight: 500;                 /* chữ vừa, không quá đậm */
 }
+/* Nhóm "Sắp xếp theo: [select]" */
 .catalog-sort {
   display: flex;
   align-items: center;
@@ -105,140 +124,114 @@
   padding: 6px 10px;
   border: 1px solid var(--color-border);
   border-radius: 4px;
-  background: #fff;
+  background: #fff;                 /* nền trắng (một số trình duyệt mặc định là xám) */
 }
+/* Dòng "Hiển thị X sản phẩm" */
 .catalog-count {
   margin: 0 0 16px;
   color: var(--color-muted);
   font-size: .85rem;
 }
 
-.filter-group {
-  padding: 12px 0;
-  border-bottom: 1px solid var(--color-border);
-}
-.filter-group summary {
-  cursor: pointer;
-  font-size: .8rem;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-.filter-links a,
-.filter-color {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 7px 0;
-  border: 0;
-  background: none;
-  color: var(--color-text);
-  text-align: left;
-}
-.filter-links a:hover,
-.filter-links a.is-active,
-.filter-color:hover,
-.filter-color.is-active {
-  color: #2b6ce4;
-}
-.filter-check {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 0;
-  font-size: .9rem;
-}
-.filter-clear {
-  margin-top: 6px;
-  border: 0;
-  background: none;
-  color: var(--color-primary);
-  font-size: .8rem;
-}
+/* ---------- 3.5 Ô MÀU (SWATCH) CHO BỘ LỌC MÀU ---------- */
 
+/* Chấm tròn nhỏ hiển thị màu */
 .swatch {
   display: inline-block;
-  flex: 0 0 14px;
+  flex: 0 0 14px;                   /* trong flex: không co, không giãn, rộng đúng 14px (tránh bị méo thành hình bầu dục) */
   width: 14px;
   height: 14px;
-  border: 1px solid #ccc;
-  border-radius: 50%;
+  border: 1px solid #ccc;           /* viền xám để màu trắng vẫn nhìn thấy trên nền trắng */
+  border-radius: 50%;               /* hình tròn */
 }
-.swatch--den { background: #111; }
-.swatch--trang { background: #fff; }
-.swatch--xam { background: #8a8a8a; }
-.swatch--be { background: #d8c4a8; }
-.swatch--hong { background: #e8899b; }
-.swatch--xanh-navy { background: #173a63; }
-.swatch--do { background: #d62828; }
-.swatch--vang { background: #f4c430; }
-.swatch--xanh-reu { background: #4a5d23; }
-.swatch--trong { background: linear-gradient(135deg, #fff 50%, #cde 50%); }
-.swatch--xanh-la { background: #2a9d5c; }
+/* Mỗi class tô 1 màu. Tên class là slug màu trong dữ liệu sản phẩm (JS ghép: swatch--${slug}) */
+.swatch--den { background: #111; }          
+.swatch--trang { background: #fff; }        
+.swatch--xam { background: #8a8a8a; }      
+.swatch--be { background: #d8c4a8; }        
+.swatch--hong { background: #e8899b; }      
+.swatch--xanh-navy { background: #173a63; } 
+.swatch--do { background: #d62828; }        
+.swatch--vang { background: #f4c430; }    
+.swatch--xanh-reu { background: #4a5d23; }  
+.swatch--trong { background: linear-gradient(135deg, #fff 50%, #cde 50%); } /* "trong suốt": chia chéo nửa trắng nửa xanh nhạt */
+.swatch--xanh-la { background: #2a9d5c; }   
 
+/* ---------- 3.6 THẺ SẢN PHẨM (PRODUCT CARD) ---------- */
+
+/* Khung chứa ảnh sản phẩm: luôn là hình vuông */
 .product-card__media {
-  position: relative;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  background: var(--color-bg-soft);
+  position: relative;               /* làm mốc để nút tim và thanh nút nổi định vị theo khung này */
+  aspect-ratio: 1 / 1;              /* tỉ lệ rộng:cao = 1:1 (hình vuông), bất kể ảnh gốc to nhỏ thế nào */
+  overflow: hidden;                 /* cắt phần ảnh/thanh nút thừa ra ngoài khung */
+  background: var(--color-bg-soft); /* nền nhạt hiện ra trong lúc ảnh đang tải */
 }
+/* Ảnh lấp đầy khung vuông */
 .product-card__media img {
-  display: block;
+  display: block;                   /* bỏ khoảng trống nhỏ phía dưới ảnh (do img mặc định là inline) */
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center;
+  object-fit: cover;                /* phủ kín khung, giữ tỉ lệ ảnh, phần thừa bị cắt (không bị méo) */
+  object-position: center;          /* khi cắt thì giữ phần chính giữa của ảnh */
 }
-.product-card__actions {
-  position: absolute;
+/* Thanh 2 nút ở đáy ảnh (Tùy chọn | Xem nhanh): mặc định ẩn, hiện khi rê chuột vào thẻ */
+.product-card__actions {            
+  position: absolute;               /* ba dòng right/bottom/left = 0 làm thanh nằm sát đáy và rộng bằng cả khung ảnh */
   right: 0;
   bottom: 0;
   left: 0;
-  display: flex;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: .2s;
+  display: flex;                    /* hai nút nằm ngang cạnh nhau */
+  opacity: 0;                       /* trong suốt hoàn toàn -> không nhìn thấy */
+  transform: translateY(8px);       /* hạ xuống 8px để khi hiện sẽ trượt nhẹ lên */
+  transition: .2s;                  /* mọi thay đổi diễn ra trong 0.2 giây (tạo hiệu ứng mượt) */
 }
-.product-card:hover .product-card__actions {
+/* Khi đưa chuột vào thẻ product-card thì sẽ áp dụng hết các thẻ con khác nằm trong thẻ product-card cho product-carf__actions */
+.product-card:hover .product-card__actions { 
   opacity: 1;
   transform: none;
 }
+/* Hai nút trong thanh: nền đen mờ, chữ trắng */
 .product-card__option,
 .product-card__quick {
-  flex: 1;
+  flex: 1;                          /* chia đều chiều rộng cho 2 nút */
   padding: 8px 6px;
   border: 0;
-  background: rgba(20, 20, 20, .78);
+  background: rgba(20, 20, 20, .78); /* đen, trong suốt 22% để thấy mờ ảnh phía sau */
   color: #fff;
   font-size: .78rem;
   text-align: center;
 }
+/* Đường kẻ trắng mờ phân cách 2 nút */
 .product-card__quick { border-left: 1px solid rgba(255, 255, 255, .2); }
+/* Tên danh mục nhỏ (chữ HOA, xanh) nằm trên tên sản phẩm */
 .product-card__vendor {
-  display: block;
+  display: block;                   /* chiếm riêng 1 dòng */
   margin-bottom: 4px;
   color: #2b6ce4;
   font-size: .75rem;
   text-transform: uppercase;
 }
-.product-card__wish.is-active { color: var(--color-primary); }
+/* Chỉ trong lưới catalog: bỏ viền thẻ và tô giá khuyến mãi màu xanh */
 .catalog-grid .product-card { border: 0; }
 .catalog-grid .price-sale { color: #2b6ce4; }
 
+/* ---------- 3.7 PHÂN TRANG ---------- */
+
 .pagination {
   display: flex;
-  justify-content: center;
+  justify-content: center;          /* căn giữa dãy nút trang */
   gap: 8px;
   margin-top: 28px;
 }
+/* Mỗi nút số trang là 1 ô vuông 36x36 */
 .page-btn {
-  min-width: 36px;
+  min-width: 36px;                  /* số trang dài (vd 10, 11) thì ô tự rộng ra */
   height: 36px;
   border: 1px solid var(--color-border);
   border-radius: 4px;
   background: #fff;
 }
+/* Trang hiện tại hoặc đang rê chuột -> đảo màu (nền đậm, chữ trắng) */
 .page-btn.is-active,
 .page-btn:hover {
   background: var(--color-text);
@@ -246,40 +239,49 @@
   border-color: var(--color-text);
 }
 
+/* Thông báo "không có sản phẩm" khi lọc không ra kết quả */
 .empty-state {
-  grid-column: 1 / -1;
+  grid-column: 1 / -1;              /* trải qua TẤT CẢ các cột của lưới (từ đường lưới đầu đến cuối) */
   padding: 40px 16px;
   color: var(--color-muted);
   text-align: center;
 }
 
+/* Bố cục 2 phần: gallery ảnh và thông tin.
+   Mobile: 1 cột (ảnh trên, thông tin dưới). Từ 768px: 2 cột cạnh nhau. */
 .product-detail {
   display: grid;
   grid-template-columns: 1fr;
   gap: 28px;
   padding-bottom: 32px;
 }
+
+/* ---------- 4.1 THƯ VIỆN ẢNH (GALLERY) ---------- */
+
+/* Gallery chia 2 cột: cột trái 72px chứa ảnh nhỏ (thumbnail), cột phải là ảnh lớn */
 .product-gallery {
   display: grid;
-  grid-template-columns: 72px 1fr;
+  grid-template-columns: 72px 1fr;  /* 72px cố định + phần còn lại */
   gap: 12px;
 }
+/* Dãy thumbnail xếp dọc */
 .product-gallery__thumbs {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
+/* Mỗi thumbnail: viền trong suốt (giữ chỗ để khi chọn đổi màu không bị nhảy layout) */
 .gallery-thumb {
   padding: 0;
   border: 1px solid transparent;
   background: var(--color-bg-soft);
-  transition: border-color .2s;
+  transition: border-color .2s;     /* viền đổi màu mượt trong 0.2s */
+  aspect-ratio: 4 / 5;              /* Thumbnail có tỉ lệ 4:5 tỉ lệ rộng : cao */
+  overflow: hidden; /* cắt phần bị nội dung bị thừa ra */
 }
+/* Thumbnail đang được chọn: viền màu chủ đạo */
 .gallery-thumb.is-active { border-color: var(--color-primary); }
-.gallery-thumb {
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
-}
+/* Ảnh (cả thumbnail lẫn ảnh lớn) phủ kín khung, cắt giữa, không méo */
 .gallery-thumb img,
 .product-gallery__main img {
   display: block;
@@ -288,26 +290,32 @@
   object-fit: cover;
   object-position: center;
 }
-.product-gallery__main { aspect-ratio: 4 / 5; }
+
+/* ---------- 4.2 THÔNG TIN SẢN PHẨM ---------- */
+
+/* Tên sản phẩm */
 .product-info h1 {
   margin-bottom: 8px;
   font-size: 1.6rem;
   font-weight: 600;
 }
+/* Dòng meta: thương hiệu, mã sản phẩm, danh mục */
 .product-meta {
   color: var(--color-muted);
   font-size: .9rem;
 }
 .product-meta a { color: #2b6ce4; }
+/* Khối giá: giá sale (to) và giá gốc gạch ngang nằm cùng hàng */
 .product-info__price {
   display: flex;
-  align-items: baseline;
+  align-items: baseline;            /* căn theo đường chân chữ để giá lớn và giá nhỏ thẳng hàng tự nhiên */
   gap: 10px;
   margin: 12px 0 16px;
   font-size: 1.4rem;
 }
 .product-info__price .price-sale { color: #2b6ce4; }
 
+/* Hộp khuyến mãi: viền nét đứt xanh, nền xanh rất nhạt */
 .promo-box {
   margin-bottom: 18px;
   padding: 12px 14px;
@@ -315,9 +323,13 @@
   border-radius: 8px;
   background: #f4f8ff;
 }
+/* Danh sách ưu đãi: bật lại dấu chấm (CSS reset thường tắt đi) */
 .promo-box ul { margin: 8px 0 0; padding-left: 18px; list-style: disc; }
 .promo-box li { margin-bottom: 4px; font-size: .9rem; }
 
+/* ---------- 4.3 CHỌN TÙY CHỌN (SIZE, MÀU) ---------- */
+
+/* Một hàng tùy chọn: nhãn ("Kích thước:") + dãy chip */
 .option-row {
   display: flex;
   flex-wrap: wrap;
@@ -325,13 +337,15 @@
   gap: 10px;
   margin-bottom: 14px;
 }
+/* Dãy các chip trong 1 hàng */
 .option-list { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+/* "Chip" tùy chọn: thực chất là <label> bọc một <input radio> ẩn */
 .option-chip {
-  position: relative;
+  position: relative;               /* làm mốc để input ẩn phủ kín chip */
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 6px;                         /* cách giữa chấm màu và chữ */
   min-width: 42px;
   height: 38px;
   padding: 0 12px;
@@ -340,25 +354,31 @@
   background: #fff;
   line-height: 1;
   cursor: pointer;
-  white-space: nowrap;
+  white-space: nowrap;              /* không cho chữ trong chip xuống dòng */
 }
+/* Radio được làm trong suốt và phủ kín chip: nhìn không thấy nhưng bấm đâu trong chip cũng chọn được */
 .option-chip input {
   position: absolute;
-  inset: 0;
+  inset: 0;                         /* viết tắt của top/right/bottom/left = 0 */
   opacity: 0;
   cursor: pointer;
 }
+/* Khi radio bên trong được tick -> chip đổi viền và chữ sang xanh.
+   :has() là bộ chọn "có chứa", cần trình duyệt đời mới (Chrome 105+, Safari 15.4+, Firefox 121+). */
 .option-chip:has(input:checked) {
   border-color: #2b6ce4;
   color: #2b6ce4;
 }
 
+/* ---------- 4.4 Ô SỐ LƯỢNG (−  1  +) ---------- */
+
 .qty-box {
-  display: inline-flex;
+  display: inline-flex;             /* chỉ rộng vừa đủ, không giãn hết dòng */
   border: 1px solid var(--color-border);
   border-radius: 4px;
-  overflow: hidden;
+  overflow: hidden;                 /* bo góc áp dụng được cho các nút bên trong */
 }
+/* Nút − , + và ô nhập số: nền trắng, không viền riêng (viền chung do .qty-box) */
 .qty-box__btn,
 .qty-box__input {
   width: 36px;
@@ -367,18 +387,23 @@
   background: #fff;
   text-align: center;
 }
+/* Ô nhập số rộng hơn hai nút để chứa số 2 chữ số */
 .qty-box__input { width: 48px; }
 
+/* ---------- 4.5 NÚT MUA HÀNG VÀ CAM KẾT ---------- */
+
+/* Nhóm 2 nút: Thêm vào giỏ / Mua ngay */
 .product-cta {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap;                  /* màn hình hẹp thì nút tự xuống dòng */
   gap: 10px;
   margin: 8px 0 18px;
 }
-.product-cta .btn { min-width: 160px; }
+.product-cta .btn { min-width: 160px; } /* mỗi nút rộng ít nhất 160px */
+/* 3 ô cam kết (giao hàng, ưu đãi, chính hãng) chia đều 3 cột */
 .product-assures {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr); /* chia 3 cột với tỉ lệ bằng nhau*/
   gap: 8px;
   padding: 14px 0;
   border-top: 1px solid var(--color-border);
@@ -386,11 +411,15 @@
   font-size: .8rem;
   text-align: center;
 }
+/* Phần mô tả sản phẩm, ngăn cách phía trên bằng đường kẻ */
 .product-desc {
   margin-top: 18px;
   padding-top: 12px;
   border-top: 1px solid var(--color-border);
 }
+
+/* ---------- 4.6 SẢN PHẨM LIÊN QUAN ---------- */
+
 .related-section { padding: 12px 0 40px; }
 .related-section h2 {
   margin-bottom: 18px;
@@ -398,29 +427,35 @@
   font-weight: 500;
 }
 
+/* Lớp phủ toàn màn hình chứa popup */
 .quick-view {
-  position: fixed;
-  inset: 0;
-  z-index: 300;
+  position: fixed;                  /* cố định theo màn hình, không cuộn theo trang */
+  inset: 0;                         /* phủ kín 4 cạnh màn hình */
+  z-index: 300;                     /* số lớn để nằm trên mọi thành phần khác của trang */
   display: grid;
-  place-items: center;
-  padding: 16px;
+  place-items: center;              /* căn hộp popup ra chính giữa (cả ngang lẫn dọc) */
+  padding: 16px;                    /* chừa lề để popup không dính mép màn hình mobile */
 }
+/* Thuộc tính HTML hidden mặc định ẩn phần tử, nhưng display:grid ở trên sẽ đè mất.
+   Dòng này đảm bảo hidden vẫn ẩn được. */
 .quick-view[hidden] { display: none; }
+/* Nền đen mờ phía sau popup; bấm vào đây sẽ đóng popup (JS gắn data-close-quick) */
 .quick-view__backdrop {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, .45);
 }
+/* Hộp trắng chứa nội dung popup */
 .quick-view__dialog {
-  position: relative;
-  width: min(920px, 100%);
-  max-height: 90vh;
-  overflow: auto;
+  position: relative;               /* nổi lên trên backdrop và làm mốc cho nút đóng */
+  width: min(920px, 100%);          /* rộng tối đa 920px, màn hình hẹp hơn thì rộng 100% */
+  max-height: 90vh;                 /* cao tối đa 90% chiều cao màn hình */
+  overflow: auto;                   /* nội dung dài hơn thì cuộn bên trong hộp */
   padding: 20px;
   border-radius: 10px;
   background: #fff;
 }
+/* Nút đóng (×) góc phải trên của hộp */
 .quick-view__close {
   position: absolute;
   top: 8px;
@@ -429,73 +464,88 @@
   background: none;
   font-size: 1.6rem;
 }
+/* Bên trong popup: mobile 1 cột, từ 768px chia 2 cột (ảnh | thông tin) */
 .quick-view__grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 20px;
 }
-.quick-view__grid > img {
+/* Ảnh nằm trực tiếp trong grid (dấu > nghĩa là con trực tiếp): hình vuông, phủ kín */
+.quick-view__grid > img { /* nghia là áp dụng mọi thuộc tính bên dưới cho img nằm trong phần tử grid cảu khối quick_view */ 
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
   background: var(--color-bg-soft);
 }
+/* Link "Xem chi tiết" ở cuối popup */
 .quick-view__detail {
   display: inline-block;
   margin-top: 8px;
   color: #2b6ce4;
 }
 
+/* Nút mũi tên tròn trắng mờ, nằm giữa chiều cao ảnh, mặc định ẩn */
 .gallery-arrow {
   position: absolute;
-  top: 50%;
+  top: 50%;                         /* đặt mép trên nút ở giữa chiều cao ảnh... */
   width: 36px;
   height: 36px;
-  transform: translateY(-50%);
+  transform: translateY(-50%);      /* ...rồi kéo lên nửa chiều cao nút -> nút nằm đúng chính giữa */
   border: 0;
   border-radius: 50%;
   background: rgba(255, 255, 255, .85);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .2); /* đổ bóng nhẹ cho nổi trên ảnh */
   font-size: 1.5rem;
   line-height: 1;
-  opacity: 0;
+  opacity: 0;                       /* ẩn, chỉ hiện khi rê chuột vào ảnh (xem bên dưới) */
   transition: opacity .2s, background .2s;
 }
-.gallery-prev { left: 8px; }
-.gallery-next { right: 8px; }
+.gallery-prev { left: 8px; }        /* mũi tên trái, cách mép trái 8px */
+.gallery-next { right: 8px; }       /* mũi tên phải, cách mép phải 8px */
+/* Khung ảnh lớn là mốc định vị cho mũi tên */
 .product-gallery__main {
+  aspect-ratio: 4 / 5;              /* Khung ảnh lớn cũng tỉ lệ 4:5 */
   position: relative;
-  overflow: hidden;
-  align-self: start;
+  overflow: hidden;                 /* các ảnh xếp ngang trong track chỉ thấy 1 ảnh, phần còn lại bị cắt */
+  align-self: start;                /* không bị kéo cao bằng cột thumbnail (tránh ảnh bị giãn) */
 }
-.gallery-main-img { display: block; }
+/* Rê chuột vào ảnh lớn -> hiện mũi tên */
 .product-gallery__main:hover .gallery-arrow { opacity: 1; }
-.gallery-arrow:hover { background: #fff; }
+.gallery-arrow:hover { background: #fff; } /* rê vào chính nút thì nền trắng đặc */
 
+/* Gallery bên trong Quick View: chỉ 1 cột, dãy thumbnail đưa xuống dưới ảnh chính và cuộn ngang */
 .quick-view .product-gallery { grid-template-columns: 1fr; }
 .quick-view .product-gallery__thumbs {
-  order: 2;
-  flex-direction: row;
-  overflow-x: auto;
+  order: 2;                         /* đưa xuống sau ảnh chính (ảnh chính mặc định order 0) */
+  flex-direction: row;              /* xếp ngang thay vì dọc */
+  overflow-x: auto;                 /* nhiều ảnh thì cuộn ngang */
 }
-.quick-view .gallery-thumb { flex: 0 0 56px; }
+.quick-view .gallery-thumb { flex: 0 0 56px; } /* mỗi thumbnail rộng cố định 56px, không co */
 
+/* ---------- Từ 768px trở lên (tablet, laptop) ---------- */
 @media (min-width: 768px) {
-  .catalog-sidebar,
   .catalog-grid { min-height: 600px; }
-  .catalog-layout { grid-template-columns: 220px 1fr; }
+  /* Lưới sản phẩm 3 cột. minmax(0, 1fr) cho phép cột co nhỏ được (không bị nội dung dài chống rộng).
+     !important để đè các style khác (vd style inline đặt từ JS hoặc file CSS khác). */
   .catalog-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+  /* Trang chi tiết: ảnh (1.05 phần) | thông tin (0.95 phần) */
   .product-detail { grid-template-columns: 1.05fr .95fr; }
+  /* Popup Quick View: ảnh (0.9 phần) | thông tin (1.1 phần) */
   .quick-view__grid { grid-template-columns: .9fr 1.1fr; }
 }
 
+/* ---------- Từ 1024px trở lên (desktop): lưới tăng lên 4 cột ---------- */
 @media (min-width: 1024px) {
   .catalog-grid { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
 }
 
-@media (max-width: 800px) {
+/* ---------- Từ 800px trở xuống (mobile) ---------- */
+@media (max-width: 800px) { /* cho CSS biết “chỉ áp dụng các style bên trong khi điều kiện đúng”*/ /* @media được gọi là truy vấn */
+   /* Banner thấp hơn, đệm và khoảng cách nhỏ lại cho vừa màn hình hẹp */
   .catalog-banner { height: 100px; padding: 0 12px; gap: 6px; }
+  /* Khối chữ chiếm phần còn lại; min-width:0 cho phép nó co nhỏ thay vì chống tràn banner */
   .catalog-banner__text { flex: 1 1 0; min-width: 0; gap: 2px; }
+  /* Tiêu đề nhỏ lại và ép 1 dòng (nowrap = không xuống dòng) */
   .catalog-banner__text strong {
     font-size: clamp(1rem, 5vw, 1.4rem);
     letter-spacing: .02em;
@@ -505,25 +555,32 @@
     font-size: clamp(.6rem, 2.9vw, .8rem);
     white-space: nowrap;
   }
+  /* Vùng ảnh banner hẹp lại (56px), ảnh nhỏ hơn và chỉnh lại vị trí cho cân đối */
   .catalog-banner__logos { flex: 0 0 56px; }
   .catalog-banner__logos img {
     left: 62%;
     bottom: -30px;
     height: 150px;
   }
+  /* Nút CTA nhỏ gọn hơn */
   .catalog-banner__cta {
     padding: 8px 12px;
     font-size: .78rem;
     white-space: nowrap;
   }
+  /* Gallery chỉ 1 cột: ảnh lớn ở trên, thumbnail xếp ngang bên dưới */
   .product-gallery { grid-template-columns: 1fr; }
   .product-gallery__thumbs {
     flex-direction: row;
     overflow-x: hidden;
   }
   .gallery-thumb { flex: 0 0 64px; }
+  /* Mobile không có hover -> luôn hiện thanh nút Tùy chọn/Xem nhanh trên thẻ sản phẩm */
   .product-card__actions { opacity: 1; transform: none; }
+  /* Ba ô cam kết xếp thành 1 cột dọc */
   .product-assures { grid-template-columns: 1fr; }
+  /* Nút Thêm vào giỏ / Mua ngay rộng 100% cho dễ bấm bằng ngón tay */
   .product-cta .btn { width: 100%; }
+  /* Mobile không có hover -> mũi tên gallery luôn hiện */
   .gallery-arrow { opacity: 1; }
 }
