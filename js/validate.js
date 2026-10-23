@@ -10,6 +10,9 @@
  * @param {string} key - key lấy từ STORAGE_KEYS
  * @param {*} fallback - giá trị trả về khi chưa có dữ liệu hoặc dữ liệu hỏng
  */
+// Đọc dữ liệu từ bộ nhớ trình duyệt (localStorage) và chuyển về dạng cấu trúc dữ liệu JavaScript (Object, Array).
+
+//Đảm bảo ứng dụng không bao giờ bị crash nếu dữ liệu trong storage bị lỗi cú pháp JSON hoặc người dùng chặn quyền truy cập storage (chế độ ẩn danh, bảo mật trình duyệt).
 function readJsonStorage(key, fallback) {
   try {
     const raw = localStorage.getItem(key);
