@@ -337,14 +337,6 @@ button {
   color: var(--color-text);
 }
 .review-grid {
-  display: flex;
-  transition: transform 0.45s ease;
-}
-.review-viewport {
-  overflow: hidden;
-}
-.review-slide {
-  flex: 0 0 100%;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
@@ -362,47 +354,6 @@ button {
   border: 1px solid var(--color-border);
   border-radius: 12px;
   box-shadow: 0 8px 22px rgba(34, 34, 34, 0.06);
-}
-.review-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 18px;
-}
-.review-control {
-  width: 36px;
-  height: 36px;
-  border: 1px solid var(--color-border);
-  border-radius: 50%;
-  background: var(--color-bg);
-  color: var(--color-text);
-  line-height: 1;
-  transition:
-    background 0.2s,
-    color 0.2s,
-    border-color 0.2s;
-}
-.review-control:hover,
-.review-control:focus-visible {
-  border-color: var(--color-primary);
-  background: var(--color-primary);
-  color: #fff;
-}
-.review-dots {
-  display: flex;
-  gap: 7px;
-}
-.review-dot {
-  width: 8px;
-  height: 8px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: var(--color-border);
-}
-.review-dot--active {
-  background: var(--color-primary);
 }
 .review-card strong {
   display: block;
