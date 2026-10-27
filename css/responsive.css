@@ -147,7 +147,7 @@
   .footer__grid { grid-template-columns: repeat(2, 1fr); }
   .header__search { display: flex; }
 }
-
+/* sửa phần Đồ hiệu KING SHOP */
 @media (min-width: 1024px) {
   .product-grid { grid-template-columns: repeat(4, 1fr); }
   .hot-product-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
