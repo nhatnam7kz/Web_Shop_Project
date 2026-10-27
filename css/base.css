@@ -14,7 +14,11 @@
   --container-width: 1200px;
 }
 
-*, *::before, *::after { box-sizing: border-box; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -24,13 +28,38 @@ body {
   line-height: 1.5;
 }
 
-img { max-width: 100%; display: block; }
-a { color: inherit; text-decoration: none; }
-ul { list-style: none; margin: 0; padding: 0; }
-h1, h2, h3, h4 { margin: 0 0 .5em; line-height: 1.25; }
-p { margin: 0 0 .75em; }
-button, input, select, textarea { font: inherit; }
-button { cursor: pointer; }
+img {
+  max-width: 100%;
+  display: block;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+h1,
+h2,
+h3,
+h4 {
+  margin: 0 0 0.5em;
+  line-height: 1.25;
+}
+p {
+  margin: 0 0 0.75em;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+}
 
 .container {
   width: 100%;
@@ -39,15 +68,21 @@ button { cursor: pointer; }
   padding: 0 16px;
 }
 
-.section { padding: 32px 0; }
-.section__title { font-size: 1.5rem; text-align: center; margin-bottom: 20px; }
+.section {
+  padding: 32px 0;
+}
+.section__title {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
 .home-section-title {
   margin-bottom: 18px;
   text-align: center;
   font-size: 1.6rem;
   font-weight: 500;
 }
-.feature-list{
+.feature-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
@@ -68,7 +103,7 @@ button { cursor: pointer; }
 
 .banner-slides {
   display: flex;
-  transition: transform .45s ease;
+  transition: transform 0.45s ease;
 }
 
 .banner-slide {
@@ -101,22 +136,26 @@ button { cursor: pointer; }
   height: 40px;
   border: 0;
   border-radius: 50%;
-  background: rgba(0, 0, 0, .45);
+  background: rgba(0, 0, 0, 0.45);
   color: #fff;
   font-size: 1.4rem;
   line-height: 1;
   cursor: pointer;
   transform: translateY(-50%);
-  transition: background .2s ease;
+  transition: background 0.2s ease;
 }
 
 .banner-control:hover,
 .banner-control:focus-visible {
-  background: rgba(0, 0, 0, .7);
+  background: rgba(0, 0, 0, 0.7);
 }
 
-.banner-control--prev { left: 14px; }
-.banner-control--next { right: 14px; }
+.banner-control--prev {
+  left: 14px;
+}
+.banner-control--next {
+  right: 14px;
+}
 
 .banner-dots {
   position: absolute;
@@ -133,7 +172,7 @@ button { cursor: pointer; }
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: rgba(255, 255, 255, .65);
+  background: rgba(255, 255, 255, 0.65);
   cursor: pointer;
 }
 
@@ -160,7 +199,7 @@ button { cursor: pointer; }
   align-items: center;
   text-align: center;
   color: var(--color-text);
-  transition: transform .2s;
+  transition: transform 0.2s;
 }
 .category-card:hover {
   transform: translateY(-4px);
@@ -181,7 +220,7 @@ button { cursor: pointer; }
   height: 100%;
   object-fit: contain;
   object-position: center;
-  transition: transform .2s;
+  transition: transform 0.2s;
 }
 .category-card:hover .category-card__image img {
   transform: scale(1.03);
@@ -194,7 +233,7 @@ button { cursor: pointer; }
 .category-card__count {
   margin-top: 2px;
   color: var(--color-muted);
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 .hot-deals-container {
   position: relative;
@@ -228,6 +267,7 @@ button { cursor: pointer; }
   display: block;
   border-bottom: 1px solid var(--color-border);
 }
+/* Bắt đầu */
 .tab-buttons {
   display: flex;
   gap: 28px;
@@ -272,7 +312,7 @@ button { cursor: pointer; }
   padding: 8px 18px;
   border: 1px solid var(--color-text);
   border-radius: 4px;
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 .view-all-link span {
   margin-left: 6px;
@@ -290,7 +330,7 @@ button { cursor: pointer; }
   border-bottom: 1px solid transparent;
   background: transparent;
   color: var(--color-muted);
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 .collection-tab--active {
   border-color: var(--color-text);
@@ -298,7 +338,7 @@ button { cursor: pointer; }
 }
 .review-grid {
   display: flex;
-  transition: transform .45s ease;
+  transition: transform 0.45s ease;
 }
 .review-viewport {
   overflow: hidden;
@@ -318,10 +358,10 @@ button { cursor: pointer; }
   min-width: 0;
   min-height: 170px;
   padding: 24px;
-  background: rgba(255, 255, 255, .92);
+  background: rgba(255, 255, 255, 0.92);
   border: 1px solid var(--color-border);
   border-radius: 12px;
-  box-shadow: 0 8px 22px rgba(34, 34, 34, .06);
+  box-shadow: 0 8px 22px rgba(34, 34, 34, 0.06);
 }
 .review-controls {
   display: flex;
@@ -338,7 +378,10 @@ button { cursor: pointer; }
   background: var(--color-bg);
   color: var(--color-text);
   line-height: 1;
-  transition: background .2s, color .2s, border-color .2s;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s;
 }
 .review-control:hover,
 .review-control:focus-visible {
@@ -375,7 +418,7 @@ button { cursor: pointer; }
 .review-card p {
   margin-bottom: 0;
   color: var(--color-muted);
-  font-size: .9rem;
+  font-size: 0.9rem;
   line-height: 1.7;
   overflow-wrap: anywhere;
 }
@@ -398,7 +441,7 @@ button { cursor: pointer; }
 .discord-section__eyebrow {
   margin-bottom: 8px;
   color: #5865f2;
-  font-size: .85rem;
+  font-size: 0.85rem;
   font-weight: 600;
   text-transform: uppercase;
 }
@@ -419,13 +462,15 @@ button { cursor: pointer; }
   padding: 10px 10px 12px;
   border: 1px solid #dfe2fb;
   border-radius: 12px;
-  background: rgba(255, 255, 255, .8);
-  box-shadow: 0 8px 20px rgba(88, 101, 242, .08);
-  transition: transform .2s ease, box-shadow .2s ease;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 20px rgba(88, 101, 242, 0.08);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 .discord-member:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 26px rgba(88, 101, 242, .16);
+  box-shadow: 0 12px 26px rgba(88, 101, 242, 0.16);
 }
 .discord-member img {
   width: 100%;
@@ -436,7 +481,7 @@ button { cursor: pointer; }
 .discord-member figcaption {
   margin-top: 10px;
   color: var(--color-text);
-  font-size: .85rem;
+  font-size: 0.85rem;
   font-weight: 600;
 }
 .discord-section__button {
@@ -447,13 +492,16 @@ button { cursor: pointer; }
   background: #5865f2;
   color: #fff;
   font-weight: 600;
-  box-shadow: 0 6px 14px rgba(88, 101, 242, .22);
-  transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+  box-shadow: 0 6px 14px rgba(88, 101, 242, 0.22);
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 .discord-section__button:hover {
   background: #4752c4;
   transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(88, 101, 242, .3);
+  box-shadow: 0 8px 18px rgba(88, 101, 242, 0.3);
 }
 .countdown-wrapper {
   display: flex;
