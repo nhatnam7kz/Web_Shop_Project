@@ -48,7 +48,7 @@
 
 .cart-layout {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 2fr 1fr; 
   gap: 30px;
   align-items: start;
 }

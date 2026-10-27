@@ -1,105 +1,162 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Thanh toán đơn hàng | King Shop</title>
-  <link rel="stylesheet" href="../css/base.css">
-  <link rel="stylesheet" href="../css/layout.css">
-  <link rel="stylesheet" href="../css/components.css">
-  <link rel="stylesheet" href="../css/responsive.css">
-  <link rel="stylesheet" href="../css/cart.css">
-</head>
-<body>
-  <div id="site-header"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Thanh toán đơn hàng | King Shop</title>
+    <meta name="description" content="Kiểm tra đơn hàng và nhập thông tin nhận hàng tại King Shop.">
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+    <link rel="stylesheet" href="../css/cart.css" />
+    <link rel="stylesheet" href="../css/search-animation.css" />
+  </head>
+  <body>
+    <div id="site-header"></div>
 
-  <main class="container checkout-page">
-    <div class="breadcrumb">
-      <a href="../index.html">Trang chủ</a> &gt; <a href="gio-hang.html">Giỏ hàng</a> &gt; <span>Thanh toán</span>
-    </div>
+    <main class="container checkout-page">
+      <div class="breadcrumb">
+        <a href="../index.html">Trang chủ</a> &gt;
+        <a href="gio-hang.html">Giỏ hàng</a> &gt; <span>Thanh toán</span>
+      </div>
 
-    <h1 class="page-title">THANH TOÁN ĐƠN HÀNG</h1>
+      <h1 class="page-title">THANH TOÁN ĐƠN HÀNG</h1>
 
-    <div class="checkout-layout">
-      <!-- Cột trái: Form nhập thông tin nhận hàng & chọn thanh toán -->
-      <form id="checkout-form" class="checkout-form" novalidate>
-        <section class="checkout-section">
-          <h2 class="section-title">1. THÔNG TIN GIAO HÀNG</h2>
-          <div class="form-group">
-            <label for="customer-name">Họ và tên <span class="required">*</span></label>
-            <input type="text" id="customer-name" name="fullName" class="form-control" placeholder="Ví dụ: Nguyễn Văn A" required>
-          </div>
-
-          <div class="form-row">
+      <div class="checkout-layout">
+        <!-- Cột trái: Form nhập thông tin nhận hàng & chọn thanh toán -->
+        <form id="checkout-form" class="checkout-form" novalidate>
+          <section class="checkout-section">
+            <h2 class="section-title">1. THÔNG TIN GIAO HÀNG</h2>
             <div class="form-group">
-              <label for="customer-phone">Số điện thoại <span class="required">*</span></label>
-              <input type="tel" id="customer-phone" name="phone" class="form-control" placeholder="10 chữ số (09...)" required>
+              <label for="customer-name"
+                >Họ và tên <span class="required">*</span></label
+              >
+              <input
+                type="text"
+                id="customer-name"
+                name="fullName"
+                class="form-control"
+                placeholder="Ví dụ: Nguyễn Văn A"
+                required
+              />
             </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="customer-phone"
+                  >Số điện thoại <span class="required">*</span></label
+                >
+                <input
+                  type="tel"
+                  id="customer-phone"
+                  name="phone"
+                  class="form-control"
+                  placeholder="10 chữ số (09...)"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="customer-email"
+                  >Email <span class="required">*</span></label
+                >
+                <input
+                  type="email"
+                  id="customer-email"
+                  name="email"
+                  class="form-control"
+                  placeholder="name@example.com"
+                  required
+                />
+              </div>
+            </div>
+
             <div class="form-group">
-              <label for="customer-email">Email <span class="required">*</span></label>
-              <input type="email" id="customer-email" name="email" class="form-control" placeholder="name@example.com" required>
+              <label for="customer-address"
+                >Địa chỉ nhận hàng cụ thể <span class="required">*</span></label
+              >
+              <input
+                type="text"
+                id="customer-address"
+                name="address"
+                class="form-control"
+                placeholder="Số nhà, tên đường, phường/xã, quận/huyện..."
+                required
+              />
             </div>
-          </div>
 
-          <div class="form-group">
-            <label for="customer-address">Địa chỉ nhận hàng cụ thể <span class="required">*</span></label>
-            <input type="text" id="customer-address" name="address" class="form-control" placeholder="Số nhà, tên đường, phường/xã, quận/huyện..." required>
-          </div>
+            <div class="form-group">
+              <label for="customer-note">Ghi chú giao hàng (tùy chọn)</label>
+              <textarea
+                id="customer-note"
+                name="note"
+                class="form-control"
+                rows="3"
+                placeholder="Ghi chú thêm về thời gian nhận hàng hoặc chỉ dẫn..."
+              ></textarea>
+            </div>
+          </section>
 
-          <div class="form-group">
-            <label for="customer-note">Ghi chú giao hàng (tùy chọn)</label>
-            <textarea id="customer-note" name="note" class="form-control" rows="3" placeholder="Ghi chú thêm về thời gian nhận hàng hoặc chỉ dẫn..."></textarea>
-          </div>
-        </section>
+          <section class="checkout-section">
+            <h2 class="section-title">2. PHƯƠNG THỨC THANH TOÁN</h2>
+            <div class="payment-methods">
+              <label class="payment-option">
+                <input type="radio" name="paymentMethod" value="cod" checked />
+                <div class="payment-option__info">
+                  <strong>Thanh toán khi nhận hàng (COD)</strong>
+                  <p>
+                    Khách hàng kiểm tra sản phẩm và thanh toán tiền mặt trực
+                    tiếp cho shipper khi giao tới.
+                  </p>
+                </div>
+              </label>
 
-        <section class="checkout-section">
-          <h2 class="section-title">2. PHƯƠNG THỨC THANH TOÁN</h2>
-          <div class="payment-methods">
-            <label class="payment-option">
-              <input type="radio" name="paymentMethod" value="cod" checked>
-              <div class="payment-option__info">
-                <strong>Thanh toán khi nhận hàng (COD)</strong>
-                <p>Khách hàng kiểm tra sản phẩm và thanh toán tiền mặt trực tiếp cho shipper khi giao tới.</p>
-              </div>
-            </label>
+              <label class="payment-option">
+                <input type="radio" name="paymentMethod" value="bank" />
+                <div class="payment-option__info">
+                  <strong>Chuyển khoản ngân hàng</strong>
+                  <p>
+                    Chuyển khoản qua mã QR ngân hàng hoặc Internet Banking 24/7.
+                  </p>
+                </div>
+              </label>
 
-            <label class="payment-option">
-              <input type="radio" name="paymentMethod" value="bank">
-              <div class="payment-option__info">
-                <strong>Chuyển khoản ngân hàng</strong>
-                <p>Chuyển khoản qua mã QR ngân hàng hoặc Internet Banking 24/7.</p>
-              </div>
-            </label>
+              <label class="payment-option">
+                <input type="radio" name="paymentMethod" value="momo" />
+                <div class="payment-option__info">
+                  <strong>Ví điện tử MoMo</strong>
+                  <p>
+                    Thanh toán nhanh chóng qua ứng dụng MoMo trên điện thoại.
+                  </p>
+                </div>
+              </label>
+            </div>
+          </section>
 
-            <label class="payment-option">
-              <input type="radio" name="paymentMethod" value="momo">
-              <div class="payment-option__info">
-                <strong>Ví điện tử MoMo</strong>
-                <p>Thanh toán nhanh chóng qua ứng dụng MoMo trên điện thoại.</p>
-              </div>
-            </label>
-          </div>
-        </section>
+          <button type="submit" class="btn-place-order">
+            XÁC NHẬN ĐẶT HÀNG
+          </button>
+        </form>
 
-        <button type="submit" class="btn-place-order">XÁC NHẬN ĐẶT HÀNG</button>
-      </form>
+        <!-- Cột phải: orders.js tự động in tóm tắt đơn vào đây -->
+        <aside
+          class="checkout-summary-wrapper"
+          id="checkout-order-summary"
+        ></aside>
+      </div>
+    </main>
 
-      <!-- Cột phải: orders.js tự động in tóm tắt đơn vào đây -->
-      <aside class="checkout-summary-wrapper" id="checkout-order-summary"></aside>
-    </div>
-  </main>
+    <div id="site-footer"></div>
+    <div id="toast-container"></div>
 
-  <div id="site-footer"></div>
-  <div id="toast-container"></div>
-
-  <!-- Nạp script theo thứ tự quy ước -->
-  <script src="../js/config.js"></script>
-  <script src="../js/validate.js"></script>
-  <script src="../js/products.js"></script>
-  <script src="../js/cart.js"></script>
-  <script src="../js/wishlist.js"></script>
-  <script src="../js/auth.js"></script>
-  <script src="../js/main.js"></script>
-  <script src="../js/orders.js"></script>
-</body>
+    <!-- Nạp script theo thứ tự quy ước -->
+    <script src="../js/config.js"></script>
+    <script src="../js/validate.js"></script>
+    <script src="../js/products.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/wishlist.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/orders.js"></script>
+  </body>
 </html>

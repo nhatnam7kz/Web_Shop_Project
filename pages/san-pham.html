@@ -1,77 +1,83 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sản phẩm | King Shop</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/base.css">
-  <link rel="stylesheet" href="../css/layout.css">
-  <link rel="stylesheet" href="../css/components.css">
-  <link rel="stylesheet" href="../css/product.css">
-  <link rel="stylesheet" href="../css/responsive.css">
-</head>
-<body>
-  <div id="site-header"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sản phẩm | King Shop</title>
+    <meta name="description" content="Khám phá sản phẩm King Shop: thời trang gaming, đồ lưu niệm, Lego, cốc bình và quà tặng.">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/product.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+    <link rel="stylesheet" href="../css/search-animation.css" />
+  </head>
+  <body>
+    <div id="site-header"></div>
 
-  <main class="catalog-page">
-    <div class="container">
-      <nav class="breadcrumb" aria-label="Đường dẫn">
-        <a href="../index.html">Trang chủ</a>
-        <span>/</span>
-        <a href="./san-pham.html">Danh mục</a>
-        <span>/</span>
-        <span id="breadcrumb-current">Tất cả sản phẩm</span>
-      </nav>
+    <main class="catalog-page">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Đường dẫn">
+          <a href="../index.html">Trang chủ</a>
+          <span>/</span>
+          <span id="breadcrumb-current">Tất cả sản phẩm</span>
+        </nav>
 
-      <a class="catalog-banner" href="./san-pham.html?sort=price-asc">
-        <div class="catalog-banner__text">
-          <strong>GIẢM ĐẾN 50%</strong>
-          <span>Ưu đãi chính hãng King Shop</span>
-        </div>
-        <div class="catalog-banner__logos">
-          <img src="../assets/images/logo.png" alt="King Shop">
-        </div>
-        <span class="catalog-banner__cta">MUA NGAY</span>
-      </a>
-
-      <div class="catalog-layout">
-        <aside class="catalog-sidebar" id="catalog-sidebar"></aside>
-        <section class="catalog-main">
-          <div class="catalog-toolbar">
-            <h1 id="catalog-title">Tất cả sản phẩm</h1>
-            <label class="catalog-sort">
-              <span>Sắp xếp:</span>
-              <select id="sort-select">
-                <option value="alpha-asc">Tên A → Z</option>
-                <option value="alpha-desc">Tên Z → A</option>
-                <option value="price-asc">Giá tăng dần</option>
-                <option value="price-desc">Giá giảm dần</option>
-                <option value="created-desc">Hàng mới</option>
-              </select>
-            </label>
+        <a class="catalog-banner" href="./san-pham.html?sort=price-asc">
+          <div class="catalog-banner__text">
+            <strong>GIẢM ĐẾN 50%</strong>
+            <span>Ưu đãi chính hãng King Shop</span>
           </div>
-          <p class="catalog-count" id="catalog-count"></p>
-          <div id="product-catalog" class="product-grid catalog-grid"></div>
-          <nav id="catalog-pagination" class="pagination" aria-label="Phân trang"></nav>
-        </section>
+          <div class="catalog-banner__logos">
+            <img src="../assets/images/logo.png" alt="King Shop" />
+          </div>
+          <span class="catalog-banner__cta">MUA NGAY</span>
+        </a>
+
+        <div class="catalog-layout">
+          <section class="catalog-main">
+            <div class="catalog-toolbar">
+              <h1 id="catalog-title">Tất cả sản phẩm</h1>
+              <label class="catalog-sort">
+                <span>Sắp xếp:</span>
+                <select id="sort-select">
+                  <option value="alpha-asc">Tên A → Z</option>
+                  <option value="alpha-desc">Tên Z → A</option>
+                  <option value="price-asc">Giá tăng dần</option>
+                  <option value="price-desc">Giá giảm dần</option>
+                  <option value="created-desc">Hàng mới</option>
+                </select>
+              </label>
+            </div>
+            <p class="catalog-count" id="catalog-count"></p>
+            <div id="product-catalog" class="product-grid catalog-grid"></div>
+            <nav
+              id="catalog-pagination"
+              class="pagination"
+              aria-label="Phân trang"
+            ></nav>
+          </section>
+        </div>
       </div>
-    </div>
-  </main>
+    </main>
 
-  <div id="site-footer"></div>
-  <div id="toast-container"></div>
-  <div id="quick-view" class="quick-view" hidden></div>
+    <div id="site-footer"></div>
+    <div id="toast-container"></div>
+    <div id="quick-view" class="quick-view" hidden></div>
 
-  <script src="../js/config.js"></script>
-  <script src="../js/validate.js"></script>
-  <script src="../js/products.js"></script>
-  <script src="../js/cart.js"></script>
-  <script src="../js/wishlist.js"></script>
-  <script src="../js/auth.js"></script>
-  <script src="../js/main.js"></script>
-  <script src="../js/search.js"></script>
-</body>
+    <script src="../js/config.js"></script>
+    <script src="../js/validate.js"></script>
+    <script src="../js/products.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/wishlist.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/search.js"></script>
+  </body>
 </html>

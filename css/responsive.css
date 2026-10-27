@@ -2,10 +2,6 @@
    Mỗi người tự lo responsive cho trang của mình trong file CSS riêng. */
 
 @media (max-width: 767px) {
-  .banner-img {
-    height: 220px;
-  }
-
   .section {
     padding: 24px 0;
   }
@@ -73,10 +69,6 @@
   }
 
   .review-grid {
-    width: 100%;
-  }
-
-  .review-slide {
     grid-template-columns: 1fr;
     gap: 12px;
     padding: 2px;
@@ -151,7 +143,7 @@
   .footer__grid { grid-template-columns: repeat(2, 1fr); }
   .header__search { display: flex; }
 }
-
+/* sửa phần Đồ hiệu KING SHOP */
 @media (min-width: 1024px) {
   .product-grid { grid-template-columns: repeat(4, 1fr); }
   .hot-product-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
