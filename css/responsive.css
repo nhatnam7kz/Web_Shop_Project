@@ -69,10 +69,6 @@
   }
 
   .review-grid {
-    width: 100%;
-  }
-
-  .review-slide {
     grid-template-columns: 1fr;
     gap: 12px;
     padding: 2px;
