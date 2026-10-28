@@ -12,6 +12,8 @@
 
 .catalog-page { padding-bottom: 40px; }
 
+/* ---------- 3.1 BANNER QUẢNG CÁO ĐẦU TRANG ---------- */
+
 .catalog-banner {
   position: relative;
   display: flex;
@@ -27,6 +29,7 @@
   color: #3b4fd8;
 }
 .catalog-banner::after {
+  z-index: -0.5;
   content: "";
   position: absolute;
   right: -40px;
@@ -38,7 +41,6 @@
   pointer-events: none;
 }
 .catalog-banner__text {
-  position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
@@ -55,6 +57,7 @@
   margin-left: auto;
 }
 .catalog-banner__logos img {
+  z-index: 1;
   position: absolute;
   left: 30%;
   bottom: -100px;
@@ -76,11 +79,16 @@
   font-weight: 700;
 }
 
+/* ---------- 3.2 BỐ CỤC CHÍNH: LƯỚI SẢN PHẨM ---------- */
+
 .catalog-layout {
   display: grid;
   grid-template-columns: 1fr;
   gap: 28px;
 }
+
+/* ---------- 3.3 THANH CÔNG CỤ: TIÊU ĐỀ + SẮP XẾP + SỐ LƯỢNG ---------- */
+
 .catalog-toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -113,49 +121,7 @@
   font-size: .85rem;
 }
 
-.filter-group {
-  padding: 12px 0;
-  border-bottom: 1px solid var(--color-border);
-}
-.filter-group summary {
-  cursor: pointer;
-  font-size: .8rem;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-.filter-links a,
-.filter-color {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 7px 0;
-  border: 0;
-  background: none;
-  color: var(--color-text);
-  text-align: left;
-}
-.filter-links a:hover,
-.filter-links a.is-active,
-.filter-color:hover,
-.filter-color.is-active {
-  color: #2b6ce4;
-}
-.filter-check {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 0;
-  font-size: .9rem;
-}
-.filter-clear {
-  margin-top: 6px;
-  border: 0;
-  background: none;
-  color: var(--color-primary);
-  font-size: .8rem;
-}
+/* ---------- 3.5 Ô MÀU (SWATCH) CHO BỘ LỌC MÀU ---------- */
 
 .swatch {
   display: inline-block;
@@ -176,6 +142,8 @@
 .swatch--xanh-reu { background: #4a5d23; }
 .swatch--trong { background: linear-gradient(135deg, #fff 50%, #cde 50%); }
 .swatch--xanh-la { background: #2a9d5c; }
+
+/* ---------- 3.6 THẺ SẢN PHẨM (PRODUCT CARD) ---------- */
 
 .product-card__media {
   position: relative;
@@ -222,9 +190,10 @@
   font-size: .75rem;
   text-transform: uppercase;
 }
-.product-card__wish.is-active { color: var(--color-primary); }
 .catalog-grid .product-card { border: 0; }
 .catalog-grid .price-sale { color: #2b6ce4; }
+
+/* ---------- 3.7 PHÂN TRANG ---------- */
 
 .pagination {
   display: flex;
@@ -259,6 +228,9 @@
   gap: 28px;
   padding-bottom: 32px;
 }
+
+/* ---------- 4.1 THƯ VIỆN ẢNH (GALLERY) ---------- */
+
 .product-gallery {
   display: grid;
   grid-template-columns: 72px 1fr;
@@ -274,12 +246,10 @@
   border: 1px solid transparent;
   background: var(--color-bg-soft);
   transition: border-color .2s;
-}
-.gallery-thumb.is-active { border-color: var(--color-primary); }
-.gallery-thumb {
   aspect-ratio: 4 / 5;
   overflow: hidden;
 }
+.gallery-thumb.is-active { border-color: var(--color-primary); }
 .gallery-thumb img,
 .product-gallery__main img {
   display: block;
@@ -288,7 +258,9 @@
   object-fit: cover;
   object-position: center;
 }
-.product-gallery__main { aspect-ratio: 4 / 5; }
+
+/* ---------- 4.2 THÔNG TIN SẢN PHẨM ---------- */
+
 .product-info h1 {
   margin-bottom: 8px;
   font-size: 1.6rem;
@@ -317,6 +289,8 @@
 }
 .promo-box ul { margin: 8px 0 0; padding-left: 18px; list-style: disc; }
 .promo-box li { margin-bottom: 4px; font-size: .9rem; }
+
+/* ---------- 4.3 CHỌN TÙY CHỌN (SIZE, MÀU) ---------- */
 
 .option-row {
   display: flex;
@@ -353,6 +327,8 @@
   color: #2b6ce4;
 }
 
+/* ---------- 4.4 Ô SỐ LƯỢNG (−  1  +) ---------- */
+
 .qty-box {
   display: inline-flex;
   border: 1px solid var(--color-border);
@@ -368,6 +344,8 @@
   text-align: center;
 }
 .qty-box__input { width: 48px; }
+
+/* ---------- 4.5 NÚT MUA HÀNG VÀ CAM KẾT ---------- */
 
 .product-cta {
   display: flex;
@@ -391,6 +369,9 @@
   padding-top: 12px;
   border-top: 1px solid var(--color-border);
 }
+
+/* ---------- 4.6 SẢN PHẨM LIÊN QUAN ---------- */
+
 .related-section { padding: 12px 0 40px; }
 .related-section h2 {
   margin-bottom: 18px;
@@ -464,11 +445,11 @@
 .gallery-prev { left: 8px; }
 .gallery-next { right: 8px; }
 .product-gallery__main {
+  aspect-ratio: 4 / 5;
   position: relative;
   overflow: hidden;
   align-self: start;
 }
-.gallery-main-img { display: block; }
 .product-gallery__main:hover .gallery-arrow { opacity: 1; }
 .gallery-arrow:hover { background: #fff; }
 
@@ -480,18 +461,22 @@
 }
 .quick-view .gallery-thumb { flex: 0 0 56px; }
 
+/* ---------- Từ 768px trở lên (tablet, laptop) ---------- */
+
 @media (min-width: 768px) {
-  .catalog-sidebar,
   .catalog-grid { min-height: 600px; }
-  .catalog-layout { grid-template-columns: 220px 1fr; }
   .catalog-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
   .product-detail { grid-template-columns: 1.05fr .95fr; }
   .quick-view__grid { grid-template-columns: .9fr 1.1fr; }
 }
 
+/* ---------- Từ 1024px trở lên (desktop): lưới tăng lên 4 cột ---------- */
+
 @media (min-width: 1024px) {
   .catalog-grid { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
 }
+
+/* ---------- Từ 800px trở xuống (mobile) ---------- */
 
 @media (max-width: 800px) {
   .catalog-banner { height: 100px; padding: 0 12px; gap: 6px; }
